@@ -136,6 +136,17 @@ function runValidation() {
     }
   });
 
+  // Check distribution of correctOptionId across A, B, C, D
+  const dist: Record<string, number> = {};
+  questions.forEach(q => {
+    dist[q.correctOptionId] = (dist[q.correctOptionId] || 0) + 1;
+  });
+  console.log(`[PASS] Answer keys distribution: A=${dist['A'] || 0}, B=${dist['B'] || 0}, C=${dist['C'] || 0}, D=${dist['D'] || 0}`);
+  if ((dist['A'] || 0) > 30 || (dist['B'] || 0) > 30 || (dist['C'] || 0) > 30 || (dist['D'] || 0) > 30) {
+    console.warn(`[WARN] Answer distribution appears skewed: ${JSON.stringify(dist)}`);
+    warnings++;
+  }
+
   console.log('--- VALIDATION SUMMARY ---');
   console.log(`Questions checked: ${questions.length}`);
   console.log(`Errors: ${errors}`);

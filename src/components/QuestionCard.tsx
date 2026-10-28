@@ -142,8 +142,9 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
           let textStyle = 'text-slate-800 dark:text-slate-200';
 
           if (isSelected) {
-            optionStyle = 'border-emerald-500 bg-emerald-50/40 dark:bg-emerald-950/20 dark:border-emerald-500 ring-1 ring-emerald-500';
-            keycapStyle = 'bg-emerald-600 text-white shadow-[0_2px_0_#047857]';
+            optionStyle = 'border-sky-500 bg-sky-50/50 dark:bg-sky-950/20 dark:border-sky-500 ring-1 ring-sky-500';
+            keycapStyle = 'bg-sky-600 text-white shadow-[0_2px_0_#0284c7]';
+            textStyle = 'text-sky-950 dark:text-sky-100 font-medium';
           }
 
           if (showAnswerStyle) {

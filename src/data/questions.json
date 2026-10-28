@@ -48,20 +48,20 @@
     "options": [
       {
         "id": "A",
-        "text": "Theo dõi và kiểm soát thông tin, đảm bảo an toàn cho dữ liệu quan trọng",
-        "isCorrect": true
-      },
-      {
-        "id": "B",
         "text": "Thay thế hoàn toàn các giải pháp kỹ thuật bảo vệ đường truyền mạng",
         "isCorrect": false,
         "distractorRationale": "Chính sách là khung quy chế định hướng quản lý, không thể thay thế công cụ kỹ thuật phần cứng/phần mềm."
       },
       {
-        "id": "C",
+        "id": "B",
         "text": "Tự động phát hiện và loại bỏ virus trên tất cả máy tính nhân viên",
         "isCorrect": false,
         "distractorRationale": "Đây là nhiệm vụ của phần mềm chống mã độc (Antivirus/EDR), không phải của văn bản chính sách."
+      },
+      {
+        "id": "C",
+        "text": "Theo dõi và kiểm soát thông tin, đảm bảo an toàn cho dữ liệu quan trọng",
+        "isCorrect": true
       },
       {
         "id": "D",
@@ -70,7 +70,7 @@
         "distractorRationale": "Chính sách an ninh áp dụng đồng bộ cho toàn bộ nhân sự và các cấp trong tổ chức."
       }
     ],
-    "correctOptionId": "A",
+    "correctOptionId": "C",
     "explanation": {
       "correctRationale": "Về mặt vận hành thực tế, mục đích chủ yếu của chính sách an ninh thông tin là theo dõi và kiểm soát thông tin, đảm bảo an toàn cho dữ liệu quan trọng của tổ chức.",
       "keyTakeaway": "Chính sách ATTT về mặt vận hành: Theo dõi và kiểm soát thông tin, đảm bảo an toàn cho dữ liệu quan trọng."
@@ -142,20 +142,20 @@
     "options": [
       {
         "id": "A",
-        "text": "ISO/IEC 27001",
-        "isCorrect": true
-      },
-      {
-        "id": "B",
         "text": "ISO/IEC 27002",
         "isCorrect": false,
         "distractorRationale": "ISO/IEC 27002 là tiêu chuẩn hướng dẫn thực hiện các biện pháp kiểm soát, không cung cấp yêu cầu chứng nhận ISMS."
       },
       {
-        "id": "C",
+        "id": "B",
         "text": "ISO/IEC 27005",
         "isCorrect": false,
         "distractorRationale": "ISO/IEC 27005 là tiêu chuẩn tập trung chuyên biệt vào quản lý rủi ro an toàn thông tin."
+      },
+      {
+        "id": "C",
+        "text": "ISO/IEC 27001",
+        "isCorrect": true
       },
       {
         "id": "D",
@@ -164,7 +164,7 @@
         "distractorRationale": "ISO 9001 là tiêu chuẩn quản lý chất lượng chung, không phải quản lý an ninh thông tin."
       }
     ],
-    "correctOptionId": "A",
+    "correctOptionId": "C",
     "explanation": {
       "correctRationale": "ISO/IEC 27001 là tiêu chuẩn quốc tế cung cấp các yêu cầu (requirements) chính thức cho Hệ thống quản lý an ninh/an toàn thông tin (ISMS) tổng thể của tổ chức.",
       "keyTakeaway": "Từ khóa: ISO/IEC 27001 = Cung cấp yêu cầu cho ISMS."
@@ -283,29 +283,29 @@
     "options": [
       {
         "id": "A",
-        "text": "Kiểu tấn công có chủ đích bằng phần mềm",
-        "isCorrect": true
-      },
-      {
-        "id": "B",
         "text": "Giao thức truyền file bảo mật",
         "isCorrect": false,
         "distractorRationale": "Giao thức truyền file an toàn là SFTP hoặc FTPS."
       },
       {
-        "id": "C",
+        "id": "B",
         "text": "Cơ chế sinh khóa mật mã công khai",
         "isCorrect": false,
         "distractorRationale": "Sinh khóa là thuật toán mật mã học, không liên quan đến Backdoor."
       },
       {
-        "id": "D",
+        "id": "C",
         "text": "Hệ thống tường lửa lọc gói tin",
         "isCorrect": false,
         "distractorRationale": "Tường lửa là biện pháp phòng thủ, trong khi Backdoor là phương thức xâm nhập của mã độc."
+      },
+      {
+        "id": "D",
+        "text": "Kiểu tấn công có chủ đích bằng phần mềm",
+        "isCorrect": true
       }
     ],
-    "correctOptionId": "A",
+    "correctOptionId": "D",
     "explanation": {
       "correctRationale": "Trong bộ câu hỏi môn học, Back doors (cửa hậu) được định danh là 'Kiểu tấn công có chủ đích bằng phần mềm', cho phép kẻ tấn công bí mật vượt qua rào cản xác thực để duy trì quyền điều khiển hệ thống.",
       "keyTakeaway": "Back doors = Kiểu tấn công có chủ đích bằng phần mềm."
@@ -330,14 +330,14 @@
     "options": [
       {
         "id": "A",
-        "text": "Tấn công chặn liên lạc",
-        "isCorrect": true
-      },
-      {
-        "id": "B",
         "text": "Tấn công từ chối dịch vụ (DoS)",
         "isCorrect": false,
         "distractorRationale": "Tấn công DoS nhằm làm sập tài nguyên mạng chứ không nhằm chặn luồng nghe lén liên lạc."
+      },
+      {
+        "id": "B",
+        "text": "Tấn công chặn liên lạc",
+        "isCorrect": true
       },
       {
         "id": "C",
@@ -352,7 +352,7 @@
         "distractorRationale": "Kiểm toán an ninh là quy trình rà soát quản lý của tổ chức."
       }
     ],
-    "correctOptionId": "A",
+    "correctOptionId": "B",
     "explanation": {
       "correctRationale": "Theo bộ câu hỏi ngân hàng đề, 4 kỹ thuật Packet sniffer (bắt gói tin), Spoofing (giả mạo), Pharming (chuyển hướng truy cập) và Man-in-the-middle (người đứng giữa) được xếp chung vào nhóm Tấn công chặn liên lạc.",
       "keyTakeaway": "Packet sniffer, Spoofing, Pharming, Man-in-the-middle thuộc nhóm Tấn công chặn liên lạc."
@@ -378,20 +378,20 @@
     "options": [
       {
         "id": "A",
-        "text": "Chặn người dùng hợp pháp truy cập vào các hệ thống nào đó",
-        "isCorrect": true
-      },
-      {
-        "id": "B",
         "text": "Đánh cắp khóa bí mật trong cơ sở dữ liệu máy chủ",
         "isCorrect": false,
         "distractorRationale": "Mục tiêu DoS là làm cạn kiệt tài nguyên mạng, không tập trung trích xuất khóa bí mật."
       },
       {
-        "id": "C",
+        "id": "B",
         "text": "Mã hóa toàn bộ tập tin để đòi tiền chuộc",
         "isCorrect": false,
         "distractorRationale": "Đây là hành vi của Ransomware (mã độc tống tiền)."
+      },
+      {
+        "id": "C",
+        "text": "Chặn người dùng hợp pháp truy cập vào các hệ thống nào đó",
+        "isCorrect": true
       },
       {
         "id": "D",
@@ -400,7 +400,7 @@
         "distractorRationale": "Đây không phải là mục tiêu của tấn công DoS."
       }
     ],
-    "correctOptionId": "A",
+    "correctOptionId": "C",
     "explanation": {
       "correctRationale": "Mục tiêu cốt lõi của tấn công từ chối dịch vụ (DoS - Denial of Service) là làm quá tải hoặc làm sập hệ thống, ngăn chặn người dùng hợp pháp truy cập vào các dịch vụ hoặc tài nguyên của hệ thống.",
       "keyTakeaway": "Mục tiêu của DoS = Chặn người dùng hợp pháp truy cập vào các hệ thống nào đó."
@@ -425,14 +425,14 @@
     "options": [
       {
         "id": "A",
-        "text": "Chữ ký điện tử có thể sử dụng để xác thực tính toàn vẹn dữ liệu",
-        "isCorrect": true
-      },
-      {
-        "id": "B",
         "text": "Chữ ký điện tử chỉ có thể dùng để nén giảm dung lượng file",
         "isCorrect": false,
         "distractorRationale": "Chữ ký điện tử không có chức năng nén dữ liệu."
+      },
+      {
+        "id": "B",
+        "text": "Chữ ký điện tử có thể sử dụng để xác thực tính toàn vẹn dữ liệu",
+        "isCorrect": true
       },
       {
         "id": "C",
@@ -447,7 +447,7 @@
         "distractorRationale": "Chữ ký điện tử dựa trên mật mã khóa công khai, không dựa trên mã đối xứng DES."
       }
     ],
-    "correctOptionId": "A",
+    "correctOptionId": "B",
     "explanation": {
       "correctRationale": "Chữ ký điện tử được sử dụng để xác thực tính toàn vẹn của dữ liệu và chứng minh nguồn gốc xuất phát của thông điệp, bảo đảm dữ liệu không bị sửa đổi trái phép sau khi ký.",
       "keyTakeaway": "Chữ ký điện tử có thể sử dụng để xác thực tính toàn vẹn dữ liệu."
@@ -566,20 +566,20 @@
     "options": [
       {
         "id": "A",
-        "text": "Chữ ký số được hình thành từ các thuật toán mã hóa khóa công khai",
-        "isCorrect": true
-      },
-      {
-        "id": "B",
         "text": "Chữ ký số được hình thành từ thuật toán mã hóa đối xứng DES",
         "isCorrect": false,
         "distractorRationale": "Hệ mã đối xứng không thể tạo ra tính bất đối xứng để một người ký và mọi người kiểm tra."
       },
       {
-        "id": "C",
+        "id": "B",
         "text": "Chữ ký số không thể kiểm tra được bằng phương pháp toán học",
         "isCorrect": false,
         "distractorRationale": "Chữ ký số được kiểm tra chính xác tuyệt đối bằng thuật toán số học với khóa công khai."
+      },
+      {
+        "id": "C",
+        "text": "Chữ ký số được hình thành từ các thuật toán mã hóa khóa công khai",
+        "isCorrect": true
       },
       {
         "id": "D",
@@ -588,7 +588,7 @@
         "distractorRationale": "Chữ ký số là chuỗi bit dữ liệu điện tử đi kèm thông điệp số."
       }
     ],
-    "correctOptionId": "A",
+    "correctOptionId": "C",
     "explanation": {
       "correctRationale": "Chữ ký số được xây dựng và phát triển trên nền tảng của các thuật toán mã hóa khóa công khai (PKC), sử dụng khóa bí mật để tạo chữ ký và khóa công khai để xác thực.",
       "keyTakeaway": "Chữ ký số được hình thành từ các thuật toán mã hóa khóa công khai."
@@ -660,29 +660,29 @@
     "options": [
       {
         "id": "A",
-        "text": "512 byte",
-        "isCorrect": true
-      },
-      {
-        "id": "B",
         "text": "128 byte",
         "isCorrect": false,
         "distractorRationale": "Bẫy tính sai: lấy 1024 chia đôi 3 lần (1024 -> 512 -> 256 -> 128 byte). Hàm băm không chia đôi dung lượng mà cho ra kích thước cố định."
       },
       {
-        "id": "C",
+        "id": "B",
         "text": "256 byte",
         "isCorrect": false,
         "distractorRationale": "Bẫy chia đôi dung lượng sau 2 lần băm."
       },
       {
-        "id": "D",
+        "id": "C",
         "text": "64 byte",
         "isCorrect": false,
         "distractorRationale": "Bẫy giả định kích thước suy giảm theo cấp số nhân."
+      },
+      {
+        "id": "D",
+        "text": "512 byte",
+        "isCorrect": true
       }
     ],
-    "correctOptionId": "A",
+    "correctOptionId": "D",
     "explanation": {
       "correctRationale": "Hàm băm có đặc tính cốt lõi là ánh xạ thông điệp đầu vào có kích thước bất kỳ thành đầu ra CÓ ĐỘ DÀI CỐ ĐỊNH. Khi hàm băm đã có kích thước đầu ra là 512 byte ở lần 1, thì lấy kết quả đó băm tiếp lần 2, lần 3 hay n lần liên tiếp (cùng một hàm băm) thì kết quả cuối cùng vẫn giữ nguyên độ dài cố định là 512 byte.",
       "keyTakeaway": "Độ dài đầu ra của hàm băm luôn CỐ ĐỊNH: Băm n lần liên tiếp kết quả vẫn là 512 byte."
@@ -708,20 +708,20 @@
     "options": [
       {
         "id": "A",
-        "text": "El-Gamal",
-        "isCorrect": true
-      },
-      {
-        "id": "B",
         "text": "DES",
         "isCorrect": false,
         "distractorRationale": "DES là giải thuật mã hóa khóa đối xứng kinh điển của NIST."
       },
       {
-        "id": "C",
+        "id": "B",
         "text": "3-DES",
         "isCorrect": false,
         "distractorRationale": "Triple DES là thuật toán mã hóa khóa đối xứng mở rộng từ DES."
+      },
+      {
+        "id": "C",
+        "text": "El-Gamal",
+        "isCorrect": true
       },
       {
         "id": "D",
@@ -730,7 +730,7 @@
         "distractorRationale": "AES là tiêu chuẩn mã hóa khóa đối xứng hiện đại."
       }
     ],
-    "correctOptionId": "A",
+    "correctOptionId": "C",
     "explanation": {
       "correctRationale": "El-Gamal là giải thuật mã hóa thuộc hệ mã khóa công khai (bất đối xứng), dựa trên bài toán logarit rời rạc. DES, 3-DES và AES đều là các giải thuật mã hóa khóa đối xứng.",
       "keyTakeaway": "El-Gamal = Giải thuật không dùng khóa đối xứng (thuộc hệ mã khóa công khai)."
@@ -755,29 +755,29 @@
     "options": [
       {
         "id": "A",
-        "text": "Tốc độ xử lý của hệ mã khóa bí mật cao hơn hệ mã khóa công khai",
-        "isCorrect": true
-      },
-      {
-        "id": "B",
         "text": "Quản lý và phân phối khóa dễ dàng trên diện rộng",
         "isCorrect": false,
         "distractorRationale": "Phân phối khóa là nhược điểm lớn nhất của hệ mã khóa đối xứng."
       },
       {
-        "id": "C",
+        "id": "B",
         "text": "Tự động xác thực danh tính người gửi chống chối bỏ",
         "isCorrect": false,
         "distractorRationale": "Mã hóa đối xứng dùng chung 1 khóa nên không thể tạo chữ ký số chống chối bỏ."
       },
       {
-        "id": "D",
+        "id": "C",
         "text": "Không cần chia sẻ bí mật giữa các bên",
         "isCorrect": false,
         "distractorRationale": "Hai bên bắt buộc phải chia sẻ chung khóa mật."
+      },
+      {
+        "id": "D",
+        "text": "Tốc độ xử lý của hệ mã khóa bí mật cao hơn hệ mã khóa công khai",
+        "isCorrect": true
       }
     ],
-    "correctOptionId": "A",
+    "correctOptionId": "D",
     "explanation": {
       "correctRationale": "Hệ mã khóa bí mật (đối xứng) thực hiện các phép toán thao tác bit trực tiếp rất nhanh, do đó ưu điểm vượt trội là tốc độ xử lý cao hơn nhiều so với hệ mã hóa khóa công khai.",
       "keyTakeaway": "Ưu điểm hệ mã khóa bí mật: Tốc độ xử lý cao hơn hệ mã hóa khóa công khai."
@@ -802,29 +802,29 @@
     "options": [
       {
         "id": "A",
-        "text": "Tốc độ xử lý của thuật toán chậm",
-        "isCorrect": true
-      },
-      {
-        "id": "B",
         "text": "Khó khăn trong việc công khai khóa ra cộng đồng",
         "isCorrect": false,
         "distractorRationale": "Khóa công khai được thiết kế để phân phối tự do mà không sợ lộ."
       },
       {
-        "id": "C",
+        "id": "B",
         "text": "Bắt buộc người gửi và người nhận phải dùng chung một khóa",
         "isCorrect": false,
         "distractorRationale": "Đây là đặc điểm của hệ mã đối xứng; PKC dùng 2 khóa riêng biệt."
       },
       {
-        "id": "D",
+        "id": "C",
         "text": "Không thể ứng dụng trong chữ ký số",
         "isCorrect": false,
         "distractorRationale": "PKC chính là nền tảng cốt lõi của chữ ký số."
+      },
+      {
+        "id": "D",
+        "text": "Tốc độ xử lý của thuật toán chậm",
+        "isCorrect": true
       }
     ],
-    "correctOptionId": "A",
+    "correctOptionId": "D",
     "explanation": {
       "correctRationale": "Do phải thực hiện các phép tính toán số học trên các số nguyên rất lớn (như phép tính số mũ modulo), nhược điểm lớn của hệ mã khóa công khai là tốc độ xử lý của thuật toán chậm.",
       "keyTakeaway": "Nhược điểm hệ mã khóa công khai: Tốc độ xử lý của thuật toán chậm."
@@ -896,29 +896,29 @@
     "options": [
       {
         "id": "A",
-        "text": "Ba ( mã hóa khóa đối xứng , mã hóa khóa công khai , hàm băm )",
-        "isCorrect": true
-      },
-      {
-        "id": "B",
         "text": "Hai (mã hóa đối xứng và mã hóa phi đối xứng)",
         "isCorrect": false,
         "distractorRationale": "Theo ngân hàng đề môn học, phân loại gồm 3 phương pháp chính bao gồm cả hàm băm."
       },
       {
-        "id": "C",
+        "id": "B",
         "text": "Bốn (mã Caesar, DES, RSA và chữ ký số)",
         "isCorrect": false,
         "distractorRationale": "Đây là các thuật toán và ứng dụng cụ thể, không phải 3 phương pháp phân loại chính."
       },
       {
-        "id": "D",
+        "id": "C",
         "text": "Chỉ có một phương pháp duy nhất là mã hóa thay thế",
         "isCorrect": false,
         "distractorRationale": "Mã hóa thay thế chỉ là một nhánh nhỏ của mật mã cổ điển."
+      },
+      {
+        "id": "D",
+        "text": "Ba ( mã hóa khóa đối xứng , mã hóa khóa công khai , hàm băm )",
+        "isCorrect": true
       }
     ],
-    "correctOptionId": "A",
+    "correctOptionId": "D",
     "explanation": {
       "correctRationale": "Theo quy ước của ngân hàng câu hỏi đề thi, có 3 phương pháp chính được liệt kê cho mã hóa và giải mã là: Ba (mã hóa khóa đối xứng, mã hóa khóa công khai, hàm băm).",
       "keyTakeaway": "Đáp án theo đề thi: Có 3 phương pháp chính: mã hóa khóa đối xứng, mã hóa khóa công khai, hàm băm."
@@ -944,14 +944,14 @@
     "options": [
       {
         "id": "A",
-        "text": "Sử dụng khóa công khai để MÃ HÓA , khóa bí mật để GIẢI MÃ",
-        "isCorrect": true
-      },
-      {
-        "id": "B",
         "text": "Sử dụng khóa bí mật để MÃ HÓA , khóa công khai để GIẢI MÃ",
         "isCorrect": false,
         "distractorRationale": "Đây là chiều dùng khóa trong tạo và kiểm tra chữ ký số, không phải để bảo mật mã hóa thông điệp."
+      },
+      {
+        "id": "B",
+        "text": "Sử dụng khóa công khai để MÃ HÓA , khóa bí mật để GIẢI MÃ",
+        "isCorrect": true
       },
       {
         "id": "C",
@@ -966,7 +966,7 @@
         "distractorRationale": "Để bảo mật thông điệp gửi cho người nhận, chỉ người gửi dùng khóa công khai của người nhận để mã hóa, và chỉ người nhận dùng khóa bí mật của mình để giải mã."
       }
     ],
-    "correctOptionId": "A",
+    "correctOptionId": "B",
     "explanation": {
       "correctRationale": "Trong việc truyền thông điệp bí mật bằng hệ mã hóa khóa công khai: Người gửi sử dụng khóa công khai (của người nhận) để MÃ HÓA thông điệp, và người nhận sử dụng khóa bí mật (của mình) để GIẢI MÃ.",
       "keyTakeaway": "Quy tắc mã hóa PKC: Khóa công khai để MÃ HÓA, khóa bí mật để GIẢI MÃ."
@@ -991,14 +991,14 @@
     "options": [
       {
         "id": "A",
-        "text": "Sử dụng một khóa mật chung cho cả hai hệ mã",
-        "isCorrect": true
-      },
-      {
-        "id": "B",
         "text": "Sử dụng hai khóa khác nhau là khóa công khai và khóa bí mật",
         "isCorrect": false,
         "distractorRationale": "Đây là nhận định ĐÚNG về PKC."
+      },
+      {
+        "id": "B",
+        "text": "Sử dụng một khóa mật chung cho cả hai hệ mã",
+        "isCorrect": true
       },
       {
         "id": "C",
@@ -1013,7 +1013,7 @@
         "distractorRationale": "Đây là nhận định ĐÚNG về PKC."
       }
     ],
-    "correctOptionId": "A",
+    "correctOptionId": "B",
     "explanation": {
       "correctRationale": "Trong hệ mã hóa khóa công khai (PKC), mỗi bên sở hữu một cặp gồm 2 khóa riêng biệt (khóa công khai và khóa bí mật). Phát biểu 'Sử dụng một khóa mật chung cho cả hai hệ mã' là hoàn toàn SAI (đây là đặc điểm của hệ mã đối xứng).",
       "keyTakeaway": "Nhận định SAI về PKC: Sử dụng một khóa mật chung cho cả hai hệ mã."
@@ -1038,29 +1038,29 @@
     "options": [
       {
         "id": "A",
-        "text": "Sử dụng khóa bí mật để ký , khóa công khai để kiểm tra chữ ký",
-        "isCorrect": true
-      },
-      {
-        "id": "B",
         "text": "Sử dụng khóa công khai để ký , khóa bí mật để kiểm tra chữ ký",
         "isCorrect": false,
         "distractorRationale": "Nếu dùng khóa công khai để ký thì ai cũng ký được, mất đi tính xác thực người gửi."
       },
       {
-        "id": "C",
+        "id": "B",
         "text": "Sử dụng khóa đối xứng chia sẻ trước để tạo dấu chứng thực",
         "isCorrect": false,
         "distractorRationale": "Khóa đối xứng không dùng để tạo chữ ký số chống chối bỏ."
       },
       {
-        "id": "D",
+        "id": "C",
         "text": "Hình ảnh chữ ký quét tay chèn vào tài liệu PDF",
         "isCorrect": false,
         "distractorRationale": "Chữ ký tay quét hình chỉ là chữ ký điện tử đơn giản, không phải cơ chế mật mã học của chữ ký số."
+      },
+      {
+        "id": "D",
+        "text": "Sử dụng khóa bí mật để ký , khóa công khai để kiểm tra chữ ký",
+        "isCorrect": true
       }
     ],
-    "correctOptionId": "A",
+    "correctOptionId": "D",
     "explanation": {
       "correctRationale": "Chữ ký số hoạt động dựa trên cơ chế: Người gửi sử dụng khóa bí mật của mình để KÝ (tạo chữ ký), và người nhận hoặc bên thứ ba sử dụng khóa công khai của người gửi để KIỂM TRA tính hợp lệ của chữ ký.",
       "keyTakeaway": "Chữ ký số: Khóa bí mật để KÝ, khóa công khai để KIỂM TRA chữ ký."
@@ -1085,14 +1085,14 @@
     "options": [
       {
         "id": "A",
-        "text": "Một phép kiểm tra trong đó nhiều người có thể kiểm tra nhưng chỉ một người được tạo chữ ký",
-        "isCorrect": true
-      },
-      {
-        "id": "B",
         "text": "Một phép kiểm tra trong đó nhiều người cùng tạo chữ ký nhưng chỉ một người kiểm tra được",
         "isCorrect": false,
         "distractorRationale": "Sai bản chất: chỉ người sở hữu khóa bí mật mới tạo được chữ ký."
+      },
+      {
+        "id": "B",
+        "text": "Một phép kiểm tra trong đó nhiều người có thể kiểm tra nhưng chỉ một người được tạo chữ ký",
+        "isCorrect": true
       },
       {
         "id": "C",
@@ -1107,7 +1107,7 @@
         "distractorRationale": "Chữ ký số gắn liền với nội dung thông điệp; thông điệp đổi thì chữ ký thay đổi ngay lập tức."
       }
     ],
-    "correctOptionId": "A",
+    "correctOptionId": "B",
     "explanation": {
       "correctRationale": "Bản chất của chữ ký số là: Chỉ có một người duy nhất tạo được chữ ký (người nắm giữ khóa bí mật), nhưng nhiều người có thể kiểm tra được chữ ký đó (bằng cách dùng khóa công khai được công bố rộng rãi).",
       "keyTakeaway": "Đặc điểm đúng của chữ ký số: Nhiều người có thể kiểm tra nhưng chỉ một người được tạo chữ ký."
@@ -1132,20 +1132,20 @@
     "options": [
       {
         "id": "A",
-        "text": "Data Encryption Standard",
-        "isCorrect": true
-      },
-      {
-        "id": "B",
         "text": "Domain Name System",
         "isCorrect": false,
         "distractorRationale": "DNS là hệ thống phân giải tên miền, không phải tiêu chuẩn mã hóa thông điệp."
       },
       {
-        "id": "C",
+        "id": "B",
         "text": "Dynamic Host Configuration Protocol",
         "isCorrect": false,
         "distractorRationale": "DHCP là giao thức cấu hình IP động trong mạng máy tính."
+      },
+      {
+        "id": "C",
+        "text": "Data Encryption Standard",
+        "isCorrect": true
       },
       {
         "id": "D",
@@ -1154,7 +1154,7 @@
         "distractorRationale": "DSA là thuật toán chữ ký số, không phải tên tiêu chuẩn phát triển mã hóa thông điệp DES."
       }
     ],
-    "correctOptionId": "A",
+    "correctOptionId": "C",
     "explanation": {
       "correctRationale": "Data Encryption Standard (DES) là tiêu chuẩn mã hóa dữ liệu đối xứng được phát triển và công bố bởi NBS (nay là NIST) vào những năm 1970 để tạo ra các thông điệp an toàn trong cơ quan và thương mại.",
       "keyTakeaway": "Data Encryption Standard = Tiêu chuẩn mã hóa dùng để phát triển tạo thông điệp an toàn."
@@ -1179,14 +1179,14 @@
     "options": [
       {
         "id": "A",
-        "text": "Data encryption standard",
-        "isCorrect": true
-      },
-      {
-        "id": "B",
         "text": "Digital encryption system",
         "isCorrect": false,
         "distractorRationale": "Sai từ viết tắt chuẩn mực của NIST."
+      },
+      {
+        "id": "B",
+        "text": "Data encryption standard",
+        "isCorrect": true
       },
       {
         "id": "C",
@@ -1201,7 +1201,7 @@
         "distractorRationale": "Sai nghĩa thuật ngữ."
       }
     ],
-    "correctOptionId": "A",
+    "correctOptionId": "B",
     "explanation": {
       "correctRationale": "DES là viết tắt của cụm từ tiếng Anh 'Data Encryption Standard' (Tiêu chuẩn mã hóa dữ liệu).",
       "keyTakeaway": "DES = Data Encryption Standard."
@@ -1226,14 +1226,14 @@
     "options": [
       {
         "id": "A",
-        "text": "Giảm thiểu các lỗ hổng bảo mật",
-        "isCorrect": true
-      },
-      {
-        "id": "B",
         "text": "Tắt hoàn toàn các dịch vụ sao lưu dữ liệu dự phòng",
         "isCorrect": false,
         "distractorRationale": "Tắt sao lưu làm tăng rủi ro mất mát dữ liệu nghiêm trọng."
+      },
+      {
+        "id": "B",
+        "text": "Giảm thiểu các lỗ hổng bảo mật",
+        "isCorrect": true
       },
       {
         "id": "C",
@@ -1248,7 +1248,7 @@
         "distractorRationale": "Không cập nhật bản vá sẽ để lộ lỗ hổng cho hacker khai thác."
       }
     ],
-    "correctOptionId": "A",
+    "correctOptionId": "B",
     "explanation": {
       "correctRationale": "Lỗ hổng bảo mật là điểm yếu mà kẻ tấn công khai thác để thâm nhập hệ thống. Vì vậy, trên thực tế có thể giảm khả năng bị tấn công nếu giảm thiểu được các lỗ hổng bảo mật thông qua vá lỗi, rà soát mã nguồn và cấu hình an toàn.",
       "keyTakeaway": "Giảm khả năng bị tấn công bằng cách: Giảm thiểu các lỗ hổng bảo mật."
@@ -1273,29 +1273,29 @@
     "options": [
       {
         "id": "A",
-        "text": "Lập kế hoạch (Plan), Thực thi kế hoạch (Do), Giám sát kết quả thực hiện (Monitor), Thực hiện các kiểm soát (Control).",
-        "isCorrect": true
-      },
-      {
-        "id": "B",
         "text": "Khởi động (Start), Vận hành (Run), Tạm dừng (Pause), Kết thúc (End).",
         "isCorrect": false,
         "distractorRationale": "Không thuộc quy trình quản lý ATTT chuẩn mực."
       },
       {
-        "id": "C",
+        "id": "B",
         "text": "Mã hóa (Encrypt), Truyền tin (Transfer), Nhận tin (Receive), Giải mã (Decrypt).",
         "isCorrect": false,
         "distractorRationale": "Đây là quy trình mã hóa truyền tin mật mã, không phải quy trình quản lý ATTT."
       },
       {
-        "id": "D",
+        "id": "C",
         "text": "Đánh giá (Assess), Tấn công (Attack), Báo cáo (Report), Sửa chữa (Fix).",
         "isCorrect": false,
         "distractorRationale": "Đây là các bước kiểm thử xâm nhập (Penetration Testing), không phải thực thi quản lý ATTT."
+      },
+      {
+        "id": "D",
+        "text": "Lập kế hoạch (Plan), Thực thi kế hoạch (Do), Giám sát kết quả thực hiện (Monitor), Thực hiện các kiểm soát (Control).",
+        "isCorrect": true
       }
     ],
-    "correctOptionId": "A",
+    "correctOptionId": "D",
     "explanation": {
       "correctRationale": "Theo ngân hàng câu hỏi đề thi, các bước thực thi quản lý ATTT được xác định theo chuỗi 4 bước: Lập kế hoạch (Plan), Thực thi kế hoạch (Do), Giám sát kết quả thực hiện (Monitor), Thực hiện các kiểm soát (Control).",
       "keyTakeaway": "Các bước thực thi quản lý ATTT: Plan -> Do -> Monitor -> Control."
@@ -1321,29 +1321,29 @@
     "options": [
       {
         "id": "A",
-        "text": "Khó khăn trong quản lý và phân phối khóa",
-        "isCorrect": true
-      },
-      {
-        "id": "B",
         "text": "Tốc độ xử lý mã hóa dữ liệu quá chậm",
         "isCorrect": false,
         "distractorRationale": "Mã hóa đối xứng có tốc độ rất nhanh, tốc độ chậm là nhược điểm của PKC."
       },
       {
-        "id": "C",
+        "id": "B",
         "text": "Kích thước bản mã luôn lớn gấp 10 lần bản rõ",
         "isCorrect": false,
         "distractorRationale": "Kích thước bản mã trong mã đối xứng xấp xỉ bằng bản rõ."
       },
       {
-        "id": "D",
+        "id": "C",
         "text": "Không thể mã hóa được các tệp văn bản lớn",
         "isCorrect": false,
         "distractorRationale": "Mã hóa đối xứng là giải pháp tiêu chuẩn tối ưu để mã hóa dữ liệu lớn và file dung lượng cao."
+      },
+      {
+        "id": "D",
+        "text": "Khó khăn trong quản lý và phân phối khóa",
+        "isCorrect": true
       }
     ],
-    "correctOptionId": "A",
+    "correctOptionId": "D",
     "explanation": {
       "correctRationale": "Điểm yếu lớn nhất của hệ mã hóa khóa đối xứng là việc trao đổi, phân phối và lưu trữ khóa an toàn giữa các bên: Với n người tham gia cần n(n-1)/2 khóa, rất khó khăn và dễ bị lộ khóa trên đường truyền.",
       "keyTakeaway": "Điểm yếu của hệ mã hóa đối xứng: Khó khăn trong quản lý và phân phối khóa."
@@ -1368,14 +1368,14 @@
     "options": [
       {
         "id": "A",
-        "text": "DES, 3-DES, AES",
-        "isCorrect": true
-      },
-      {
-        "id": "B",
         "text": "RSA, El-Gamal, ECC",
         "isCorrect": false,
         "distractorRationale": "Đây là các thuật toán mã hóa khóa công khai (bất đối xứng)."
+      },
+      {
+        "id": "B",
+        "text": "DES, 3-DES, AES",
+        "isCorrect": true
       },
       {
         "id": "C",
@@ -1390,7 +1390,7 @@
         "distractorRationale": "Diffie-Hellman là giao thức trao đổi khóa, DSA là chữ ký số, RSA là mã công khai."
       }
     ],
-    "correctOptionId": "A",
+    "correctOptionId": "B",
     "explanation": {
       "correctRationale": "Các thuật toán mã hóa khóa đối xứng (khóa bí mật) tiêu biểu và thông dụng nhất trong mật mã học gồm có DES, 3-DES (Triple DES) và AES.",
       "keyTakeaway": "Thuật toán mã hóa đối xứng thông dụng: DES, 3-DES, AES."
@@ -1462,14 +1462,14 @@
     "options": [
       {
         "id": "A",
-        "text": "Mã hóa",
-        "isCorrect": true
-      },
-      {
-        "id": "B",
         "text": "Gửi dưới dạng văn bản thuần không khóa bảo vệ",
         "isCorrect": false,
         "distractorRationale": "Văn bản thuần (plaintext) dễ dàng bị nghe lén trên đường truyền mạng."
+      },
+      {
+        "id": "B",
+        "text": "Mã hóa",
+        "isCorrect": true
       },
       {
         "id": "C",
@@ -1484,7 +1484,7 @@
         "distractorRationale": "Chia sẻ mật khẩu công khai làm mất hoàn toàn tính bảo mật."
       }
     ],
-    "correctOptionId": "A",
+    "correctOptionId": "B",
     "explanation": {
       "correctRationale": "Mã hóa (Encryption) là phương pháp biến đổi bản rõ thành bản mã khó hiểu nhằm bảo vệ tính bí mật của thông tin trong suốt quá trình truyền trên mạng, đảm bảo chỉ người có khóa hợp lệ mới đọc được.",
       "keyTakeaway": "Bảo vệ thông tin trong quá trình truyền tin = Mã hóa."
@@ -1603,20 +1603,20 @@
     "options": [
       {
         "id": "A",
-        "text": "Kiểm tra 'https', biểu tượng ổ khóa, và chứng chỉ SSL.",
-        "isCorrect": true
-      },
-      {
-        "id": "B",
         "text": "Trang web có nhiều hình ảnh quảng cáo lấp lánh và pop-up trúng thưởng",
         "isCorrect": false,
         "distractorRationale": "Đây thường là dấu hiệu của trang web lừa đảo hoặc chứa mã độc."
       },
       {
-        "id": "C",
+        "id": "B",
         "text": "Đường dẫn chỉ sử dụng giao thức 'http' không có mã hóa",
         "isCorrect": false,
         "distractorRationale": "Giao thức 'http' truyền dữ liệu dạng văn bản rõ không an toàn."
+      },
+      {
+        "id": "C",
+        "text": "Kiểm tra 'https', biểu tượng ổ khóa, và chứng chỉ SSL.",
+        "isCorrect": true
       },
       {
         "id": "D",
@@ -1625,7 +1625,7 @@
         "distractorRationale": "Dấu hiệu phát tán phần mềm độc hại (Malware)."
       }
     ],
-    "correctOptionId": "A",
+    "correctOptionId": "C",
     "explanation": {
       "correctRationale": "Trang web an toàn sử dụng giao thức HTTPS được mã hóa qua TLS/SSL, có biểu tượng ổ khóa an toàn trên thanh địa chỉ của trình duyệt và đi kèm chứng chỉ SSL hợp lệ do CA uy tín cấp.",
       "keyTakeaway": "Dấu hiệu nhận biết web an toàn: Kiểm tra 'https', biểu tượng ổ khóa và chứng chỉ SSL."
@@ -1650,14 +1650,14 @@
     "options": [
       {
         "id": "A",
-        "text": "Tăng cường bảo mật",
-        "isCorrect": true
-      },
-      {
-        "id": "B",
         "text": "Làm chậm tốc độ vận hành của hệ thống",
         "isCorrect": false,
         "distractorRationale": "Làm chậm hệ thống không phải là mục tiêu của quản trị an toàn."
+      },
+      {
+        "id": "B",
+        "text": "Tăng cường bảo mật",
+        "isCorrect": true
       },
       {
         "id": "C",
@@ -1672,7 +1672,7 @@
         "distractorRationale": "Đánh giá lỗ hổng nhằm làm rõ và xử lý cảnh báo chứ không bỏ qua."
       }
     ],
-    "correctOptionId": "A",
+    "correctOptionId": "B",
     "explanation": {
       "correctRationale": "Mục tiêu tối thượng của việc rà soát và đánh giá lỗ hổng bảo mật là phát hiện kịp thời các điểm yếu tiềm ẩn trong hệ thống nhằm đưa ra giải pháp khắc phục, từ đó tăng cường bảo mật cho hệ thống.",
       "keyTakeaway": "Mục tiêu đánh giá lỗ hổng bảo mật: Tăng cường bảo mật."
@@ -1791,14 +1791,14 @@
     "options": [
       {
         "id": "A",
-        "text": "Bảo vệ tài sản",
-        "isCorrect": true
-      },
-      {
-        "id": "B",
         "text": "Tăng dung lượng lưu trữ phần cứng máy chủ",
         "isCorrect": false,
         "distractorRationale": "Chính sách là văn bản quản lý, không làm tăng dung lượng ổ cứng."
+      },
+      {
+        "id": "B",
+        "text": "Bảo vệ tài sản",
+        "isCorrect": true
       },
       {
         "id": "C",
@@ -1813,7 +1813,7 @@
         "distractorRationale": "Vi phạm nguyên tắc bảo mật tối thượng."
       }
     ],
-    "correctOptionId": "A",
+    "correctOptionId": "B",
     "explanation": {
       "correctRationale": "Mục đích tối hậu của việc ban hành chính sách an toàn thông tin trong tổ chức là bảo vệ tài sản (bao gồm thông tin, dữ liệu, phần cứng, phần mềm và uy tín của tổ chức).",
       "keyTakeaway": "Mục đích của chính sách an toàn thông tin (câu hỏi ngắn): Bảo vệ tài sản."
@@ -1886,20 +1886,20 @@
     "options": [
       {
         "id": "A",
-        "text": "Xác định các mối đe dọa tiềm ẩn và tác động của chúng",
-        "isCorrect": true
-      },
-      {
-        "id": "B",
         "text": "Tự động mã hóa tất cả các file trong mạng nội bộ",
         "isCorrect": false,
         "distractorRationale": "Mã hóa là biện pháp kỹ thuật, không phải kết quả của đánh giá rủi ro."
       },
       {
-        "id": "C",
+        "id": "B",
         "text": "Bỏ qua các tiêu chuẩn an toàn thông tin quốc tế",
         "isCorrect": false,
         "distractorRationale": "Đánh giá rủi ro nhằm áp dụng tiêu chuẩn hiệu quả hơn chứ không bỏ qua."
+      },
+      {
+        "id": "C",
+        "text": "Xác định các mối đe dọa tiềm ẩn và tác động của chúng",
+        "isCorrect": true
       },
       {
         "id": "D",
@@ -1908,7 +1908,7 @@
         "distractorRationale": "Mục đích là bảo vệ tài sản dựa trên mức độ rủi ro, không chỉ đơn thuần cắt giảm thiết bị."
       }
     ],
-    "correctOptionId": "A",
+    "correctOptionId": "C",
     "explanation": {
       "correctRationale": "Đánh giá rủi ro (Risk Assessment) giúp tổ chức xác định các mối đe dọa tiềm ẩn, các điểm yếu hiện hữu và ước tính mức độ tác động của chúng đối với tài sản thông tin.",
       "keyTakeaway": "Đánh giá rủi ro giúp: Xác định các mối đe dọa tiềm ẩn và tác động của chúng."
@@ -1933,20 +1933,20 @@
     "options": [
       {
         "id": "A",
-        "text": "Đánh giá sự tuân thủ các chính sách và tiêu chuẩn an ninh",
-        "isCorrect": true
-      },
-      {
-        "id": "B",
         "text": "Lập trình giải thuật mã hóa khóa công khai",
         "isCorrect": false,
         "distractorRationale": "Đây là công việc của kỹ sư mật mã học."
       },
       {
-        "id": "C",
+        "id": "B",
         "text": "Bảo hành thiết bị phần cứng máy in văn phòng",
         "isCorrect": false,
         "distractorRationale": "Đây là dịch vụ kỹ thuật bảo trì thiết bị văn phòng."
+      },
+      {
+        "id": "C",
+        "text": "Đánh giá sự tuân thủ các chính sách và tiêu chuẩn an ninh",
+        "isCorrect": true
       },
       {
         "id": "D",
@@ -1955,7 +1955,7 @@
         "distractorRationale": "Đây là kiểm toán tài chính, không phải kiểm toán an ninh."
       }
     ],
-    "correctOptionId": "A",
+    "correctOptionId": "C",
     "explanation": {
       "correctRationale": "Kiểm toán an ninh (Security Audit) là quá trình độc lập kiểm tra, rà soát nhằm đánh giá sự tuân thủ đối với các chính sách an toàn thông tin và tiêu chuẩn an ninh đã được ban hành trong tổ chức.",
       "keyTakeaway": "Ý nghĩa kiểm toán an ninh: Đánh giá sự tuân thủ các chính sách và tiêu chuẩn an ninh."
@@ -2027,29 +2027,29 @@
     "options": [
       {
         "id": "A",
-        "text": "UYERPCXLSRKXMR",
-        "isCorrect": true
-      },
-      {
-        "id": "B",
         "text": "UYERPBXLSRKXMR",
         "isCorrect": false,
         "distractorRationale": "Sai chữ cái ở vị trí thứ 6 (Y dịch 4 vị trí qua Z, A, B thành C, không phải B)."
       },
       {
-        "id": "C",
+        "id": "B",
         "text": "TYDQOBWKNQJSWQ",
         "isCorrect": false,
         "distractorRationale": "Đây là kết quả dịch chuyển sai bước (k=3 thay vì k=4)."
       },
       {
-        "id": "D",
+        "id": "C",
         "text": "VZFSQDYMTMSLYS",
         "isCorrect": false,
         "distractorRationale": "Đây là kết quả dịch chuyển thừa (k=5 thay vì k=4)."
+      },
+      {
+        "id": "D",
+        "text": "UYERPCXLSRKXMR",
+        "isCorrect": true
       }
     ],
-    "correctOptionId": "A",
+    "correctOptionId": "D",
     "explanation": {
       "correctRationale": "Áp dụng công thức Caesar C = (P + 4) mod 26: Q->U, U->Y, A->E, N->R, L->P, Y->C (24+4=28 mod 26 = 2 tức C), T->X, H->L, O->S, N->R, G->K, T->X, I->M, N->R. Kết quả ghép lại chính xác: UYERPCXLSRKXMR.",
       "keyTakeaway": "QUANLYTHONGTIN (k=4) -> UYERPCXLSRKXMR (đặc biệt lưu ý chữ Y quay vòng về C)."
@@ -2074,20 +2074,20 @@
     "options": [
       {
         "id": "A",
-        "text": "Whitfield Diffie và Martin Hellman",
-        "isCorrect": true
-      },
-      {
-        "id": "B",
         "text": "Alan Turing và John von Neumann",
         "isCorrect": false,
         "distractorRationale": "Turing là cha đẻ khoa học máy tính và máy giải mã Enigma; von Neumann là kiến trúc sư máy tính."
       },
       {
-        "id": "C",
+        "id": "B",
         "text": "Julius Caesar và Augustus",
         "isCorrect": false,
         "distractorRationale": "Julius Caesar là người phát minh mã Caesar thời cổ đại."
+      },
+      {
+        "id": "C",
+        "text": "Whitfield Diffie và Martin Hellman",
+        "isCorrect": true
       },
       {
         "id": "D",
@@ -2096,7 +2096,7 @@
         "distractorRationale": "Shannon là cha đẻ lý thuyết thông tin; Berners-Lee là người phát minh World Wide Web."
       }
     ],
-    "correctOptionId": "A",
+    "correctOptionId": "C",
     "explanation": {
       "correctRationale": "Hệ mã hóa khóa công khai (PKC) được đề xuất và phát minh vào năm 1976 bởi hai nhà khoa học máy tính Whitfield Diffie và Martin Hellman trong bài báo lịch sử 'New Directions in Cryptography'.",
       "keyTakeaway": "Người phát minh mã hóa khóa công khai: Whitfield Diffie và Martin Hellman."
@@ -2121,20 +2121,20 @@
     "options": [
       {
         "id": "A",
-        "text": "Có khả năng giải mã ngược",
-        "isCorrect": true
-      },
-      {
-        "id": "B",
         "text": "Tính một chiều (khó tìm đầu vào từ đầu ra)",
         "isCorrect": false,
         "distractorRationale": "Đây là đặc điểm bắt buộc của hàm băm an toàn."
       },
       {
-        "id": "C",
+        "id": "B",
         "text": "Kháng va chạm (khó tìm 2 đầu vào cho cùng một đầu ra)",
         "isCorrect": false,
         "distractorRationale": "Đây là đặc điểm bảo mật quan trọng của hàm băm."
+      },
+      {
+        "id": "C",
+        "text": "Có khả năng giải mã ngược",
+        "isCorrect": true
       },
       {
         "id": "D",
@@ -2143,7 +2143,7 @@
         "distractorRationale": "Đây là đặc tính cơ bản của hàm băm."
       }
     ],
-    "correctOptionId": "A",
+    "correctOptionId": "C",
     "explanation": {
       "correctRationale": "Hàm băm mật mã là hàm toán học một chiều (one-way). Đặc điểm 'Có khả năng giải mã ngược' là hoàn toàn sai đối với một hàm băm an toàn.",
       "keyTakeaway": "Hàm băm an toàn: KHÔNG CÓ KHẢ NĂNG giải mã ngược."
@@ -2168,14 +2168,14 @@
     "options": [
       {
         "id": "A",
-        "text": "Dễ dàng tìm đầu vào từ đầu ra",
-        "isCorrect": true
-      },
-      {
-        "id": "B",
         "text": "Tính toán giá trị băm từ đầu vào nhanh chóng",
         "isCorrect": false,
         "distractorRationale": "Đây là đặc tính ĐÚNG của hàm băm."
+      },
+      {
+        "id": "B",
+        "text": "Dễ dàng tìm đầu vào từ đầu ra",
+        "isCorrect": true
       },
       {
         "id": "C",
@@ -2190,7 +2190,7 @@
         "distractorRationale": "Đây là hiệu ứng tuyết lở (avalanche effect) ĐÚNG của hàm băm."
       }
     ],
-    "correctOptionId": "A",
+    "correctOptionId": "B",
     "explanation": {
       "correctRationale": "Hàm băm mật mã an toàn có tính chất tiền ảnh (pre-image resistance): Từ giá trị băm đầu ra, việc tính toán ngược lại để tìm đầu vào ban đầu là bất khả thi về mặt tính toán. Do đó, 'Dễ dàng tìm đầu vào từ đầu ra' là đặc điểm KHÔNG ĐÚNG.",
       "keyTakeaway": "Đặc điểm KHÔNG ĐÚNG về hàm băm: Dễ dàng tìm đầu vào từ đầu ra."
@@ -2215,29 +2215,29 @@
     "options": [
       {
         "id": "A",
-        "text": "Mã thay thế",
-        "isCorrect": true
-      },
-      {
-        "id": "B",
         "text": "Mã hoán vị",
         "isCorrect": false,
         "distractorRationale": "Mã hoán vị thay đổi thứ tự vị trí các chữ cái, trong khi Caesar thay đổi giá trị chữ cái này bằng chữ cái khác."
       },
       {
-        "id": "C",
+        "id": "B",
         "text": "Mã hóa khóa công khai hiện đại",
         "isCorrect": false,
         "distractorRationale": "Caesar là hệ mật cổ điển đối xứng sơ khai, không phải mã khóa công khai."
       },
       {
-        "id": "D",
+        "id": "C",
         "text": "Hàm băm mật mã",
         "isCorrect": false,
         "distractorRationale": "Caesar có giải mã ngược được bằng dịch lùi (-k), không phải hàm băm."
+      },
+      {
+        "id": "D",
+        "text": "Mã thay thế",
+        "isCorrect": true
       }
     ],
-    "correctOptionId": "A",
+    "correctOptionId": "D",
     "explanation": {
       "correctRationale": "Caesar cipher (mật mã Caesar) hoạt động bằng cách thay thế từng ký tự trong bản rõ bằng một ký tự khác cách nó k vị trí trong bảng chữ cái, do đó đây là ví dụ kinh điển của Mã thay thế (Substitution Cipher).",
       "keyTakeaway": "Caesar cipher là ví dụ của: Mã thay thế (Substitution cipher)."
@@ -2262,29 +2262,29 @@
     "options": [
       {
         "id": "A",
-        "text": "DES (Tiêu chuẩn mã hóa dữ liệu)",
-        "isCorrect": true
-      },
-      {
-        "id": "B",
         "text": "AES (Tiêu chuẩn mã hóa nâng cao)",
         "isCorrect": false,
         "distractorRationale": "AES được phát triển và chuẩn hóa vào năm 2001 (cuối thập niên 1990 đầu 2000), không phải 1970."
       },
       {
-        "id": "C",
+        "id": "B",
         "text": "RSA (Mã hóa khóa công khai)",
         "isCorrect": false,
         "distractorRationale": "RSA là mã hóa khóa công khai, không phải phương pháp mã hóa đối xứng."
       },
       {
-        "id": "D",
+        "id": "C",
         "text": "SHA-256 (Hàm băm)",
         "isCorrect": false,
         "distractorRationale": "SHA-256 là hàm băm ra đời vào năm 2001."
+      },
+      {
+        "id": "D",
+        "text": "DES (Tiêu chuẩn mã hóa dữ liệu)",
+        "isCorrect": true
       }
     ],
-    "correctOptionId": "A",
+    "correctOptionId": "D",
     "explanation": {
       "correctRationale": "Data Encryption Standard (DES) là phương pháp mã hóa đối xứng quan trọng bậc nhất được phát triển bởi IBM và chuẩn hóa vào thập niên 1970 bởi NBS (nay là NIST).",
       "keyTakeaway": "Mã hóa đối xứng quan trọng phát triển vào những năm 1970: DES."
@@ -2309,14 +2309,14 @@
     "options": [
       {
         "id": "A",
-        "text": "Khóa bí mật",
-        "isCorrect": true
-      },
-      {
-        "id": "B",
         "text": "Khóa công khai",
         "isCorrect": false,
         "distractorRationale": "Khóa công khai dùng để KIỂM TRA chữ ký, không dùng để tạo chữ ký."
+      },
+      {
+        "id": "B",
+        "text": "Khóa bí mật",
+        "isCorrect": true
       },
       {
         "id": "C",
@@ -2331,7 +2331,7 @@
         "distractorRationale": "Chữ ký số gắn liền với khóa bí mật định danh lâu dài của người ký."
       }
     ],
-    "correctOptionId": "A",
+    "correctOptionId": "B",
     "explanation": {
       "correctRationale": "Để tạo chữ ký số (ký lên văn bản), người gửi bắt buộc phải sử dụng Khóa bí mật (private key) của mình. Chỉ người sở hữu khóa bí mật mới ký được, đảm bảo tính xác thực người ký.",
       "keyTakeaway": "Khóa sử dụng để TẠO chữ ký số: Khóa bí mật."
@@ -2403,29 +2403,29 @@
     "options": [
       {
         "id": "A",
-        "text": "Một tổ chức cung cấp và xác minh các khóa công khai",
-        "isCorrect": true
-      },
-      {
-        "id": "B",
         "text": "Một phần mềm độc hại chuyên đánh cắp khóa bí mật",
         "isCorrect": false,
         "distractorRationale": "CA là tổ chức uy tín (Certificate Authority) cấp chứng chỉ số, không phải mã độc."
       },
       {
-        "id": "C",
+        "id": "B",
         "text": "Thiết bị phần cứng lưu trữ dây cáp mạng",
         "isCorrect": false,
         "distractorRationale": "Không phải thiết bị phần cứng hạ tầng mạng."
       },
       {
-        "id": "D",
+        "id": "C",
         "text": "Nhóm tin tặc chuyên tấn công các ngân hàng trực tuyến",
         "isCorrect": false,
         "distractorRationale": "CA là tổ chức xác thực hợp pháp trong hạ tầng PKI."
+      },
+      {
+        "id": "D",
+        "text": "Một tổ chức cung cấp và xác minh các khóa công khai",
+        "isCorrect": true
       }
     ],
-    "correctOptionId": "A",
+    "correctOptionId": "D",
     "explanation": {
       "correctRationale": "Cơ quan chứng thực (Certificate Authority - CA) là bên thứ ba đáng tin cậy chịu trách nhiệm phát hành, quản lý và xác minh tính hợp lệ của các chứng chỉ số cùng khóa công khai của người dùng và tổ chức.",
       "keyTakeaway": "CA (Cơ quan chứng thực): Một tổ chức cung cấp và xác minh các khóa công khai."
@@ -2450,20 +2450,20 @@
     "options": [
       {
         "id": "A",
-        "text": "Layered Security Model",
-        "isCorrect": true
-      },
-      {
-        "id": "B",
         "text": "Single Barrier Defense",
         "isCorrect": false,
         "distractorRationale": "Single Barrier là mô hình rào chắn đơn lập, trái ngược với bảo mật nhiều lớp."
       },
       {
-        "id": "C",
+        "id": "B",
         "text": "Open Door Access Model",
         "isCorrect": false,
         "distractorRationale": "Open Door là mô hình mở cửa tự do, không an toàn."
+      },
+      {
+        "id": "C",
+        "text": "Layered Security Model",
+        "isCorrect": true
       },
       {
         "id": "D",
@@ -2472,7 +2472,7 @@
         "distractorRationale": "Mạng phẳng (flat network) không phân vùng bảo vệ nhiều lớp."
       }
     ],
-    "correctOptionId": "A",
+    "correctOptionId": "C",
     "explanation": {
       "correctRationale": "Mô hình bảo mật nhiều lớp trong tiếng Anh được gọi là 'Layered Security Model' (hay còn gọi là Defense in Depth), thiết lập nhiều tầng rào chắn an ninh bảo vệ bổ trợ cho nhau.",
       "keyTakeaway": "Mô hình bảo mật nhiều lớp = Layered Security Model (phòng thủ chiều sâu)."
@@ -2498,14 +2498,14 @@
     "options": [
       {
         "id": "A",
-        "text": "Cấp quyền vừa đủ để thực hiện nhiệm vụ",
-        "isCorrect": true
-      },
-      {
-        "id": "B",
         "text": "Cấp quyền quản trị tối cao (Administrator) cho tất cả nhân viên",
         "isCorrect": false,
         "distractorRationale": "Vi phạm nghiêm trọng an toàn, tăng nguy cơ lộ lọt và phá hoại hệ thống."
+      },
+      {
+        "id": "B",
+        "text": "Cấp quyền vừa đủ để thực hiện nhiệm vụ",
+        "isCorrect": true
       },
       {
         "id": "C",
@@ -2520,7 +2520,7 @@
         "distractorRationale": "Không khả thi trong quản lý vận hành."
       }
     ],
-    "correctOptionId": "A",
+    "correctOptionId": "B",
     "explanation": {
       "correctRationale": "Nguyên tắc đặc quyền tối thiểu (Principle of Least Privilege): Mỗi người dùng chỉ được cấp các quyền truy cập vừa đủ và tối thiểu để hoàn thành nhiệm vụ công việc được giao, tránh dư thừa quyền hạn.",
       "keyTakeaway": "Chính sách cấp quyền tuân thủ nguyên tắc: Cấp quyền vừa đủ để thực hiện nhiệm vụ."
@@ -2592,14 +2592,14 @@
     "options": [
       {
         "id": "A",
-        "text": "Thay một giá trị bằng một giá trị khác",
-        "isCorrect": true
-      },
-      {
-        "id": "B",
         "text": "Xáo trộn thứ tự vị trí các chữ cái trong khi giữ nguyên giá trị",
         "isCorrect": false,
         "distractorRationale": "Xáo trộn vị trí là cơ chế của phương pháp hoán vị (Transposition)."
+      },
+      {
+        "id": "B",
+        "text": "Thay một giá trị bằng một giá trị khác",
+        "isCorrect": true
       },
       {
         "id": "C",
@@ -2614,7 +2614,7 @@
         "distractorRationale": "Xóa ký tự làm mất thông tin, không thể khôi phục bản rõ."
       }
     ],
-    "correctOptionId": "A",
+    "correctOptionId": "B",
     "explanation": {
       "correctRationale": "Phương pháp thay thế (Substitution) trong mật mã học hoạt động theo nguyên lý cơ bản: Thay một giá trị (chữ cái, bit, ký hiệu) bằng một giá trị khác theo một quy tắc hoặc bảng tra cứu xác định.",
       "keyTakeaway": "Phương pháp thay thế: Thay một giá trị bằng một giá trị khác."
@@ -2639,29 +2639,29 @@
     "options": [
       {
         "id": "A",
-        "text": "Thay thế từng ký tự bằng ký tự khác theo khóa cố định",
-        "isCorrect": true
-      },
-      {
-        "id": "B",
         "text": "Tính giá trị tóm lược một chiều không có khóa",
         "isCorrect": false,
         "distractorRationale": "Đây là nguyên lý của hàm băm (Hash)."
       },
       {
-        "id": "C",
+        "id": "B",
         "text": "Phát sinh cặp khóa công khai và bí mật theo thuật toán RSA",
         "isCorrect": false,
         "distractorRationale": "Caesar là mật mã dịch chuyển ký tự cổ điển, không phát sinh cặp khóa RSA."
       },
       {
-        "id": "D",
+        "id": "C",
         "text": "Hoán đổi vị trí của các dòng văn bản theo ma trận ngẫu nhiên",
         "isCorrect": false,
         "distractorRationale": "Đây là kỹ thuật hoán vị ma trận, không phải Caesar cipher."
+      },
+      {
+        "id": "D",
+        "text": "Thay thế từng ký tự bằng ký tự khác theo khóa cố định",
+        "isCorrect": true
       }
     ],
-    "correctOptionId": "A",
+    "correctOptionId": "D",
     "explanation": {
       "correctRationale": "Kỹ thuật mã hóa Caesar cipher dịch chuyển từng ký tự trong bản rõ đi một khoảng cố định k vị trí trong bảng chữ cái; tức là thực hiện việc thay thế từng ký tự bằng ký tự khác theo khóa cố định k.",
       "keyTakeaway": "Caesar cipher: Thay thế từng ký tự bằng ký tự khác theo khóa cố định (k)."
@@ -2686,29 +2686,29 @@
     "options": [
       {
         "id": "A",
-        "text": "Khóa đối xứng",
-        "isCorrect": true
-      },
-      {
-        "id": "B",
         "text": "Khóa phi đối xứng",
         "isCorrect": false,
         "distractorRationale": "Mã hóa phi đối xứng dùng cặp khóa như RSA, ECC; DES chỉ dùng 1 khóa chung."
       },
       {
-        "id": "C",
+        "id": "B",
         "text": "Hàm băm một chiều",
         "isCorrect": false,
         "distractorRationale": "DES là thuật toán mã hóa 2 chiều có giải mã, không phải hàm băm."
       },
       {
-        "id": "D",
+        "id": "C",
         "text": "Mã hóa thay thế đa bảng không khóa",
         "isCorrect": false,
         "distractorRationale": "DES là mật mã khối hiện đại có khóa đối xứng."
+      },
+      {
+        "id": "D",
+        "text": "Khóa đối xứng",
+        "isCorrect": true
       }
     ],
-    "correctOptionId": "A",
+    "correctOptionId": "D",
     "explanation": {
       "correctRationale": "DES (Data Encryption Standard) là dạng mã hóa khóa đối xứng (khóa bí mật), trong đó bên gửi và bên nhận dùng chung cùng một khóa mật cho cả quá trình mã hóa và giải mã.",
       "keyTakeaway": "DES = Dạng mã hóa khóa đối xứng."
@@ -2733,20 +2733,20 @@
     "options": [
       {
         "id": "A",
-        "text": "56 bít",
-        "isCorrect": true
-      },
-      {
-        "id": "B",
         "text": "64 bít",
         "isCorrect": false,
         "distractorRationale": "64 bit là tổng độ dài khối đầu vào của khóa, nhưng có 8 bit chẵn lẻ nên kích thước khóa thực tế có hiệu lực bảo mật chỉ là 56 bit."
       },
       {
-        "id": "C",
+        "id": "B",
         "text": "128 bít",
         "isCorrect": false,
         "distractorRationale": "128 bit là kích thước khóa tiêu chuẩn của AES, không phải DES."
+      },
+      {
+        "id": "C",
+        "text": "56 bít",
+        "isCorrect": true
       },
       {
         "id": "D",
@@ -2755,7 +2755,7 @@
         "distractorRationale": "256 bit là kích thước khóa tối đa của AES."
       }
     ],
-    "correctOptionId": "A",
+    "correctOptionId": "C",
     "explanation": {
       "correctRationale": "Khóa đầu vào danh nghĩa của DES dài 64 bít, nhưng có 8 bít (các bít ở vị trí 8, 16, 24, 32, 40, 48, 56, 64) được sử dụng để kiểm tra chẵn lẻ (parity check). Do đó, kích thước khóa thực tế có hiệu lực mật mã được sử dụng trong thuật toán DES là 56 bít.",
       "keyTakeaway": "Kích thước khóa thực tế trong DES = 56 bít."
@@ -2827,20 +2827,20 @@
     "options": [
       {
         "id": "A",
-        "text": "Kiểm tra tính toàn vẹn của dữ liệu",
-        "isCorrect": true
-      },
-      {
-        "id": "B",
         "text": "Khôi phục lại dữ liệu ban đầu khi bị virus tấn công",
         "isCorrect": false,
         "distractorRationale": "Hàm băm là hàm một chiều nén dữ liệu, không khôi phục lại văn bản gốc."
       },
       {
-        "id": "C",
+        "id": "B",
         "text": "Tự động phân phát địa chỉ IP cho thiết bị mạng",
         "isCorrect": false,
         "distractorRationale": "Đây là chức năng của giao thức mạng DHCP."
+      },
+      {
+        "id": "C",
+        "text": "Kiểm tra tính toàn vẹn của dữ liệu",
+        "isCorrect": true
       },
       {
         "id": "D",
@@ -2849,7 +2849,7 @@
         "distractorRationale": "Hàm băm không tác động đến băng thông đường truyền."
       }
     ],
-    "correctOptionId": "A",
+    "correctOptionId": "C",
     "explanation": {
       "correctRationale": "Chức năng ứng dụng chủ yếu của hàm băm trong an toàn thông tin là kiểm tra tính toàn vẹn (Integrity) của dữ liệu: so sánh mã băm trước và sau khi truyền tải để phát hiện xem dữ liệu có bị can thiệp, sai lệch hay không.",
       "keyTakeaway": "Hàm băm được sử dụng để: Kiểm tra tính toàn vẹn của dữ liệu."
@@ -2874,14 +2874,14 @@
     "options": [
       {
         "id": "A",
-        "text": "MD5, SHA-256",
-        "isCorrect": true
-      },
-      {
-        "id": "B",
         "text": "DES, AES",
         "isCorrect": false,
         "distractorRationale": "DES và AES là các giải thuật mã hóa đối xứng, không phải hàm băm."
+      },
+      {
+        "id": "B",
+        "text": "MD5, SHA-256",
+        "isCorrect": true
       },
       {
         "id": "C",
@@ -2896,7 +2896,7 @@
         "distractorRationale": "WPA2 và WPA3 là các chuẩn bảo mật mạng không dây Wi-Fi."
       }
     ],
-    "correctOptionId": "A",
+    "correctOptionId": "B",
     "explanation": {
       "correctRationale": "MD5 (Message Digest 5 - tạo đầu ra 128 bit) và SHA-256 (Secure Hash Algorithm 256 - tạo đầu ra 256 bit) là hai ví dụ điển hình và phổ biến nhất của hàm băm mật mã.",
       "keyTakeaway": "Ví dụ hàm băm phổ biến: MD5, SHA-256."
@@ -2921,14 +2921,14 @@
     "options": [
       {
         "id": "A",
-        "text": "Khóa công khai",
-        "isCorrect": true
-      },
-      {
-        "id": "B",
         "text": "Khóa đối xứng bí mật",
         "isCorrect": false,
         "distractorRationale": "Mã hóa khóa đối xứng là DES, AES; RSA là mã phi đối xứng."
+      },
+      {
+        "id": "B",
+        "text": "Khóa công khai",
+        "isCorrect": true
       },
       {
         "id": "C",
@@ -2943,7 +2943,7 @@
         "distractorRationale": "One-Time Pad là mật mã dòng hoàn hảo đối xứng, không phải RSA."
       }
     ],
-    "correctOptionId": "A",
+    "correctOptionId": "B",
     "explanation": {
       "correctRationale": "RSA là giải thuật mã hóa khóa công khai (Public Key Cryptography), sử dụng một cặp khóa: khóa công khai dùng để mã hóa và khóa bí mật dùng để giải mã.",
       "keyTakeaway": "RSA là giải thuật mã hóa: Khóa công khai."
@@ -2968,29 +2968,29 @@
     "options": [
       {
         "id": "A",
-        "text": "Không đối xứng",
-        "isCorrect": true
-      },
-      {
-        "id": "B",
         "text": "Đối xứng",
         "isCorrect": false,
         "distractorRationale": "Hệ mật mã đối xứng bắt buộc sử dụng chung một khóa cho cả mã hóa và giải mã."
       },
       {
-        "id": "C",
+        "id": "B",
         "text": "Mã hóa cổ điển đơn bảng",
         "isCorrect": false,
         "distractorRationale": "Mã hóa cổ điển đơn bảng là hệ mã đối xứng dùng chung khóa."
       },
       {
-        "id": "D",
+        "id": "C",
         "text": "Mã hóa khóa bí mật",
         "isCorrect": false,
         "distractorRationale": "Mã hóa khóa bí mật chính là tên gọi khác của hệ mã đối xứng."
+      },
+      {
+        "id": "D",
+        "text": "Không đối xứng",
+        "isCorrect": true
       }
     ],
-    "correctOptionId": "A",
+    "correctOptionId": "D",
     "explanation": {
       "correctRationale": "Trong hệ mật mã không đối xứng (còn gọi là hệ mã hóa khóa công khai hay phi đối xứng), quá trình mã hóa và giải mã sử dụng hai khóa khác nhau: một khóa công khai và một khóa bí mật.",
       "keyTakeaway": "Người gửi và người nhận sử dụng các khóa khác nhau = Hệ mật mã Không đối xứng."
@@ -3015,29 +3015,29 @@
     "options": [
       {
         "id": "A",
-        "text": "Khóa bí mật của người gửi",
-        "isCorrect": true
-      },
-      {
-        "id": "B",
         "text": "Khóa công khai của người gửi",
         "isCorrect": false,
         "distractorRationale": "Khóa công khai của người gửi để người nhận kiểm tra chữ ký, không dùng để ký."
       },
       {
-        "id": "C",
+        "id": "B",
         "text": "Khóa công khai của người nhận",
         "isCorrect": false,
         "distractorRationale": "Khóa công khai của người nhận dùng khi muốn mã hóa bảo mật thông điệp gửi cho họ, không phải để ký."
       },
       {
-        "id": "D",
+        "id": "C",
         "text": "Khóa bí mật của người nhận",
         "isCorrect": false,
         "distractorRationale": "Người gửi không thể và không được phép biết khóa bí mật của người nhận."
+      },
+      {
+        "id": "D",
+        "text": "Khóa bí mật của người gửi",
+        "isCorrect": true
       }
     ],
-    "correctOptionId": "A",
+    "correctOptionId": "D",
     "explanation": {
       "correctRationale": "Quy tắc cơ bản của chữ ký số: Để ký tài liệu, người gửi phải sử dụng Khóa bí mật của chính người gửi (chỉ duy nhất người gửi nắm giữ). Khi người nhận nhận được tài liệu, họ sẽ dùng Khóa công khai của người gửi để kiểm tra chữ ký.",
       "keyTakeaway": "Ký tài liệu trước khi gửi: Khóa bí mật của người gửi."
@@ -3062,20 +3062,20 @@
     "options": [
       {
         "id": "A",
-        "text": "27001 đưa ra yêu cầu, 27002 hướng dẫn thực hiện các biện pháp kiểm soát",
-        "isCorrect": true
-      },
-      {
-        "id": "B",
         "text": "27001 hướng dẫn thực hiện kiểm soát, 27002 đưa ra yêu cầu ISMS",
         "isCorrect": false,
         "distractorRationale": "Đảo ngược sai lệch vai trò của 2 tiêu chuẩn."
       },
       {
-        "id": "C",
+        "id": "B",
         "text": "Cả hai tiêu chuẩn hoàn toàn giống hệt nhau về nội dung và cách thức áp dụng",
         "isCorrect": false,
         "distractorRationale": "27001 là tiêu chuẩn đánh giá chứng nhận, 27002 là cẩm nang hướng dẫn thực hành."
+      },
+      {
+        "id": "C",
+        "text": "27001 đưa ra yêu cầu, 27002 hướng dẫn thực hiện các biện pháp kiểm soát",
+        "isCorrect": true
       },
       {
         "id": "D",
@@ -3084,7 +3084,7 @@
         "distractorRationale": "Cả hai tiêu chuẩn đều áp dụng chung cho mọi tổ chức, doanh nghiệp."
       }
     ],
-    "correctOptionId": "A",
+    "correctOptionId": "C",
     "explanation": {
       "correctRationale": "Mối quan hệ Yêu cầu - Hướng dẫn trong bộ ISO 27000: ISO/IEC 27001 đưa ra các yêu cầu chính thức (requirements) cho ISMS, còn ISO/IEC 27002 đóng vai trò là tài liệu hướng dẫn thực hành chi tiết cho các biện pháp kiểm soát an toàn thông tin.",
       "keyTakeaway": "Mối quan hệ: 27001 đưa ra yêu cầu, 27002 hướng dẫn thực hiện các biện pháp kiểm soát."
@@ -3109,20 +3109,20 @@
     "options": [
       {
         "id": "A",
-        "text": "Xác định ranh giới và giới hạn của ISMS trong tổ chức",
-        "isCorrect": true
-      },
-      {
-        "id": "B",
         "text": "Liệt kê danh sách tất cả số điện thoại của khách hàng",
         "isCorrect": false,
         "distractorRationale": "Đây là danh bạ dữ liệu khách hàng, không phải phạm vi ISMS."
       },
       {
-        "id": "C",
+        "id": "B",
         "text": "Cam kết không phát sinh bất kỳ chi phí đầu tư CNTT nào",
         "isCorrect": false,
         "distractorRationale": "Không liên quan đến mục đích của phạm vi ISMS."
+      },
+      {
+        "id": "C",
+        "text": "Xác định ranh giới và giới hạn của ISMS trong tổ chức",
+        "isCorrect": true
       },
       {
         "id": "D",
@@ -3131,7 +3131,7 @@
         "distractorRationale": "Thuộc chính sách tiền lương nhân sự."
       }
     ],
-    "correctOptionId": "A",
+    "correctOptionId": "C",
     "explanation": {
       "correctRationale": "Theo điều khoản 4.3 của tiêu chuẩn ISO/IEC 27001, việc xác định 'Phạm vi áp dụng' (scope) nhằm xác định rõ ràng ranh giới vật lý, tổ chức, công nghệ và các giới hạn áp dụng của ISMS trong tổ chức.",
       "keyTakeaway": "Phạm vi áp dụng (scope) của ISMS: Xác định ranh giới và giới hạn của ISMS trong tổ chức."
@@ -3156,14 +3156,14 @@
     "options": [
       {
         "id": "A",
-        "text": "Hoạch định (Planning)",
-        "isCorrect": true
-      },
-      {
-        "id": "B",
         "text": "Đánh giá kết quả hoạt động (Performance evaluation)",
         "isCorrect": false,
         "distractorRationale": "Đánh giá kết quả là điều khoản 9, trong khi đánh giá rủi ro thuộc hoạch định điều khoản 6.1."
+      },
+      {
+        "id": "B",
+        "text": "Hoạch định (Planning)",
+        "isCorrect": true
       },
       {
         "id": "C",
@@ -3178,7 +3178,7 @@
         "distractorRationale": "Hỗ trợ thuộc điều khoản 7 về năng lực, nhận thức và truyền thông."
       }
     ],
-    "correctOptionId": "A",
+    "correctOptionId": "B",
     "explanation": {
       "correctRationale": "Trong cấu trúc của tiêu chuẩn ISO/IEC 27001, điều khoản 6.1 về Đánh giá rủi ro an toàn thông tin (Information security risk assessment) nằm trong nhóm hoạt động Hoạch định (Planning).",
       "keyTakeaway": "Điều khoản Đánh giá rủi ro thông tin trong ISO/IEC 27001 thuộc: Hoạch định (Planning)."
@@ -3203,20 +3203,20 @@
     "options": [
       {
         "id": "A",
-        "text": "Liệt kê các biện pháp kiểm soát được chọn và lý do áp dụng hoặc loại trừ",
-        "isCorrect": true
-      },
-      {
-        "id": "B",
         "text": "Tính toán tiền thưởng cuối năm cho ban giám đốc công ty",
         "isCorrect": false,
         "distractorRationale": "Không liên quan đến tài liệu kiểm soát an ninh thông tin."
       },
       {
-        "id": "C",
+        "id": "B",
         "text": "Thay thế toàn bộ các hợp đồng lao động của nhân viên",
         "isCorrect": false,
         "distractorRationale": "SoA là tài liệu kỹ thuật quản trị ISMS, không phải hợp đồng nhân sự."
+      },
+      {
+        "id": "C",
+        "text": "Liệt kê các biện pháp kiểm soát được chọn và lý do áp dụng hoặc loại trừ",
+        "isCorrect": true
       },
       {
         "id": "D",
@@ -3225,7 +3225,7 @@
         "distractorRationale": "Hoàn toàn sai phạm vi chuyên môn."
       }
     ],
-    "correctOptionId": "A",
+    "correctOptionId": "C",
     "explanation": {
       "correctRationale": "Statement of Applicability (SoA - Tuyên bố áp dụng) là tài liệu trọng yếu trong ISO/IEC 27001, có mục đích liệt kê đầy đủ các biện pháp kiểm soát cần thiết được tổ chức lựa chọn cùng lý do áp dụng, trạng thái triển khai hoặc lý do loại trừ.",
       "keyTakeaway": "SoA (Statement of Applicability): Liệt kê các biện pháp kiểm soát được chọn và lý do áp dụng hoặc loại trừ."
@@ -3250,29 +3250,29 @@
     "options": [
       {
         "id": "A",
-        "text": "27005 tập trung vào quản lý rủi ro an toàn thông tin, còn 27001 đưa ra yêu cầu ISMS tổng thể",
-        "isCorrect": true
-      },
-      {
-        "id": "B",
         "text": "27001 tập trung vào quản lý rủi ro, còn 27005 đưa ra yêu cầu ISMS tổng thể",
         "isCorrect": false,
         "distractorRationale": "Đảo ngược sai bản chất tiêu chuẩn."
       },
       {
-        "id": "C",
+        "id": "B",
         "text": "27005 là thuật toán mã hóa đối xứng, còn 27001 là thuật toán hàm băm",
         "isCorrect": false,
         "distractorRationale": "Cả hai đều là tiêu chuẩn quản lý quốc tế, không phải thuật toán mật mã."
       },
       {
-        "id": "D",
+        "id": "C",
         "text": "27005 chỉ dành cho mạng không dây, còn 27001 chỉ dành cho phần cứng",
         "isCorrect": false,
         "distractorRationale": "Sai lệch hoàn toàn phạm vi áp dụng."
+      },
+      {
+        "id": "D",
+        "text": "27005 tập trung vào quản lý rủi ro an toàn thông tin, còn 27001 đưa ra yêu cầu ISMS tổng thể",
+        "isCorrect": true
       }
     ],
-    "correctOptionId": "A",
+    "correctOptionId": "D",
     "explanation": {
       "correctRationale": "ISO/IEC 27001 cung cấp các yêu cầu cốt lõi cho một Hệ thống quản lý an toàn thông tin (ISMS) tổng thể, trong khi ISO/IEC 27005 là tiêu chuẩn hướng dẫn chuyên sâu tập trung vào quy trình Quản lý rủi ro an toàn thông tin.",
       "keyTakeaway": "Khác biệt: 27005 tập trung vào quản lý rủi ro ATTT, còn 27001 đưa ra yêu cầu ISMS tổng thể."

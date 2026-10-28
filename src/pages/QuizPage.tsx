@@ -73,10 +73,16 @@ export const QuizPage: React.FC<QuizPageProps> = ({
 
       const key = e.key.toUpperCase();
       if (!isConfirmed || isExamMode) {
-        if (key === 'A' || key === '1') onAnswerQuestion(currentQuestionId, 'A');
-        if (key === 'B' || key === '2') onAnswerQuestion(currentQuestionId, 'B');
-        if (key === 'C' || key === '3') onAnswerQuestion(currentQuestionId, 'C');
-        if (key === 'D' || key === '4') onAnswerQuestion(currentQuestionId, 'D');
+        if (!currentQuestion) return;
+        let targetOptId: string | undefined;
+        if (key === 'A' || key === '1') targetOptId = currentQuestion.options[0]?.id;
+        if (key === 'B' || key === '2') targetOptId = currentQuestion.options[1]?.id;
+        if (key === 'C' || key === '3') targetOptId = currentQuestion.options[2]?.id;
+        if (key === 'D' || key === '4') targetOptId = currentQuestion.options[3]?.id;
+
+        if (targetOptId) {
+          onAnswerQuestion(currentQuestionId, targetOptId);
+        }
       }
 
       if (isConfirmed && showImmediateFeedback && (e.key === 'Enter' || e.key === ' ')) {
@@ -88,7 +94,7 @@ export const QuizPage: React.FC<QuizPageProps> = ({
         onToggleBookmark(currentQuestionId);
       }
     },
-    [currentQuestionId, isConfirmed, isExamMode, onAnswerQuestion, onNextQuestion, onToggleBookmark, showImmediateFeedback]
+    [currentQuestionId, currentQuestion, isConfirmed, isExamMode, onAnswerQuestion, onNextQuestion, onToggleBookmark, showImmediateFeedback]
   );
 
   useEffect(() => {

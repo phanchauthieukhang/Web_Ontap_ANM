@@ -63,6 +63,17 @@ describe('Quiz Engine Utilities', () => {
     expect(shuffledQ1.options[1].text).toBe('Sai');
   });
 
+  it('shuffleQuestionOptions re-indexes non-boolean questions and updates correctOptionId', () => {
+    const q2 = questionsData[1] as unknown as Question;
+    const shuffledQ2 = shuffleQuestionOptions(q2);
+    expect(shuffledQ2.options.length).toBe(4);
+    expect(shuffledQ2.options.map((o) => o.id)).toEqual(['A', 'B', 'C', 'D']);
+    const correctOpt = shuffledQ2.options.find((o) => o.isCorrect);
+    expect(correctOpt).toBeDefined();
+    expect(correctOpt?.id).toBe(shuffledQ2.correctOptionId);
+    expect(evaluateAnswer(shuffledQ2, shuffledQ2.correctOptionId)).toBe(true);
+  });
+
   it('evaluateAnswer accurately checks correctness', () => {
     const q2 = questionsData[1] as unknown as Question;
     expect(evaluateAnswer(q2, q2.correctOptionId)).toBe(true);

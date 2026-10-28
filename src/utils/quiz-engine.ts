@@ -13,16 +13,25 @@ export function shuffleArray<T>(array: T[]): T[] {
 }
 
 /**
- * Shuffle options of a single question while keeping option IDs consistent
+ * Shuffle options of a single question while re-indexing option IDs ('A', 'B', 'C', 'D')
+ * and updating correctOptionId to guarantee 100% evaluation accuracy.
  */
 export function shuffleQuestionOptions(question: Question): Question {
   // If boolean question (True/False), do not shuffle to keep standard layout (A: Đúng, B: Sai)
   if (question.answerType === 'boolean') {
     return question;
   }
+  const shuffled = shuffleArray(question.options);
+  const reindexedOptions = shuffled.map((opt, idx) => ({
+    ...opt,
+    id: String.fromCharCode(65 + idx),
+  }));
+  const correctOpt = reindexedOptions.find((o) => o.isCorrect);
+
   return {
     ...question,
-    options: shuffleArray(question.options)
+    options: reindexedOptions,
+    correctOptionId: correctOpt ? correctOpt.id : 'A',
   };
 }
 
