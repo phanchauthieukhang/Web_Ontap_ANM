@@ -123,7 +123,7 @@ export const QuizPage: React.FC<QuizPageProps> = ({
       : 'threats';
 
   return (
-    <div className="space-y-6 pb-16 max-w-4xl mx-auto">
+    <div className="space-y-6 pb-16 max-w-6xl mx-auto">
       {/* Top Session Bar */}
       <div className="flex flex-wrap items-center justify-between gap-3 rounded-3xl border border-slate-200/80 bg-white px-5 py-3.5 shadow-sm dark:border-white/10 dark:bg-[#0e0f12] transition-colors">
         <div className="flex items-center gap-3">
@@ -180,72 +180,77 @@ export const QuizPage: React.FC<QuizPageProps> = ({
         </div>
       </div>
 
-      {/* Main Question Card */}
-      <QuestionCard
-        question={currentQuestion}
-        selectedOptionId={currentAnswerRecord?.selectedOptionId}
-        isConfirmed={isConfirmed}
-        onSelectOption={(optId) => onAnswerQuestion(currentQuestionId, optId)}
-        isBookmarked={isBookmarked}
-        onToggleBookmark={() => onToggleBookmark(currentQuestionId)}
-        showImmediateFeedback={showImmediateFeedback}
-        currentIndex={session.currentIndex}
-        totalInSession={totalCount}
-      />
+      {/* Two-Column Layout: Question & Explanation (Left 8 cols) + Sticky Sidebar Navigator (Right 4 cols) */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+        {/* Main Question Area */}
+        <div className="lg:col-span-8 space-y-4">
+          <QuestionCard
+            question={currentQuestion}
+            selectedOptionId={currentAnswerRecord?.selectedOptionId}
+            isConfirmed={isConfirmed}
+            onSelectOption={(optId) => onAnswerQuestion(currentQuestionId, optId)}
+            isBookmarked={isBookmarked}
+            onToggleBookmark={() => onToggleBookmark(currentQuestionId)}
+            showImmediateFeedback={showImmediateFeedback}
+            currentIndex={session.currentIndex}
+            totalInSession={totalCount}
+          />
 
-      {/* Immediate Explanation Panel (in Practice Mode) */}
-      {showImmediateFeedback && isConfirmed && (
-        <ExplanationPanel
-          question={currentQuestion}
-          selectedOptionId={currentAnswerRecord.selectedOptionId}
-          onNextQuestion={isLastQuestion ? onFinishSession : onNextQuestion}
-          isLastQuestion={isLastQuestion}
-        />
-      )}
+          {/* Quick Previous / Next Navigation Bar */}
+          <div className="flex items-center justify-between pt-1">
+            <button
+              disabled={session.currentIndex === 0}
+              onClick={() => onSelectIndex(session.currentIndex - 1)}
+              className={`rounded-2xl border px-4 py-2 text-xs sm:text-sm font-semibold transition ${
+                session.currentIndex > 0
+                  ? 'border-slate-200/80 bg-white text-slate-700 hover:bg-slate-50 dark:border-white/10 dark:bg-[#0e0f12] dark:text-slate-200 dark:hover:bg-white/5'
+                  : 'opacity-40 cursor-not-allowed border-slate-200 dark:border-white/10 text-slate-400'
+              }`}
+            >
+              ← Câu trước
+            </button>
 
-      {/* Exam Mode Navigation Actions */}
-      {isExamMode && (
-        <div className="flex items-center justify-between pt-2">
-          <button
-            disabled={session.currentIndex === 0}
-            onClick={() => onSelectIndex(session.currentIndex - 1)}
-            className={`rounded-2xl border px-4 py-2 text-xs sm:text-sm font-semibold transition ${
-              session.currentIndex > 0
-                ? 'border-slate-200/80 bg-white text-slate-700 hover:bg-slate-50 dark:border-white/10 dark:bg-[#0e0f12] dark:text-slate-200'
-                : 'opacity-40 cursor-not-allowed border-slate-200 dark:border-white/10'
-            }`}
-          >
-            ← Câu trước
-          </button>
+            <span className="text-xs text-slate-500 dark:text-slate-400 font-mono">
+              Đã làm: <strong className="text-slate-900 dark:text-white font-bold">{answeredCount}</strong> / {totalCount} câu
+            </span>
 
-          <span className="text-xs text-slate-500 dark:text-slate-400 font-mono">
-            Đã làm: <strong className="text-slate-900 dark:text-white font-bold">{answeredCount}</strong> / {totalCount} câu
-          </span>
+            <button
+              onClick={() => {
+                if (isLastQuestion) {
+                  onFinishSession();
+                } else {
+                  onSelectIndex(session.currentIndex + 1);
+                }
+              }}
+              className="rounded-2xl bg-emerald-600 px-5 py-2 text-xs sm:text-sm font-semibold text-white shadow-sm hover:bg-emerald-500 transition"
+            >
+              {isLastQuestion ? (isExamMode ? 'Nộp bài thi' : 'Xem kết quả') : 'Câu kế tiếp →'}
+            </button>
+          </div>
 
-          <button
-            onClick={() => {
-              if (isLastQuestion) {
-                onFinishSession();
-              } else {
-                onSelectIndex(session.currentIndex + 1);
-              }
-            }}
-            className="rounded-2xl bg-emerald-600 px-5 py-2 text-xs sm:text-sm font-semibold text-white shadow-sm hover:bg-emerald-500 transition"
-          >
-            {isLastQuestion ? 'Nộp bài thi' : 'Câu kế tiếp →'}
-          </button>
+          {/* Immediate Explanation Panel (in Practice Mode) */}
+          {showImmediateFeedback && isConfirmed && (
+            <ExplanationPanel
+              question={currentQuestion}
+              selectedOptionId={currentAnswerRecord.selectedOptionId}
+              onNextQuestion={isLastQuestion ? onFinishSession : onNextQuestion}
+              isLastQuestion={isLastQuestion}
+            />
+          )}
         </div>
-      )}
 
-      {/* Fast Question Navigator Drawer / Grid */}
-      <QuestionNavigator
-        questionIds={session.questionIds}
-        currentIndex={session.currentIndex}
-        userAnswers={session.userAnswers}
-        bookmarkedIds={progressStore.bookmarkedQuestionIds}
-        onSelectIndex={onSelectIndex}
-        showImmediateFeedback={showImmediateFeedback}
-      />
+        {/* Side Question Navigator (Sticky on Desktop) */}
+        <div className="lg:col-span-4 lg:sticky lg:top-20">
+          <QuestionNavigator
+            questionIds={session.questionIds}
+            currentIndex={session.currentIndex}
+            userAnswers={session.userAnswers}
+            bookmarkedIds={progressStore.bookmarkedQuestionIds}
+            onSelectIndex={onSelectIndex}
+            showImmediateFeedback={showImmediateFeedback}
+          />
+        </div>
+      </div>
     </div>
   );
 };
