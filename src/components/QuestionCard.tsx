@@ -185,9 +185,9 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
 
       {/* =========================================================
           PART 2: FLOATING 2x2 SPATIAL OPTION MATRIX PODS
-          (Deconstructed pods so the 3D Core shines between options)
+          (Sleek inline pods — no wasted top header row)
           ========================================================= */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
         {question.options.map((option, idx) => {
           const isSelected = selectedOptionId === option.id;
           const isCorrect = option.isCorrect;
@@ -198,8 +198,8 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
           let keycapStyle =
             'bg-white/80 dark:bg-white/10 text-slate-900 dark:text-white border-slate-300/80 dark:border-white/20 shadow-[0_3px_0_rgba(148,163,184,0.5)] dark:shadow-[0_3px_0_rgba(0,0,0,0.6)]';
           let textStyle = 'text-slate-800 dark:text-slate-100 font-medium';
-          let badgeLabel = `NODE // 0${idx + 1}`;
-          let badgeClass = 'text-slate-400 dark:text-slate-400';
+          let badgeLabel = '';
+          let badgeClass = '';
 
           if (isSelected) {
             podStyle =
@@ -207,7 +207,7 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
             keycapStyle = 'bg-sky-500 text-white border-sky-300 shadow-[0_3px_0_#0369a1]';
             textStyle = 'text-slate-950 dark:text-white font-bold';
             badgeLabel = 'ĐÃ CHỌN';
-            badgeClass = 'text-sky-600 dark:text-sky-300 font-bold';
+            badgeClass = 'text-sky-600 dark:text-sky-300 bg-sky-500/15 border-sky-500/30';
           }
 
           if (showAnswerStyle) {
@@ -216,15 +216,15 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
                 'crystal-pod scanline-effect border-emerald-400 dark:border-emerald-400 ring-2 ring-emerald-500/60 shadow-xl shadow-emerald-500/20 !bg-emerald-500/20';
               keycapStyle = 'bg-emerald-500 text-slate-950 border-emerald-300 shadow-[0_3px_0_#047857]';
               textStyle = 'text-emerald-950 dark:text-white font-bold';
-              badgeLabel = 'ĐÁP ÁN ĐÚNG ✓';
-              badgeClass = 'text-emerald-600 dark:text-emerald-300 font-bold';
+              badgeLabel = 'ĐÚNG ✓';
+              badgeClass = 'text-emerald-700 dark:text-emerald-300 bg-emerald-500/15 border-emerald-500/30';
             } else if (isSelected && !isCorrect) {
               podStyle =
                 'crystal-pod border-rose-500 dark:border-rose-500 ring-2 ring-rose-500/50 shadow-xl shadow-rose-500/20 !bg-rose-500/20';
               keycapStyle = 'bg-rose-500 text-white border-rose-300 shadow-[0_3px_0_#be123c]';
               textStyle = 'text-rose-950 dark:text-rose-100 font-semibold';
-              badgeLabel = 'CHƯA ĐÚNG ✗';
-              badgeClass = 'text-rose-600 dark:text-rose-300 font-bold';
+              badgeLabel = 'SAI ✗';
+              badgeClass = 'text-rose-700 dark:text-rose-300 bg-rose-500/15 border-rose-500/30';
             } else {
               podStyle = 'crystal-pod border-slate-200/40 dark:border-white/5 opacity-40';
             }
@@ -240,44 +240,42 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
               onClick={() => onSelectOption(option.id)}
               onMouseMove={handlePodMouseMove}
               onMouseLeave={handlePodMouseLeave}
-              className={`anim-option-btn spotlight-card hud-corners group relative flex flex-col justify-between rounded-3xl border p-5 text-left transition-colors ${podStyle} ${
+              className={`anim-option-btn spotlight-card hud-corners group relative flex items-center gap-3.5 rounded-2xl border px-4 py-3.5 text-left transition-colors ${podStyle} ${
                 isPhysicallyPressed ? 'translate-y-[1px]' : ''
               } ${isConfirmed && showImmediateFeedback ? 'cursor-default' : 'cursor-pointer'}`}
             >
-              {/* Top Pod Bar: 3D Keycap + Telemetry Tag */}
-              <div className="relative z-10 flex items-center justify-between gap-2 w-full mb-3.5 pb-2.5 border-b border-slate-200/50 dark:border-white/10">
-                <div className="flex items-center gap-2.5">
-                  <div
-                    className={`flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-xl text-xs font-black font-mono border transition-colors ${keycapStyle} ${
-                      isPhysicallyPressed ? 'translate-y-[2px] shadow-none' : ''
-                    }`}
-                  >
-                    {showAnswerStyle && isCorrect ? (
-                      <Check className="h-4 w-4 stroke-[3]" />
-                    ) : showAnswerStyle && isSelected && !isCorrect ? (
-                      <X className="h-4 w-4 stroke-[3]" />
-                    ) : (
-                      optLetter
-                    )}
-                  </div>
-                  <span className="text-xs font-mono font-bold text-slate-600 dark:text-slate-300">
-                    PHƯƠNG ÁN {optLetter}
-                  </span>
-                </div>
-
-                <span className={`text-[10px] font-mono uppercase tracking-wider ${badgeClass}`}>
-                  {badgeLabel}
-                </span>
+              {/* 3D Keycap inline on the left */}
+              <div
+                className={`relative z-10 flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-xl text-xs font-black font-mono border transition-colors ${keycapStyle} ${
+                  isPhysicallyPressed ? 'translate-y-[2px] shadow-none' : ''
+                }`}
+              >
+                {showAnswerStyle && isCorrect ? (
+                  <Check className="h-4 w-4 stroke-[3]" />
+                ) : showAnswerStyle && isSelected && !isCorrect ? (
+                  <X className="h-4 w-4 stroke-[3]" />
+                ) : (
+                  optLetter
+                )}
               </div>
 
-              {/* Option Content */}
-              <div className="relative z-10 w-full flex-1">
-                <span className={`text-base sm:text-[17px] leading-relaxed block ${textStyle}`}>
-                  {option.text}
-                </span>
+              {/* Option Text & Distractor Rationale */}
+              <div className="relative z-10 flex-1 min-w-0">
+                <div className="flex items-center justify-between gap-2">
+                  <span className={`text-sm sm:text-base leading-snug block ${textStyle}`}>
+                    {option.text}
+                  </span>
+                  {badgeLabel && (
+                    <span
+                      className={`flex-shrink-0 rounded-lg border px-2 py-0.5 text-[10px] font-mono font-bold uppercase tracking-wider ${badgeClass}`}
+                    >
+                      {badgeLabel}
+                    </span>
+                  )}
+                </div>
 
                 {showAnswerStyle && !isCorrect && isSelected && option.distractorRationale && (
-                  <p className="mt-3 text-xs text-rose-700 dark:text-rose-200 font-medium bg-rose-500/15 rounded-2xl px-3.5 py-2.5 border border-rose-500/30">
+                  <p className="mt-2 text-xs text-rose-700 dark:text-rose-200 font-medium bg-rose-500/15 rounded-xl px-3 py-2 border border-rose-500/30">
                     {option.distractorRationale}
                   </p>
                 )}
