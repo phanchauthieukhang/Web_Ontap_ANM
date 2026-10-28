@@ -24,18 +24,23 @@ export const ExplanationPanel: React.FC<ExplanationPanelProps> = ({
   const isCorrect = selectedOptionId === question.correctOptionId;
   const correctOption = question.options.find((o) => o.id === question.correctOptionId);
 
-  // Smooth expanding animation with GSAP
+  // Smooth expanding animation with GSAP (explicit fromTo for React 18 StrictMode safety)
   useGSAP(
     () => {
       if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-      gsap.from(panelRef.current, {
-        y: 16,
-        opacity: 0,
-        duration: 0.35,
-        ease: 'power3.out',
-      });
+      gsap.fromTo(
+        panelRef.current,
+        { y: 12, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.3,
+          ease: 'power3.out',
+          clearProps: 'transform,opacity',
+        }
+      );
     },
-    { dependencies: [question.id], scope: panelRef }
+    { dependencies: [question.id], scope: panelRef, revertOnUpdate: true }
   );
 
   return (

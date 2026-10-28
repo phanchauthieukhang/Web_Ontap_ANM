@@ -33,26 +33,33 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
   const cardRef = useRef<HTMLDivElement>(null);
   const [activeKey, setActiveKey] = useState<string | null>(null);
 
-  // Staggered entrance animation on question change
+  // Staggered entrance animation on question change (using explicit fromTo to remain 100% safe under React 18 StrictMode)
   useGSAP(
     () => {
       if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
       const tl = gsap.timeline();
-      tl.from('.anim-question-title', {
-        y: 8,
-        opacity: 0,
-        duration: 0.28,
-        ease: 'power3.out',
-      });
-      tl.from(
-        '.anim-option-btn',
+      tl.fromTo(
+        '.anim-question-title',
+        { y: 8, opacity: 0 },
         {
-          x: -12,
-          opacity: 0,
-          duration: 0.24,
-          stagger: 0.045,
+          y: 0,
+          opacity: 1,
+          duration: 0.25,
+          ease: 'power3.out',
+          clearProps: 'transform,opacity',
+        }
+      );
+      tl.fromTo(
+        '.anim-option-btn',
+        { x: -10, opacity: 0 },
+        {
+          x: 0,
+          opacity: 1,
+          duration: 0.22,
+          stagger: 0.04,
           ease: 'power2.out',
+          clearProps: 'transform,opacity',
         },
         '-=0.15'
       );
@@ -167,7 +174,7 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
               key={option.id}
               disabled={isConfirmed && showImmediateFeedback}
               onClick={() => onSelectOption(option.id)}
-              className={`anim-option-btn group relative flex w-full items-start gap-3.5 rounded-2xl border p-4 text-left transition-all ${optionStyle} ${
+              className={`anim-option-btn group relative flex w-full items-start gap-3.5 rounded-2xl border p-4 text-left transition-colors ${optionStyle} ${
                 isPhysicallyPressed ? 'translate-y-[1px]' : ''
               } ${isConfirmed && showImmediateFeedback ? 'cursor-default' : 'cursor-pointer'}`}
             >

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo, useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Question, QuizMode, QuizSessionState, UserProgressStore } from './types/quiz';
 import questionsRaw from './data/questions.json';
 import { Header } from './components/Header';
@@ -13,7 +13,15 @@ import {
   toggleBookmark,
   resetAllProgress
 } from './utils/storage';
-import { shuffleArray, evaluateAnswer } from './utils/quiz-engine';
+import { shuffleArray, shuffleQuestionOptions, evaluateAnswer } from './utils/quiz-engine';
+
+const buildQuestionsMap = (shouldShuffleOptions: boolean): Record<number, Question> => {
+  const map: Record<number, Question> = {};
+  (questionsRaw as Question[]).forEach((q) => {
+    map[q.id] = shouldShuffleOptions ? shuffleQuestionOptions(q) : q;
+  });
+  return map;
+};
 
 export const App: React.FC = () => {
   // Theme dark/light state (Default dark mode for cybersecurity aesthetic)
@@ -36,14 +44,10 @@ export const App: React.FC = () => {
     }
   }, [darkMode]);
 
-  // Questions Database map
-  const questionsMap = useMemo<Record<number, Question>>(() => {
-    const map: Record<number, Question> = {};
-    (questionsRaw as Question[]).forEach((q) => {
-      map[q.id] = q;
-    });
-    return map;
-  }, []);
+  // Questions Database map (supports option shuffling per session in random/exam modes)
+  const [questionsMap, setQuestionsMap] = useState<Record<number, Question>>(() =>
+    buildQuestionsMap(false)
+  );
 
   // Persistent Progress Store
   const [progressStore, setProgressStore] = useState<UserProgressStore>(() => loadProgressStore());
@@ -115,6 +119,7 @@ export const App: React.FC = () => {
         isCompleted: false,
       };
 
+      setQuestionsMap(buildQuestionsMap(mode === 'random' || mode === 'exam'));
       setActiveSession(session);
       setCurrentPage('quiz');
     },
@@ -136,6 +141,7 @@ export const App: React.FC = () => {
       isCompleted: false,
     };
 
+    setQuestionsMap(buildQuestionsMap(false));
     setActiveSession(session);
     setCurrentPage('quiz');
   };

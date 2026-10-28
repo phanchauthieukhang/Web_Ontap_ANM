@@ -99,14 +99,19 @@ export const ResultPage: React.FC<ResultPageProps> = ({
         },
       });
 
-      // Animate topic progress bars
-      gsap.from('.anim-topic-bar', {
-        width: 0,
-        duration: 0.9,
-        stagger: 0.15,
-        ease: 'power2.out',
-        delay: 0.3,
-      });
+      // Animate topic progress bars safely with scaleX fromTo
+      gsap.fromTo(
+        '.anim-topic-bar',
+        { scaleX: 0, transformOrigin: 'left center' },
+        {
+          scaleX: 1,
+          duration: 0.8,
+          stagger: 0.12,
+          ease: 'power2.out',
+          delay: 0.2,
+          clearProps: 'transform',
+        }
+      );
     },
     { scope: containerRef }
   );
@@ -234,7 +239,7 @@ export const ResultPage: React.FC<ResultPageProps> = ({
                 </div>
                 <div className="h-2.5 w-full rounded-full bg-slate-100 dark:bg-slate-800 overflow-hidden">
                   <div
-                    className="anim-topic-bar h-full rounded-full bg-emerald-500 transition-all duration-700 ease-out"
+                    className="anim-topic-bar h-full rounded-full bg-emerald-500"
                     style={{ width: `${pct}%` }}
                   />
                 </div>
