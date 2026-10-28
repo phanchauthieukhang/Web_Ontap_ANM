@@ -1,14 +1,26 @@
 import React, { useState } from 'react';
 import { UserProgressStore, QuizMode } from '../types/quiz';
 import { ModeSelector } from '../components/ModeSelector';
-import { ProgressOverview } from '../components/ProgressOverview';
-import { CyberCanvas3D, TopologyType } from '../components/CyberCanvas3D';
+import { TopologyType } from '../components/CyberCanvas3D';
 import { CipherText } from '../components/CipherText';
-import { ShieldCheck, BookOpen, Sparkles, Layers } from 'lucide-react';
+import {
+  ShieldCheck,
+  BookOpen,
+  Sparkles,
+  Layers,
+  CheckCircle2,
+  AlertCircle,
+  Bookmark,
+  Activity,
+} from 'lucide-react';
 
 interface HomePageProps {
   progressStore: UserProgressStore;
-  onStartMode: (mode: QuizMode, topicId?: string, examConfig?: { questionCount: number; timeMinutes: number }) => void;
+  onStartMode: (
+    mode: QuizMode,
+    topicId?: string,
+    examConfig?: { questionCount: number; timeMinutes: number }
+  ) => void;
   onOpenLibrary: () => void;
   onOpenCommandPalette: () => void;
   activeTopology?: TopologyType;
@@ -29,92 +41,194 @@ export const HomePage: React.FC<HomePageProps> = ({
     onChangeTopology?.(topo);
   };
 
+  // Compute live telemetry metrics
+  const totalQuestions = 70;
+  const answeredIds = Object.keys(progressStore.questionStats).map(Number);
+  const totalAnswered = answeredIds.length;
+  const incorrectCount = progressStore.incorrectQuestionIds.length;
+  const bookmarkedCount = progressStore.bookmarkedQuestionIds.length;
+
+  const totalAttempts = Object.values(progressStore.questionStats).reduce(
+    (acc, curr) => acc + curr.timesAnswered,
+    0
+  );
+  const totalCorrectAttempts = Object.values(progressStore.questionStats).reduce(
+    (acc, curr) => acc + curr.timesCorrect,
+    0
+  );
+  const accuracyRate =
+    totalAttempts > 0 ? Math.round((totalCorrectAttempts / totalAttempts) * 100) : 0;
+  const completionPct = Math.round((totalAnswered / totalQuestions) * 100);
+
+  // SVG Ring calculation
+  const radius = 28;
+  const circumference = 2 * Math.PI * radius;
+  const strokeDashoffset = circumference - (completionPct / 100) * circumference;
+
   return (
-    <div className="space-y-8 pb-12">
-      {/* Hero Banner with 3D Cyber Shield Visual */}
-      <div className="relative overflow-hidden rounded-3xl border border-white/15 bg-gradient-to-br from-slate-900/90 via-[#0b0d14]/85 to-slate-950/90 backdrop-blur-2xl p-6 sm:p-10 text-white shadow-2xl">
-        <div className="relative z-10 max-w-2xl">
-          <div className="inline-flex items-center gap-2 rounded-full bg-emerald-500/10 px-3.5 py-1 text-xs font-semibold text-emerald-400 border border-emerald-500/20 mb-4 backdrop-blur-sm">
+    <div className="space-y-8 pb-16">
+      {/* Open Spatial Command Stage (No opaque box blocking the 3D Core) */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center pt-2">
+        {/* Left: Floating Hologram Identity & Topology Controller */}
+        <div className="lg:col-span-7 space-y-4">
+          <div className="inline-flex items-center gap-2 rounded-full bg-emerald-500/15 px-3.5 py-1 text-xs font-semibold text-emerald-600 dark:text-emerald-300 border border-emerald-500/30 backdrop-blur-md">
             <Sparkles className="h-3.5 w-3.5" />
-            <CipherText text="AN TOÀN THÔNG TIN // SPATIAL 3D EDITION" duration={0.4} />
+            <CipherText text="CYBERSECURITY // SPATIAL 3D COMMAND DECK" duration={0.4} />
           </div>
-          <h1 className="text-2xl sm:text-4xl font-extrabold tracking-tight text-white leading-tight">
-            Nền tảng Ôn tập Trắc nghiệm An toàn thông tin
+
+          <h1 className="text-3xl sm:text-5xl font-black tracking-tight text-slate-900 dark:text-white leading-[1.12] drop-shadow-sm">
+            Không gian Ôn tập{' '}
+            <span className="bg-gradient-to-r from-emerald-500 via-teal-400 to-sky-400 bg-clip-text text-transparent">
+              An toàn Thông tin
+            </span>
           </h1>
-          <p className="mt-3 text-sm sm:text-base text-slate-300 leading-relaxed">
-            Hệ thống hóa toàn bộ 70 câu hỏi chuẩn hóa, giải thích có căn cứ học thuật, mô phỏng mật mã tương tác 3D và 6 chế độ luyện tập thông minh.
+
+          <p className="max-w-xl text-sm sm:text-base text-slate-600 dark:text-slate-300/90 leading-relaxed">
+            Làm chủ 70 câu hỏi chuẩn hóa cùng phòng thí nghiệm mật mã tương tác 3D. Di chuột hoặc chọn cấu trúc bên dưới để biến đổi Lõi Mật Mã không gian theo thời gian thực.
           </p>
 
-          <div className="mt-6 flex flex-wrap gap-3">
+          {/* Primary Quick Launch & Topology Matrix Switcher */}
+          <div className="flex flex-wrap items-center gap-3 pt-1">
             <button
               onClick={() => onStartMode('sequential')}
-              className="flex items-center gap-2 rounded-xl bg-emerald-500 px-5 py-2.5 text-sm font-bold text-slate-950 hover:bg-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-400 transition shadow-lg shadow-emerald-500/25 hover:scale-[1.02]"
+              className="flex items-center gap-2 rounded-2xl bg-emerald-500 px-5 py-3 text-sm font-bold text-slate-950 hover:bg-emerald-400 transition shadow-lg shadow-emerald-500/25 hover:scale-[1.02]"
             >
-              <ShieldCheck className="h-4 w-4" />
-              Làm trọn vẹn 70 câu
+              <ShieldCheck className="h-4 w-4 stroke-[2.5]" />
+              Bắt đầu Chiến dịch 70 Câu
             </button>
             <button
               onClick={onOpenLibrary}
-              className="flex items-center gap-2 rounded-xl bg-white/10 hover:bg-white/15 border border-white/15 px-4 py-2.5 text-sm font-semibold text-white transition backdrop-blur-sm"
+              className="spatial-glass flex items-center gap-2 rounded-2xl border border-slate-300/80 dark:border-white/15 px-4 py-3 text-sm font-semibold text-slate-800 dark:text-white hover:border-emerald-500/50 transition"
             >
-              <BookOpen className="h-4 w-4 text-emerald-400" />
-              Tra cứu bảng so sánh
+              <BookOpen className="h-4 w-4 text-emerald-500" />
+              Bảng đối sánh & Cảnh báo
             </button>
           </div>
 
-          {/* Interactive Topology Switcher Pills */}
-          <div className="mt-6 pt-5 border-t border-white/10 flex flex-wrap items-center gap-2 text-xs">
-            <span className="text-slate-400 flex items-center gap-1 font-mono text-[11px]">
-              <Layers className="h-3.5 w-3.5 text-emerald-400" /> Cấu trúc 3D:
+          {/* Floating 3D Topology Selector Pills */}
+          <div className="flex flex-wrap items-center gap-2 pt-2">
+            <span className="text-slate-500 dark:text-slate-400 flex items-center gap-1.5 font-mono text-[11px] mr-1">
+              <Layers className="h-3.5 w-3.5 text-emerald-500" /> Lõi 3D:
             </span>
             <button
               onClick={() => handleTopologyChange('cryptography')}
-              className={`px-2.5 py-1 rounded-lg font-mono text-[11px] transition ${
+              className={`px-3 py-1 rounded-full font-mono text-[11px] backdrop-blur-md transition border ${
                 activeTopology === 'cryptography'
-                  ? 'bg-sky-500/20 text-sky-300 border border-sky-500/40'
-                  : 'text-slate-400 hover:text-white'
+                  ? 'bg-sky-500/20 text-sky-600 dark:text-sky-300 border-sky-500/50 shadow-sm shadow-sky-500/20'
+                  : 'bg-white/30 dark:bg-white/5 text-slate-500 dark:text-slate-400 border-slate-300/50 dark:border-white/10 hover:text-slate-900 dark:hover:text-white'
               }`}
             >
-              1. Khối Mật mã (Lattice)
+              01 // Khối Đa Diện Mật Mã
             </button>
             <button
               onClick={() => handleTopologyChange('governance')}
-              className={`px-2.5 py-1 rounded-lg font-mono text-[11px] transition ${
+              className={`px-3 py-1 rounded-full font-mono text-[11px] backdrop-blur-md transition border ${
                 activeTopology === 'governance'
-                  ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40'
-                  : 'text-slate-400 hover:text-white'
+                  ? 'bg-emerald-500/20 text-emerald-600 dark:text-emerald-300 border-emerald-500/50 shadow-sm shadow-emerald-500/20'
+                  : 'bg-white/30 dark:bg-white/5 text-slate-500 dark:text-slate-400 border-slate-300/50 dark:border-white/10 hover:text-slate-900 dark:hover:text-white'
               }`}
             >
-              2. Vòng Khiên ISO 27000
+              02 // Vòng Khiên ISO 27000
             </button>
             <button
               onClick={() => handleTopologyChange('threats')}
-              className={`px-2.5 py-1 rounded-lg font-mono text-[11px] transition ${
+              className={`px-3 py-1 rounded-full font-mono text-[11px] backdrop-blur-md transition border ${
                 activeTopology === 'threats'
-                  ? 'bg-amber-500/20 text-amber-300 border border-amber-500/40'
-                  : 'text-slate-400 hover:text-white'
+                  ? 'bg-amber-500/20 text-amber-600 dark:text-amber-300 border-amber-500/50 shadow-sm shadow-amber-500/20'
+                  : 'bg-white/30 dark:bg-white/5 text-slate-500 dark:text-slate-400 border-slate-300/50 dark:border-white/10 hover:text-slate-900 dark:hover:text-white'
               }`}
             >
-              3. Mạng Tô-pô Radar
+              03 // Vòm Radar Phòng Vệ
             </button>
           </div>
         </div>
 
-        {/* 3D Canvas in Hero right area */}
-        <CyberCanvas3D
-          topology={activeTopology}
-          className="absolute right-0 top-0 bottom-0 w-full sm:w-1/2 h-full opacity-75 sm:opacity-100"
-        />
+        {/* Right: Floating Holographic Telemetry HUD (Ultra-transparent so 3D Core shines through) */}
+        <div className="lg:col-span-5">
+          <div className="spatial-glass hud-corners rounded-3xl border border-slate-200/70 dark:border-white/15 p-5">
+            <div className="flex items-center justify-between pb-4 border-b border-slate-200/50 dark:border-white/10">
+              <div className="flex items-center gap-3">
+                {/* SVG Radial Mastery Ring */}
+                <div className="relative flex h-16 w-16 items-center justify-center">
+                  <svg className="h-16 w-16 -rotate-90 transform" viewBox="0 0 68 68">
+                    <circle
+                      cx="34"
+                      cy="34"
+                      r={radius}
+                      stroke="currentColor"
+                      strokeWidth="5"
+                      fill="transparent"
+                      className="text-slate-200/70 dark:text-white/10"
+                    />
+                    <circle
+                      cx="34"
+                      cy="34"
+                      r={radius}
+                      stroke="currentColor"
+                      strokeWidth="5"
+                      strokeDasharray={circumference}
+                      strokeDashoffset={strokeDashoffset}
+                      strokeLinecap="round"
+                      fill="transparent"
+                      className="text-emerald-500 transition-all duration-700"
+                    />
+                  </svg>
+                  <span className="absolute text-xs font-mono font-bold text-slate-900 dark:text-white">
+                    {completionPct}%
+                  </span>
+                </div>
+                <div>
+                  <span className="text-[11px] font-mono uppercase tracking-wider text-emerald-600 dark:text-emerald-400 font-bold block">
+                    TELEMETRY // TIẾN ĐỘ
+                  </span>
+                  <h2 className="text-base font-bold text-slate-900 dark:text-white">
+                    {totalAnswered} / {totalQuestions} câu đã chinh phục
+                  </h2>
+                  <p className="text-xs text-slate-500 dark:text-slate-400">
+                    Lưu tự động Offline trên trình duyệt
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* 3 Micro Telemetry Pills */}
+            <div className="grid grid-cols-3 gap-2.5 pt-4">
+              <div className="crystal-pod rounded-2xl border border-slate-200/60 dark:border-white/10 p-3 text-center">
+                <div className="flex items-center justify-center gap-1 text-[11px] text-sky-600 dark:text-sky-400 font-semibold">
+                  <Activity className="h-3.5 w-3.5" /> Chính xác
+                </div>
+                <div className="mt-1 text-lg font-black font-mono text-slate-900 dark:text-white">
+                  {accuracyRate}%
+                </div>
+              </div>
+
+              <div className="crystal-pod rounded-2xl border border-rose-500/20 p-3 text-center">
+                <div className="flex items-center justify-center gap-1 text-[11px] text-rose-600 dark:text-rose-400 font-semibold">
+                  <AlertCircle className="h-3.5 w-3.5" /> Câu sai
+                </div>
+                <div className="mt-1 text-lg font-black font-mono text-rose-600 dark:text-rose-400">
+                  {incorrectCount}
+                </div>
+              </div>
+
+              <div className="crystal-pod rounded-2xl border border-amber-500/20 p-3 text-center">
+                <div className="flex items-center justify-center gap-1 text-[11px] text-amber-600 dark:text-amber-400 font-semibold">
+                  <Bookmark className="h-3.5 w-3.5" /> Đã lưu
+                </div>
+                <div className="mt-1 text-lg font-black font-mono text-amber-600 dark:text-amber-400">
+                  {bookmarkedCount}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
-      {/* Progress Overview Section */}
-      <ProgressOverview progressStore={progressStore} totalQuestions={70} />
-
-      {/* Mode & Topic Selector Section */}
+      {/* Creative Tactical Command Dock & Orbital Topic Nodes */}
       <ModeSelector
         onStartMode={onStartMode}
-        incorrectCount={progressStore.incorrectQuestionIds.length}
-        bookmarkedCount={progressStore.bookmarkedQuestionIds.length}
+        incorrectCount={incorrectCount}
+        bookmarkedCount={bookmarkedCount}
         onHoverTopic={(topo) => handleTopologyChange(topo)}
       />
     </div>

@@ -130,9 +130,9 @@ export const CyberCanvas3D: React.FC<CyberCanvas3DProps> = ({
 
     const pointsMat = new THREE.PointsMaterial({
       color: 0x10b981,
-      size: isMiniOrb ? 0.35 : 0.42,
+      size: isMiniOrb ? 0.35 : 0.48,
       transparent: true,
-      opacity: isGlobalStage ? 0.78 : 0.9,
+      opacity: isGlobalStage ? 0.92 : 0.95,
     });
     const pointsMesh = new THREE.Points(pointsGeo, pointsMat);
     pointsMeshRef.current = pointsMesh;
@@ -150,21 +150,21 @@ export const CyberCanvas3D: React.FC<CyberCanvas3DProps> = ({
     linesGeo.setIndex(lineIndices);
 
     const linesMat = new THREE.LineBasicMaterial({
-      color: 0x0ea5e9,
+      color: 0x38bdf8,
       transparent: true,
-      opacity: isGlobalStage ? 0.16 : 0.24,
+      opacity: isGlobalStage ? 0.28 : 0.32,
     });
     const linesMesh = new THREE.LineSegments(linesGeo, linesMat);
     linesMeshRef.current = linesMesh;
     masterGroup.add(linesMesh);
 
     // 4. Glowing Quantum Core
-    const coreGeo = new THREE.IcosahedronGeometry(isMiniOrb ? 0.85 : 1.55, 1);
+    const coreGeo = new THREE.IcosahedronGeometry(isMiniOrb ? 0.85 : 1.75, 1);
     const coreMat = new THREE.MeshBasicMaterial({
       color: 0x10b981,
       wireframe: true,
       transparent: true,
-      opacity: isGlobalStage ? 0.25 : 0.35,
+      opacity: isGlobalStage ? 0.42 : 0.48,
     });
     const coreMesh = new THREE.Mesh(coreGeo, coreMat);
     coreMeshRef.current = coreMesh;
@@ -183,22 +183,22 @@ export const CyberCanvas3D: React.FC<CyberCanvas3DProps> = ({
     let floorGrid: THREE.GridHelper | null = null;
 
     if (!isMiniOrb) {
-      gyroGeo1 = new THREE.TorusGeometry(6.8, 0.025, 8, 90);
+      gyroGeo1 = new THREE.TorusGeometry(6.8, 0.03, 8, 90);
       gyroMat1 = new THREE.MeshBasicMaterial({
         color: 0x10b981,
         transparent: true,
-        opacity: isGlobalStage ? 0.18 : 0.28,
+        opacity: isGlobalStage ? 0.32 : 0.35,
       });
       const ring1 = new THREE.Mesh(gyroGeo1, gyroMat1);
       ring1.rotation.x = Math.PI / 2.6;
       gyroRing1Ref.current = ring1;
       masterGroup.add(ring1);
 
-      gyroGeo2 = new THREE.TorusGeometry(8.4, 0.02, 8, 90);
+      gyroGeo2 = new THREE.TorusGeometry(8.4, 0.025, 8, 90);
       gyroMat2 = new THREE.MeshBasicMaterial({
-        color: 0x0ea5e9,
+        color: 0x38bdf8,
         transparent: true,
-        opacity: isGlobalStage ? 0.12 : 0.2,
+        opacity: isGlobalStage ? 0.24 : 0.28,
       });
       const ring2 = new THREE.Mesh(gyroGeo2, gyroMat2);
       ring2.rotation.y = Math.PI / 3.2;
@@ -206,7 +206,7 @@ export const CyberCanvas3D: React.FC<CyberCanvas3DProps> = ({
       masterGroup.add(ring2);
 
       // 3D Shockwave Ring for Answer Feedback
-      shockGeo = new THREE.RingGeometry(1.8, 2.25, 64);
+      shockGeo = new THREE.RingGeometry(1.8, 2.35, 64);
       shockMat = new THREE.MeshBasicMaterial({
         color: 0x10b981,
         side: THREE.DoubleSide,
@@ -220,34 +220,34 @@ export const CyberCanvas3D: React.FC<CyberCanvas3DProps> = ({
 
     // 6. Global Spatial Stage Extras: Perspective Grid Floor & Volumetric Z-Space Particles
     if (isGlobalStage) {
-      floorGrid = new THREE.GridHelper(60, 40, 0x10b981, 0x1e293b);
-      floorGrid.position.y = -7.5;
+      floorGrid = new THREE.GridHelper(64, 42, 0x10b981, 0x0f172a);
+      floorGrid.position.y = -7.2;
       if (Array.isArray(floorGrid.material)) {
         floorGrid.material.forEach((m) => {
           m.transparent = true;
-          m.opacity = 0.14;
+          m.opacity = 0.26;
         });
       } else {
         floorGrid.material.transparent = true;
-        floorGrid.material.opacity = 0.14;
+        floorGrid.material.opacity = 0.26;
       }
       scene.add(floorGrid);
 
       // Deep Z-Space Ambient Particles
-      const PARTICLE_COUNT = 220;
+      const PARTICLE_COUNT = 260;
       const pCoords = new Float32Array(PARTICLE_COUNT * 3);
       for (let i = 0; i < PARTICLE_COUNT; i++) {
-        pCoords[i * 3] = (Math.random() - 0.5) * 44;
+        pCoords[i * 3] = (Math.random() - 0.5) * 46;
         pCoords[i * 3 + 1] = (Math.random() - 0.5) * 28;
-        pCoords[i * 3 + 2] = (Math.random() - 0.5) * 26 - 4;
+        pCoords[i * 3 + 2] = (Math.random() - 0.5) * 26 - 3;
       }
       ambientGeo = new THREE.BufferGeometry();
       ambientGeo.setAttribute('position', new THREE.BufferAttribute(pCoords, 3));
       ambientMat = new THREE.PointsMaterial({
         color: 0x38bdf8,
-        size: 0.16,
+        size: 0.2,
         transparent: true,
-        opacity: 0.35,
+        opacity: 0.52,
       });
       ambientPoints = new THREE.Points(ambientGeo, ambientMat);
       scene.add(ambientPoints);

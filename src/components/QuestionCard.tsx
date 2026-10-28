@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { Question } from '../types/quiz';
 import { CipherText } from './CipherText';
-import { Bookmark, AlertCircle, Check, X, Info } from 'lucide-react';
+import { Bookmark, AlertCircle, Check, X, Info, Sparkles } from 'lucide-react';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
 
@@ -33,7 +33,7 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
   const cardRef = useRef<HTMLDivElement>(null);
   const [activeKey, setActiveKey] = useState<string | null>(null);
 
-  // Staggered entrance animation on question change (using explicit fromTo to remain 100% safe under React 18 StrictMode)
+  // Staggered entrance animation on question change (explicit fromTo for React 18 StrictMode safety)
   useGSAP(
     () => {
       if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
@@ -41,27 +41,28 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
       const tl = gsap.timeline();
       tl.fromTo(
         '.anim-question-title',
-        { y: 8, opacity: 0 },
+        { y: 10, opacity: 0 },
         {
           y: 0,
           opacity: 1,
-          duration: 0.25,
+          duration: 0.26,
           ease: 'power3.out',
           clearProps: 'transform,opacity',
         }
       );
       tl.fromTo(
         '.anim-option-btn',
-        { x: -10, opacity: 0 },
+        { y: 14, opacity: 0, scale: 0.97 },
         {
-          x: 0,
+          y: 0,
           opacity: 1,
-          duration: 0.22,
-          stagger: 0.04,
+          scale: 1,
+          duration: 0.26,
+          stagger: 0.045,
           ease: 'power2.out',
           clearProps: 'transform,opacity',
         },
-        '-=0.15'
+        '-=0.16'
       );
     },
     { dependencies: [question.id], scope: cardRef, revertOnUpdate: true }
@@ -85,101 +86,147 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
     };
   }, []);
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+  const handleCardMouseMove = (e: React.MouseEvent<HTMLElement>) => {
     const rect = e.currentTarget.getBoundingClientRect();
     e.currentTarget.style.setProperty('--mouse-x', `${e.clientX - rect.left}px`);
     e.currentTarget.style.setProperty('--mouse-y', `${e.clientY - rect.top}px`);
   };
 
+  // Independent 3D Tilt for each Option Pod
+  const handlePodMouseMove = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const el = e.currentTarget;
+    const rect = el.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    el.style.setProperty('--mouse-x', `${x}px`);
+    el.style.setProperty('--mouse-y', `${y}px`);
+
+    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      const rotateY = ((x / rect.width) - 0.5) * 8;
+      const rotateX = (0.5 - (y / rect.height)) * 8;
+      gsap.to(el, {
+        rotateX,
+        rotateY,
+        transformPerspective: 900,
+        duration: 0.22,
+        ease: 'power2.out',
+      });
+    }
+  };
+
+  const handlePodMouseLeave = (e: React.MouseEvent<HTMLButtonElement>) => {
+    gsap.to(e.currentTarget, {
+      rotateX: 0,
+      rotateY: 0,
+      duration: 0.4,
+      ease: 'power3.out',
+    });
+  };
+
   return (
-    <div
-      ref={cardRef}
-      onMouseMove={handleMouseMove}
-      className="spatial-glass spotlight-card rounded-3xl border border-slate-200/80 p-6 sm:p-8 dark:border-white/15 transition-colors"
-    >
-      {/* Top Metadata Header */}
-      <div className="relative z-10 flex flex-wrap items-center justify-between gap-3 pb-4 border-b border-slate-200/70 dark:border-white/10">
-        <div className="flex items-center gap-2.5">
-          <span className="flex h-7 items-center justify-center rounded-lg bg-emerald-500/15 px-3 text-xs font-bold text-emerald-700 dark:bg-emerald-500/20 dark:text-emerald-300 font-mono border border-emerald-400/40 dark:border-emerald-500/40 shadow-sm shadow-emerald-500/10">
-            <CipherText text={`CÂU ${question.id}`} duration={0.3} />
-          </span>
-          <span className="text-xs font-medium text-slate-500 dark:text-slate-400 font-mono">
-            [{currentIndex + 1} / {totalInSession}]
-          </span>
-          <span className="hidden sm:inline-flex items-center rounded-lg bg-slate-100/80 dark:bg-white/5 px-2.5 py-0.5 text-[11px] font-mono text-slate-500 dark:text-slate-400 border border-slate-200/60 dark:border-white/10">
-            {question.topicName}
-          </span>
-          {question.questionPolarity === 'negative' && (
-            <span className="inline-flex items-center gap-1 rounded-lg bg-amber-100 px-2.5 py-0.5 text-xs font-bold text-amber-800 dark:bg-amber-950/80 dark:text-amber-300 border border-amber-300 dark:border-amber-800 animate-pulse">
-              <AlertCircle className="h-3 w-3" />
-              Câu hỏi phủ định
+    <div ref={cardRef} className="space-y-4">
+      {/* =========================================================
+          PART 1: FLOATING HOLOGRAM QUESTION STAGE
+          ========================================================= */}
+      <div
+        onMouseMove={handleCardMouseMove}
+        className="spatial-glass spotlight-card hud-corners rounded-3xl border border-slate-200/80 dark:border-white/15 p-6 sm:p-7 transition-colors"
+      >
+        {/* Top Metadata Telemetry Header */}
+        <div className="relative z-10 flex flex-wrap items-center justify-between gap-3 pb-4 border-b border-slate-200/60 dark:border-white/10">
+          <div className="flex flex-wrap items-center gap-2.5">
+            <span className="flex h-7 items-center justify-center rounded-lg bg-emerald-500/20 px-3 text-xs font-bold text-emerald-700 dark:text-emerald-300 font-mono border border-emerald-400/40 shadow-sm shadow-emerald-500/10">
+              <CipherText text={`CÂU ${question.id}`} duration={0.3} />
             </span>
+            <span className="text-xs font-semibold text-slate-500 dark:text-slate-300 font-mono bg-white/40 dark:bg-white/5 px-2.5 py-0.5 rounded-lg border border-slate-200/60 dark:border-white/10">
+              {currentIndex + 1} / {totalInSession}
+            </span>
+            <span className="hidden sm:inline-flex items-center gap-1 rounded-lg bg-sky-500/10 px-2.5 py-0.5 text-[11px] font-mono text-sky-700 dark:text-sky-300 border border-sky-500/25">
+              <Sparkles className="h-3 w-3" />
+              {question.conceptName}
+            </span>
+            {question.questionPolarity === 'negative' && (
+              <span className="inline-flex items-center gap-1 rounded-lg bg-amber-500/20 px-2.5 py-0.5 text-xs font-bold text-amber-800 dark:text-amber-300 border border-amber-400/50 animate-pulse">
+                <AlertCircle className="h-3.5 w-3.5" />
+                Câu hỏi phủ định
+              </span>
+            )}
+          </div>
+
+          {/* Action Controls: Bookmark */}
+          <div className="flex items-center gap-2">
+            <button
+              onClick={onToggleBookmark}
+              className={`flex items-center gap-1.5 rounded-xl px-3 py-1.5 text-xs font-semibold border transition ${
+                isBookmarked
+                  ? 'border-amber-400/70 bg-amber-500/20 text-amber-800 dark:text-amber-300 shadow-sm shadow-amber-500/15'
+                  : 'border-slate-300/70 dark:border-white/15 bg-white/40 dark:bg-white/5 text-slate-600 dark:text-slate-300 hover:border-amber-400/50'
+              }`}
+              title="Đánh dấu câu hỏi này (Shift + B)"
+            >
+              <Bookmark className={`h-3.5 w-3.5 ${isBookmarked ? 'fill-amber-400 text-amber-400' : ''}`} />
+              <span>{isBookmarked ? 'Đã lưu' : 'Lưu câu'}</span>
+            </button>
+          </div>
+        </div>
+
+        {/* Question Prompt Typography */}
+        <div className="relative z-10 pt-5 pb-1">
+          <h2 className="anim-question-title text-lg sm:text-2xl font-extrabold text-slate-900 dark:text-white leading-relaxed tracking-tight drop-shadow-sm">
+            {question.displayQuestion}
+          </h2>
+          {question.originalQuestion !== question.displayQuestion && (
+            <div className="mt-2 text-xs text-slate-500 dark:text-slate-400 italic">
+              * Nguyên văn đề gốc: "{question.originalQuestion}"
+            </div>
           )}
         </div>
-
-        {/* Action Controls: Bookmark */}
-        <div className="flex items-center gap-2">
-          <button
-            onClick={onToggleBookmark}
-            className={`flex items-center gap-1.5 rounded-xl px-3 py-1.5 text-xs font-semibold border transition ${
-              isBookmarked
-                ? 'border-amber-400/60 bg-amber-50 text-amber-700 dark:border-amber-500/50 dark:bg-amber-950/60 dark:text-amber-300 shadow-sm shadow-amber-500/10'
-                : 'border-slate-200 text-slate-500 hover:bg-slate-50 dark:border-white/10 dark:text-slate-400 dark:hover:bg-white/5'
-            }`}
-            title="Đánh dấu câu hỏi này (Shift + B)"
-          >
-            <Bookmark className={`h-3.5 w-3.5 ${isBookmarked ? 'fill-amber-500 text-amber-500' : ''}`} />
-            <span>{isBookmarked ? 'Đã lưu' : 'Lưu câu'}</span>
-          </button>
-        </div>
       </div>
 
-      {/* Question Text */}
-      <div className="relative z-10 py-6">
-        <h2 className="anim-question-title text-lg sm:text-xl font-bold text-slate-900 dark:text-white leading-relaxed tracking-tight">
-          {question.displayQuestion}
-        </h2>
-        {question.originalQuestion !== question.displayQuestion && (
-          <div className="mt-2 text-xs text-slate-400 dark:text-slate-500 italic">
-            * Nguyên văn đề gốc: "{question.originalQuestion}"
-          </div>
-        )}
-      </div>
-
-      {/* Options List with 3D Tactile Keycaps */}
-      <div className="relative z-10 space-y-3.5 pt-1">
+      {/* =========================================================
+          PART 2: FLOATING 2x2 SPATIAL OPTION MATRIX PODS
+          (Deconstructed pods so the 3D Core shines between options)
+          ========================================================= */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5">
         {question.options.map((option, idx) => {
           const isSelected = selectedOptionId === option.id;
           const isCorrect = option.isCorrect;
           const showAnswerStyle = showImmediateFeedback && isConfirmed;
 
-          let optionStyle =
-            'border-slate-200/90 hover:border-emerald-500/50 dark:border-white/10 dark:hover:border-emerald-400/50 bg-white/70 dark:bg-[#13161f]/80 hover:bg-white dark:hover:bg-[#181c28] shadow-sm';
+          let podStyle =
+            'crystal-pod border-slate-200/80 hover:border-emerald-400/60 dark:border-white/15 dark:hover:border-emerald-400/60';
           let keycapStyle =
-            'bg-slate-100 dark:bg-[#1e2230] text-slate-800 dark:text-slate-200 shadow-[0_3px_0_#cbd5e1] dark:shadow-[0_3px_0_#090b10]';
-          let textStyle = 'text-slate-800 dark:text-slate-100';
+            'bg-white/80 dark:bg-white/10 text-slate-900 dark:text-white border-slate-300/80 dark:border-white/20 shadow-[0_3px_0_rgba(148,163,184,0.5)] dark:shadow-[0_3px_0_rgba(0,0,0,0.6)]';
+          let textStyle = 'text-slate-800 dark:text-slate-100 font-medium';
+          let badgeLabel = `NODE // 0${idx + 1}`;
+          let badgeClass = 'text-slate-400 dark:text-slate-400';
 
           if (isSelected) {
-            optionStyle =
-              'border-sky-500 bg-sky-50/70 dark:bg-sky-950/35 dark:border-sky-400 ring-1 ring-sky-500/60 shadow-lg shadow-sky-500/10';
-            keycapStyle = 'bg-sky-600 text-white shadow-[0_3px_0_#0369a1]';
-            textStyle = 'text-sky-950 dark:text-sky-100 font-semibold';
+            podStyle =
+              'crystal-pod border-sky-400 dark:border-sky-400 ring-2 ring-sky-500/40 shadow-lg shadow-sky-500/15 !bg-sky-500/15';
+            keycapStyle = 'bg-sky-500 text-white border-sky-300 shadow-[0_3px_0_#0369a1]';
+            textStyle = 'text-slate-950 dark:text-white font-bold';
+            badgeLabel = 'ĐÃ CHỌN';
+            badgeClass = 'text-sky-600 dark:text-sky-300 font-bold';
           }
 
           if (showAnswerStyle) {
             if (isCorrect) {
-              optionStyle =
-                'scanline-effect border-emerald-500 bg-emerald-50/90 dark:bg-emerald-950/45 dark:border-emerald-400 ring-2 ring-emerald-500/60 shadow-lg shadow-emerald-500/15';
-              keycapStyle = 'bg-emerald-500 text-white shadow-[0_3px_0_#047857]';
-              textStyle = 'text-emerald-950 dark:text-emerald-100 font-bold';
+              podStyle =
+                'crystal-pod scanline-effect border-emerald-400 dark:border-emerald-400 ring-2 ring-emerald-500/60 shadow-xl shadow-emerald-500/20 !bg-emerald-500/20';
+              keycapStyle = 'bg-emerald-500 text-slate-950 border-emerald-300 shadow-[0_3px_0_#047857]';
+              textStyle = 'text-emerald-950 dark:text-white font-bold';
+              badgeLabel = 'ĐÁP ÁN ĐÚNG ✓';
+              badgeClass = 'text-emerald-600 dark:text-emerald-300 font-bold';
             } else if (isSelected && !isCorrect) {
-              optionStyle =
-                'border-rose-500 bg-rose-50/90 dark:bg-rose-950/45 dark:border-rose-500 ring-2 ring-rose-500/50 shadow-lg shadow-rose-500/15';
-              keycapStyle = 'bg-rose-600 text-white shadow-[0_3px_0_#be123c]';
-              textStyle = 'text-rose-950 dark:text-rose-200 font-medium';
+              podStyle =
+                'crystal-pod border-rose-500 dark:border-rose-500 ring-2 ring-rose-500/50 shadow-xl shadow-rose-500/20 !bg-rose-500/20';
+              keycapStyle = 'bg-rose-500 text-white border-rose-300 shadow-[0_3px_0_#be123c]';
+              textStyle = 'text-rose-950 dark:text-rose-100 font-semibold';
+              badgeLabel = 'CHƯA ĐÚNG ✗';
+              badgeClass = 'text-rose-600 dark:text-rose-300 font-bold';
             } else {
-              optionStyle =
-                'border-slate-200/50 dark:border-white/5 bg-slate-50/40 dark:bg-[#0d0f14]/50 opacity-55';
+              podStyle = 'crystal-pod border-slate-200/40 dark:border-white/5 opacity-40';
             }
           }
 
@@ -191,32 +238,46 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
               key={option.id}
               disabled={isConfirmed && showImmediateFeedback}
               onClick={() => onSelectOption(option.id)}
-              className={`anim-option-btn group relative flex w-full items-start gap-4 rounded-2xl border p-4 sm:p-5 text-left transition-colors ${optionStyle} ${
+              onMouseMove={handlePodMouseMove}
+              onMouseLeave={handlePodMouseLeave}
+              className={`anim-option-btn spotlight-card hud-corners group relative flex flex-col justify-between rounded-3xl border p-5 text-left transition-colors ${podStyle} ${
                 isPhysicallyPressed ? 'translate-y-[1px]' : ''
               } ${isConfirmed && showImmediateFeedback ? 'cursor-default' : 'cursor-pointer'}`}
             >
-              {/* 3D Hardware Keycap */}
-              <div
-                className={`flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-xl text-xs font-bold font-mono border border-slate-200/60 dark:border-white/15 transition-colors ${keycapStyle} ${
-                  isPhysicallyPressed ? 'translate-y-[2px] shadow-none' : ''
-                }`}
-              >
-                {showAnswerStyle && isCorrect ? (
-                  <Check className="h-4 w-4 stroke-[2.5]" />
-                ) : showAnswerStyle && isSelected && !isCorrect ? (
-                  <X className="h-4 w-4 stroke-[2.5]" />
-                ) : (
-                  optLetter
-                )}
+              {/* Top Pod Bar: 3D Keycap + Telemetry Tag */}
+              <div className="relative z-10 flex items-center justify-between gap-2 w-full mb-3.5 pb-2.5 border-b border-slate-200/50 dark:border-white/10">
+                <div className="flex items-center gap-2.5">
+                  <div
+                    className={`flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-xl text-xs font-black font-mono border transition-colors ${keycapStyle} ${
+                      isPhysicallyPressed ? 'translate-y-[2px] shadow-none' : ''
+                    }`}
+                  >
+                    {showAnswerStyle && isCorrect ? (
+                      <Check className="h-4 w-4 stroke-[3]" />
+                    ) : showAnswerStyle && isSelected && !isCorrect ? (
+                      <X className="h-4 w-4 stroke-[3]" />
+                    ) : (
+                      optLetter
+                    )}
+                  </div>
+                  <span className="text-xs font-mono font-bold text-slate-600 dark:text-slate-300">
+                    PHƯƠNG ÁN {optLetter}
+                  </span>
+                </div>
+
+                <span className={`text-[10px] font-mono uppercase tracking-wider ${badgeClass}`}>
+                  {badgeLabel}
+                </span>
               </div>
 
-              {/* Option Text */}
-              <div className="flex-1 pt-1">
+              {/* Option Content */}
+              <div className="relative z-10 w-full flex-1">
                 <span className={`text-base sm:text-[17px] leading-relaxed block ${textStyle}`}>
                   {option.text}
                 </span>
+
                 {showAnswerStyle && !isCorrect && isSelected && option.distractorRationale && (
-                  <p className="mt-2 text-xs sm:text-sm text-rose-600 dark:text-rose-300 font-medium bg-rose-500/10 rounded-xl px-3 py-2 border border-rose-500/20">
+                  <p className="mt-3 text-xs text-rose-700 dark:text-rose-200 font-medium bg-rose-500/15 rounded-2xl px-3.5 py-2.5 border border-rose-500/30">
                     {option.distractorRationale}
                   </p>
                 )}
@@ -226,22 +287,26 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
         })}
       </div>
 
-      {/* Keyboard Shortcut Hint */}
-      <div className="relative z-10 mt-6 flex flex-wrap items-center justify-between gap-2 text-xs text-slate-400 dark:text-slate-500 pt-4 border-t border-slate-200/70 dark:border-white/10">
+      {/* Subtle Floating Keyboard Hint Bar */}
+      <div className="flex flex-wrap items-center justify-between gap-2 px-2 text-xs text-slate-500 dark:text-slate-400">
         <span className="flex items-center gap-1.5">
           <Info className="h-3.5 w-3.5 text-emerald-500" />
-          Phím tắt: Bấm{' '}
-          <kbd className="px-1.5 py-0.5 rounded bg-slate-100 dark:bg-white/10 font-mono text-[10px] text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-white/10">
+          Phím tắt cơ học:{' '}
+          <kbd className="px-1.5 py-0.5 rounded bg-white/60 dark:bg-white/10 font-mono text-[10px] text-slate-700 dark:text-slate-200 border border-slate-300/60 dark:border-white/15">
             A-D
           </kbd>{' '}
           hoặc{' '}
-          <kbd className="px-1.5 py-0.5 rounded bg-slate-100 dark:bg-white/10 font-mono text-[10px] text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-white/10">
+          <kbd className="px-1.5 py-0.5 rounded bg-white/60 dark:bg-white/10 font-mono text-[10px] text-slate-700 dark:text-slate-200 border border-slate-300/60 dark:border-white/15">
             1-4
           </kbd>{' '}
-          để chọn nhanh.
+          • Nhấn{' '}
+          <kbd className="px-1.5 py-0.5 rounded bg-white/60 dark:bg-white/10 font-mono text-[10px] text-slate-700 dark:text-slate-200 border border-slate-300/60 dark:border-white/15">
+            Enter
+          </kbd>{' '}
+          qua câu kế tiếp
         </span>
-        <span className="font-mono text-[11px] text-emerald-600/80 dark:text-emerald-400/80">
-          {question.conceptName}
+        <span className="font-mono text-[11px] text-emerald-600 dark:text-emerald-400">
+          {question.topicName}
         </span>
       </div>
     </div>

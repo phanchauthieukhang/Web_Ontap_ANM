@@ -19,8 +19,8 @@ export const Header: React.FC<HeaderProps> = ({
   onGoHome,
 }) => {
   return (
-    <header className="sticky top-0 z-40 w-full border-b border-slate-200/80 bg-white/80 backdrop-blur-md dark:border-white/10 dark:bg-[#07080a]/80 transition-colors">
-      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6">
+    <header className="sticky top-0 z-40 w-full border-b border-slate-200/60 bg-white/55 backdrop-blur-md dark:border-white/10 dark:bg-[#05070d]/35 transition-colors">
+      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6">
         {/* Brand Logo & Name */}
         <button
           onClick={onGoHome}

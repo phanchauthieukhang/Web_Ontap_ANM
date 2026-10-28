@@ -48,7 +48,7 @@ export const QuestionNavigator: React.FC<QuestionNavigatorProps> = ({
   const progressPct = questionIds.length > 0 ? Math.round((answeredCount / questionIds.length) * 100) : 0;
 
   return (
-    <aside className="spatial-glass rounded-3xl border border-slate-200/80 p-4 dark:border-white/15 transition-colors">
+    <aside className="spatial-glass hud-corners rounded-3xl border border-slate-200/70 p-4 dark:border-white/15 transition-colors">
       {/* Header */}
       <div className="flex items-center justify-between pb-3 border-b border-slate-200/70 dark:border-white/10">
         <div className="flex items-center gap-1.5">

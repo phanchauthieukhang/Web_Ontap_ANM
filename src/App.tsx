@@ -284,10 +284,10 @@ export const App: React.FC = () => {
             sceneMode={currentPage}
             topology={globalTopology}
             feedbackState={globalFeedbackState}
-            className="w-full h-full opacity-45 dark:opacity-75"
+            className="w-full h-full opacity-80 dark:opacity-95"
           />
-          {/* Subtle Radial Depth Vignette */}
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_20%,rgba(241,245,249,0.75)_100%)] dark:bg-[radial-gradient(circle_at_center,transparent_15%,rgba(5,6,9,0.82)_100%)]" />
+          {/* Subtle Edge-Only Vignette (Leaves the center 3D core 100% bright & clear) */}
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_55%,rgba(241,245,249,0.45)_100%)] dark:bg-[radial-gradient(circle_at_center,transparent_55%,rgba(4,6,11,0.52)_100%)]" />
         </div>
       )}
 
