@@ -20,19 +20,26 @@
    - **Câu hỏi đánh dấu**: Lưu lại các câu hỏi quan trọng, bẫy trắc nghiệm cần xem lại.
    - **Thi thử mô phỏng**: 40 câu ngẫu nhiên trong 30 phút, đồng hồ đếm ngược, chỉ công bố đáp án và phân tích chi tiết sau khi nộp bài.
 
-3. **Thư viện Tra cứu Kiến thức Nhanh**:
-   - Tích hợp sẵn 3 bảng so sánh kinh điển (Khóa đối xứng vs PKC vs Hàm băm; PKC vs Chữ ký số; Tiêu chuẩn ISO 27001, 27002, 27005).
-   - Bảng 5 quy tắc bất biến trong phòng thi.
+3. **Thư viện Tra cứu Kiến thức Nhanh & Lệnh Tức thì (Ctrl + K)**:
+   - Tích hợp **Raycast-style Command Palette (`Ctrl + K`)**: Tra cứu toàn văn 70 câu hỏi và nhảy nhanh đến bất kỳ câu hỏi/chế độ nào.
+   - 3 bảng so sánh kinh điển (Khóa đối xứng vs PKC vs Hàm băm; PKC vs Chữ ký số; Tiêu chuẩn ISO 27001, 27002, 27005).
+   - Bảng 5 quy tắc bất biến trong phòng thi & 5 cảnh báo học thuật trọng tâm.
 
-4. **Lưu trữ Cục bộ & Bảo mật**:
+4. **"Signature Elements" — Phòng thí nghiệm Mật mã Tương tác (Interactive Crypto Labs)**:
+   - **Lab 01 (Caesar Shifter)**: Tương tác thanh trượt $k \in [0..25]$, tính toán mô-đun thời gian thực $C = (P + k) \bmod 26$ (Câu 44, 48, 56, 57).
+   - **Lab 02 (Fixed-Length Hash Pipeline)**: Mô phỏng khóa kích thước đầu ra 512-byte qua nhiều vòng băm và cảnh báo một chiều `ONE_WAY_ERROR` (Câu 14, 15, 20, 46).
+   - **Lab 03 (Asymmetric Key-Flow Simulator)**: Trực quan hóa đối kháng giữa luồng Mã hóa Bí mật (khóa công khai mã hóa) vs. Chữ ký số (khóa bí mật ký) (Câu 11-13, 21-24, 65).
+
+5. **Lưu trữ Cục bộ & Bảo mật**:
    - Hoạt động 100% Offline, không yêu cầu đăng nhập, không dùng AI API khi làm bài.
-   - Lưu tiến độ học tập, lịch sử thi và câu sai an toàn qua `localStorage` (có phiên bản Schema v1).
+   - Lưu tiến độ học tập, lịch sử thi và câu sai an toàn qua `localStorage` (phiên bản Schema v1).
 
-5. **Giao diện Anti-Slop Hiện đại**:
-   - Thiết kế chuẩn mực kết hợp giữa `taste-skill v2`, `awesome-design-md` và `web-design-guidelines`.
-   - Hỗ trợ Dark Mode / Light Mode.
-   - Mô hình 3D Cryptographic Lattice (Three.js) mượt mà, tối ưu hiệu năng.
-   - Hỗ trợ phím tắt toàn diện (`A-D`, `1-4`, `Enter`, `Space`, `Shift+B`).
+6. **Giao diện Cyber-Craft & Interactive 3D Edition**:
+   - Thiết kế kết hợp giữa `taste-skill v2`, `awesome-design-md` (Linear + Raycast) và `web-design-guidelines`.
+   - **Lõi 3D Morphing Topologies (Three.js)**: Biến hình 3 cấu trúc hình học đại diện cho 3 chủ đề (Vòng khiên đồng tâm Layered Security, Tinh thể 20 mặt Icosahedron, và Mạng radar tô-pô phân tán).
+   - **State-Reactive Feedback**: Xung năng lượng lục bảo Emerald khi trả lời đúng, Glitch shake cảnh báo khi chọn sai.
+   - **Hiệu ứng Giải mã Chữ ký GSAP (`CipherText`)**: Hiệu ứng scramble hex sống động khi chuyển câu hỏi.
+   - **3D Hardware Keycaps**: Phím bấm vật lý phản hồi chuyển động lún phím khi gõ phím thật (`A-D`, `1-4`, `Enter`, `Shift+B`).
 
 ---
 
