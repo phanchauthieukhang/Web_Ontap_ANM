@@ -7,6 +7,8 @@ import { QuizPage } from './pages/QuizPage';
 import { ResultPage } from './pages/ResultPage';
 import { KnowledgeLibraryModal } from './components/KnowledgeLibraryModal';
 import { CommandPalette } from './components/CommandPalette';
+import { CyberCanvas3D, TopologyType } from './components/CyberCanvas3D';
+import { Eye, EyeOff } from 'lucide-react';
 import {
   loadProgressStore,
   recordQuestionAttempt,
@@ -241,8 +243,54 @@ export const App: React.FC = () => {
     setCurrentPage('quiz');
   };
 
+  // Spatial 3D Stage State
+  const [enableSpatial3D, setEnableSpatial3D] = useState<boolean>(true);
+  const [homeTopology, setHomeTopology] = useState<TopologyType>('cryptography');
+
+  // Derive active 3D topology & feedback state for the full-viewport 3D stage
+  const currentQuizQuestionId =
+    activeSession && currentPage === 'quiz'
+      ? activeSession.questionIds[activeSession.currentIndex]
+      : undefined;
+  const currentQuizQuestion = currentQuizQuestionId ? questionsMap[currentQuizQuestionId] : undefined;
+  const currentAnswerRec =
+    activeSession && currentQuizQuestionId
+      ? activeSession.userAnswers[currentQuizQuestionId]
+      : undefined;
+
+  const globalTopology: TopologyType =
+    currentPage === 'quiz' && currentQuizQuestion
+      ? currentQuizQuestion.topicId === 'topic-governance-iso'
+        ? 'governance'
+        : currentQuizQuestion.topicId === 'topic-cryptography'
+        ? 'cryptography'
+        : 'threats'
+      : homeTopology;
+
+  const globalFeedbackState: 'idle' | 'correct' | 'incorrect' =
+    currentPage === 'quiz' && activeSession?.mode !== 'exam' && currentAnswerRec
+      ? currentAnswerRec.isCorrect
+        ? 'correct'
+        : 'incorrect'
+      : 'idle';
+
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900 dark:bg-[#07080a] dark:text-[#f4f4f6] flex flex-col font-sans transition-colors duration-200">
+    <div className="relative min-h-screen bg-slate-100 text-slate-900 dark:bg-[#050609] dark:text-[#f4f4f6] flex flex-col font-sans transition-colors duration-200">
+      {/* Full-Viewport Ambient Spatial 3D Stage */}
+      {enableSpatial3D && (
+        <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
+          <CyberCanvas3D
+            isGlobalStage={true}
+            sceneMode={currentPage}
+            topology={globalTopology}
+            feedbackState={globalFeedbackState}
+            className="w-full h-full opacity-45 dark:opacity-75"
+          />
+          {/* Subtle Radial Depth Vignette */}
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_20%,rgba(241,245,249,0.75)_100%)] dark:bg-[radial-gradient(circle_at_center,transparent_15%,rgba(5,6,9,0.82)_100%)]" />
+        </div>
+      )}
+
       {/* Universal Header */}
       <Header
         darkMode={darkMode}
@@ -254,13 +302,15 @@ export const App: React.FC = () => {
       />
 
       {/* Main Container Content */}
-      <main className="flex-1 max-w-6xl w-full mx-auto px-4 sm:px-6 pt-6 sm:pt-8">
+      <main className="relative z-10 flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 pt-6 sm:pt-8">
         {currentPage === 'home' && (
           <HomePage
             progressStore={progressStore}
             onStartMode={handleStartMode}
             onOpenLibrary={() => setIsLibraryOpen(true)}
             onOpenCommandPalette={() => setIsCommandPaletteOpen(true)}
+            activeTopology={homeTopology}
+            onChangeTopology={setHomeTopology}
           />
         )}
 
@@ -289,6 +339,28 @@ export const App: React.FC = () => {
         )}
       </main>
 
+      {/* Spatial 3D HUD Toggle Button (Bottom Right) */}
+      <div className="fixed bottom-4 right-4 z-30">
+        <button
+          onClick={() => setEnableSpatial3D((prev) => !prev)}
+          className="spatial-glass flex items-center gap-2 rounded-full border border-slate-200/80 dark:border-white/15 px-3.5 py-1.5 text-[11px] font-mono font-semibold text-slate-700 dark:text-slate-200 hover:border-emerald-500/60 transition shadow-lg"
+          title="Bật/Tắt Không gian 3D Toàn cảnh"
+        >
+          {enableSpatial3D ? (
+            <>
+              <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
+              <Eye className="h-3.5 w-3.5 text-emerald-400" />
+              <span>3D Spatial: ON</span>
+            </>
+          ) : (
+            <>
+              <EyeOff className="h-3.5 w-3.5 text-slate-400" />
+              <span>Focus 2D</span>
+            </>
+          )}
+        </button>
+      </div>
+
       {/* Knowledge Library Modal */}
       <KnowledgeLibraryModal
         isOpen={isLibraryOpen}
@@ -306,10 +378,10 @@ export const App: React.FC = () => {
       />
 
       {/* Footer */}
-      <footer className="border-t border-slate-200/80 dark:border-white/10 py-6 text-center text-xs text-slate-500 dark:text-slate-400 bg-white/40 dark:bg-[#07080a]/40 backdrop-blur transition-colors">
-        <div className="max-w-6xl mx-auto px-4">
+      <footer className="relative z-10 border-t border-slate-200/80 dark:border-white/10 py-6 text-center text-xs text-slate-500 dark:text-slate-400 bg-white/40 dark:bg-[#050609]/60 backdrop-blur-xl transition-colors">
+        <div className="max-w-7xl mx-auto px-4">
           <p>
-            Hệ thống Ôn tập Trắc nghiệm An toàn thông tin • 70 câu hỏi chuẩn hóa & Interactive 3D Lab.
+            Hệ thống Ôn tập Trắc nghiệm An toàn thông tin • 70 câu hỏi chuẩn hóa & Spatial 3D Lab.
           </p>
           <p className="mt-1 font-mono text-[11px] text-slate-400">
             Offline 100% • LocalStorage Schema v1.0 • Bấm <kbd className="px-1.5 py-0.5 rounded bg-slate-200 dark:bg-white/10 font-mono text-[10px] text-slate-500 dark:text-slate-300">Ctrl + K</kbd> để tìm kiếm

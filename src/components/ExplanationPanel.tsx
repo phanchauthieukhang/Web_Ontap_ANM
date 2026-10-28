@@ -46,7 +46,7 @@ export const ExplanationPanel: React.FC<ExplanationPanelProps> = ({
   return (
     <div
       ref={panelRef}
-      className="mt-4 rounded-3xl border border-slate-200/80 bg-white p-5 sm:p-7 shadow-sm dark:border-white/10 dark:bg-[#0e0f12] transition-colors"
+      className="spatial-glass mt-4 rounded-3xl border border-slate-200/80 p-5 sm:p-7 dark:border-white/15 transition-colors"
     >
       {/* Result Status Banner */}
       <div className="flex items-center justify-between pb-4 border-b border-slate-100 dark:border-white/10">

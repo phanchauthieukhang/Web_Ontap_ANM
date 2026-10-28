@@ -29,8 +29,8 @@ export const ProgressOverview: React.FC<ProgressOverviewProps> = ({
   const completionPercentage = Math.round((totalAnswered / totalQuestions) * 100);
 
   return (
-    <div className="rounded-2xl border border-slate-200/80 bg-white p-5 sm:p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-5 border-b border-slate-100 dark:border-slate-800/80">
+    <div className="spatial-glass rounded-3xl border border-slate-200/80 p-5 sm:p-6 dark:border-white/15">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-5 border-b border-slate-200/70 dark:border-white/10">
         <div>
           <h2 className="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
             <Award className="h-5 w-5 text-emerald-600 dark:text-emerald-400" />

@@ -123,25 +123,25 @@ export const QuizPage: React.FC<QuizPageProps> = ({
       : 'threats';
 
   return (
-    <div className="space-y-6 pb-16 max-w-6xl mx-auto">
+    <div className="space-y-6 pb-16 max-w-7xl mx-auto">
       {/* Top Session Bar */}
-      <div className="flex flex-wrap items-center justify-between gap-3 rounded-3xl border border-slate-200/80 bg-white px-5 py-3.5 shadow-sm dark:border-white/10 dark:bg-[#0e0f12] transition-colors">
+      <div className="spatial-glass flex flex-wrap items-center justify-between gap-3 rounded-3xl border border-slate-200/80 px-5 py-3.5 dark:border-white/15 transition-colors">
         <div className="flex items-center gap-3">
           <button
             onClick={onExitToHome}
-            className="flex items-center gap-1.5 rounded-xl border border-slate-200/80 px-3 py-1.5 text-xs font-semibold text-slate-600 hover:bg-slate-100 dark:border-white/10 dark:text-slate-300 dark:hover:bg-slate-800 transition"
+            className="flex items-center gap-1.5 rounded-xl border border-slate-200/80 px-3 py-1.5 text-xs font-semibold text-slate-600 hover:bg-slate-100 dark:border-white/15 dark:text-slate-300 dark:hover:bg-white/10 transition"
           >
             <ArrowLeft className="h-4 w-4" />
             Trang chủ
           </button>
 
           {/* Mini 3D State Orb */}
-          <div className="flex items-center gap-2 pl-1 border-l border-slate-200 dark:border-white/10">
+          <div className="flex items-center gap-2.5 pl-1 border-l border-slate-200 dark:border-white/10">
             <CyberCanvas3D
               isMiniOrb={true}
               topology={topology}
               feedbackState={feedback3DState}
-              className="h-8 w-8 rounded-full bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10"
+              className="h-8 w-8 rounded-full bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/15"
             />
             <span className="text-xs sm:text-sm font-bold text-slate-900 dark:text-white">
               {session.mode === 'sequential' && 'Tuần tự (1 → 70)'}
@@ -180,10 +180,10 @@ export const QuizPage: React.FC<QuizPageProps> = ({
         </div>
       </div>
 
-      {/* Two-Column Layout: Question & Explanation (Left 8 cols) + Sticky Sidebar Navigator (Right 4 cols) */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+      {/* Asymmetric Two-Column Layout: Expanded Question Area (1fr ~78%) + Compact Sticky Sidebar (272px-290px) */}
+      <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_272px] xl:grid-cols-[minmax(0,1fr)_290px] gap-6 items-start">
         {/* Main Question Area */}
-        <div className="lg:col-span-8 space-y-4">
+        <div className="space-y-4">
           <QuestionCard
             question={currentQuestion}
             selectedOptionId={currentAnswerRecord?.selectedOptionId}
@@ -197,13 +197,13 @@ export const QuizPage: React.FC<QuizPageProps> = ({
           />
 
           {/* Quick Previous / Next Navigation Bar */}
-          <div className="flex items-center justify-between pt-1">
+          <div className="spatial-glass flex items-center justify-between rounded-2xl border border-slate-200/80 dark:border-white/10 px-4 py-2.5">
             <button
               disabled={session.currentIndex === 0}
               onClick={() => onSelectIndex(session.currentIndex - 1)}
-              className={`rounded-2xl border px-4 py-2 text-xs sm:text-sm font-semibold transition ${
+              className={`rounded-xl border px-3.5 py-1.5 text-xs sm:text-sm font-semibold transition ${
                 session.currentIndex > 0
-                  ? 'border-slate-200/80 bg-white text-slate-700 hover:bg-slate-50 dark:border-white/10 dark:bg-[#0e0f12] dark:text-slate-200 dark:hover:bg-white/5'
+                  ? 'border-slate-200/80 bg-white/80 text-slate-700 hover:bg-slate-100 dark:border-white/15 dark:bg-white/5 dark:text-slate-200 dark:hover:bg-white/10'
                   : 'opacity-40 cursor-not-allowed border-slate-200 dark:border-white/10 text-slate-400'
               }`}
             >
@@ -222,7 +222,7 @@ export const QuizPage: React.FC<QuizPageProps> = ({
                   onSelectIndex(session.currentIndex + 1);
                 }
               }}
-              className="rounded-2xl bg-emerald-600 px-5 py-2 text-xs sm:text-sm font-semibold text-white shadow-sm hover:bg-emerald-500 transition"
+              className="rounded-xl bg-emerald-600 px-4 py-1.5 text-xs sm:text-sm font-semibold text-white shadow-md shadow-emerald-600/20 hover:bg-emerald-500 transition"
             >
               {isLastQuestion ? (isExamMode ? 'Nộp bài thi' : 'Xem kết quả') : 'Câu kế tiếp →'}
             </button>
@@ -239,8 +239,8 @@ export const QuizPage: React.FC<QuizPageProps> = ({
           )}
         </div>
 
-        {/* Side Question Navigator (Sticky on Desktop) */}
-        <div className="lg:col-span-4 lg:sticky lg:top-20">
+        {/* Compact Side Question Navigator (Sticky on Desktop) */}
+        <div className="lg:sticky lg:top-20">
           <QuestionNavigator
             questionIds={session.questionIds}
             currentIndex={session.currentIndex}

@@ -34,13 +34,35 @@ export const ModeSelector: React.FC<ModeSelectorProps> = ({
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
 
-  // Spotlight mouse effect
+  // 3D Tilt + Spotlight mouse effect
   const handleMouseMove = (e: React.MouseEvent<HTMLButtonElement>) => {
-    const rect = e.currentTarget.getBoundingClientRect();
+    const el = e.currentTarget;
+    const rect = el.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
-    e.currentTarget.style.setProperty('--mouse-x', `${x}px`);
-    e.currentTarget.style.setProperty('--mouse-y', `${y}px`);
+    el.style.setProperty('--mouse-x', `${x}px`);
+    el.style.setProperty('--mouse-y', `${y}px`);
+
+    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      const rotateY = ((x / rect.width) - 0.5) * 9;
+      const rotateX = (0.5 - (y / rect.height)) * 9;
+      gsap.to(el, {
+        rotateX,
+        rotateY,
+        transformPerspective: 950,
+        duration: 0.25,
+        ease: 'power2.out',
+      });
+    }
+  };
+
+  const handleMouseLeave = (e: React.MouseEvent<HTMLButtonElement>) => {
+    gsap.to(e.currentTarget, {
+      rotateX: 0,
+      rotateY: 0,
+      duration: 0.45,
+      ease: 'power3.out',
+    });
   };
 
   return (
@@ -55,8 +77,9 @@ export const ModeSelector: React.FC<ModeSelectorProps> = ({
           <button
             onClick={() => onStartMode('sequential')}
             onMouseMove={handleMouseMove}
+            onMouseLeave={handleMouseLeave}
             onMouseEnter={() => onHoverTopic?.('governance')}
-            className="group relative flex flex-col justify-between rounded-2xl border border-slate-200/80 bg-white p-5 text-left shadow-sm hover:border-emerald-500/80 hover:shadow-md dark:border-white/10 dark:bg-[#0e0f12] dark:hover:border-emerald-500/60 transition-all overflow-hidden"
+            className="spatial-glass spotlight-card group relative flex flex-col justify-between rounded-2xl border border-slate-200/80 p-5 text-left hover:border-emerald-500/80 dark:border-white/15 dark:hover:border-emerald-500/60 transition-colors overflow-hidden"
           >
             <div className="relative z-10">
               <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-50 text-emerald-600 dark:bg-emerald-950/60 dark:text-emerald-400 mb-3.5 group-hover:scale-105 transition-transform">
@@ -78,8 +101,9 @@ export const ModeSelector: React.FC<ModeSelectorProps> = ({
           <button
             onClick={() => onStartMode('random')}
             onMouseMove={handleMouseMove}
+            onMouseLeave={handleMouseLeave}
             onMouseEnter={() => onHoverTopic?.('cryptography')}
-            className="group relative flex flex-col justify-between rounded-2xl border border-slate-200/80 bg-white p-5 text-left shadow-sm hover:border-sky-500/80 hover:shadow-md dark:border-white/10 dark:bg-[#0e0f12] dark:hover:border-sky-500/60 transition-all overflow-hidden"
+            className="spatial-glass spotlight-card group relative flex flex-col justify-between rounded-2xl border border-slate-200/80 p-5 text-left hover:border-sky-500/80 dark:border-white/15 dark:hover:border-sky-500/60 transition-colors overflow-hidden"
           >
             <div className="relative z-10">
               <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-sky-50 text-sky-600 dark:bg-sky-950/60 dark:text-sky-400 mb-3.5 group-hover:scale-105 transition-transform">
@@ -101,12 +125,13 @@ export const ModeSelector: React.FC<ModeSelectorProps> = ({
           <button
             onClick={() => onStartMode('incorrect')}
             onMouseMove={handleMouseMove}
+            onMouseLeave={handleMouseLeave}
             onMouseEnter={() => onHoverTopic?.('threats')}
             disabled={incorrectCount === 0}
-            className={`group relative flex flex-col justify-between rounded-2xl border p-5 text-left shadow-sm transition-all overflow-hidden ${
+            className={`spatial-glass spotlight-card group relative flex flex-col justify-between rounded-2xl border p-5 text-left transition-colors overflow-hidden ${
               incorrectCount > 0
-                ? 'border-rose-200/80 bg-white hover:border-rose-500 hover:shadow-md dark:border-rose-950/60 dark:bg-[#0e0f12] dark:hover:border-rose-500/60'
-                : 'border-slate-200/60 bg-slate-50/50 opacity-60 cursor-not-allowed dark:border-white/5 dark:bg-[#0e0f12]/40'
+                ? 'border-rose-200/80 hover:border-rose-500 dark:border-rose-950/60 dark:hover:border-rose-500/60'
+                : 'border-slate-200/60 opacity-60 cursor-not-allowed dark:border-white/5'
             }`}
           >
             <div className="relative z-10">
@@ -135,11 +160,12 @@ export const ModeSelector: React.FC<ModeSelectorProps> = ({
           <button
             onClick={() => onStartMode('bookmarked')}
             onMouseMove={handleMouseMove}
+            onMouseLeave={handleMouseLeave}
             disabled={bookmarkedCount === 0}
-            className={`group relative flex flex-col justify-between rounded-2xl border p-5 text-left shadow-sm transition-all overflow-hidden ${
+            className={`spatial-glass spotlight-card group relative flex flex-col justify-between rounded-2xl border p-5 text-left transition-colors overflow-hidden ${
               bookmarkedCount > 0
-                ? 'border-amber-200/80 bg-white hover:border-amber-500 hover:shadow-md dark:border-amber-950/60 dark:bg-[#0e0f12] dark:hover:border-amber-500/60'
-                : 'border-slate-200/60 bg-slate-50/50 opacity-60 cursor-not-allowed dark:border-white/5 dark:bg-[#0e0f12]/40'
+                ? 'border-amber-200/80 hover:border-amber-500 dark:border-amber-950/60 dark:hover:border-amber-500/60'
+                : 'border-slate-200/60 opacity-60 cursor-not-allowed dark:border-white/5'
             }`}
           >
             <div className="relative z-10">
@@ -168,7 +194,8 @@ export const ModeSelector: React.FC<ModeSelectorProps> = ({
           <button
             onClick={() => onStartMode('exam', undefined, { questionCount: 40, timeMinutes: 30 })}
             onMouseMove={handleMouseMove}
-            className="group relative flex flex-col justify-between rounded-2xl border border-purple-200/80 bg-white p-5 text-left shadow-sm hover:border-purple-500 hover:shadow-md dark:border-purple-950/60 dark:bg-[#0e0f12] dark:hover:border-purple-500/60 transition-all sm:col-span-2 lg:col-span-2 overflow-hidden"
+            onMouseLeave={handleMouseLeave}
+            className="spatial-glass spotlight-card group relative flex flex-col justify-between rounded-2xl border border-purple-200/80 p-5 text-left hover:border-purple-500 dark:border-purple-950/60 dark:hover:border-purple-500/60 transition-colors sm:col-span-2 lg:col-span-2 overflow-hidden"
           >
             <div className="relative z-10">
               <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-purple-50 text-purple-600 dark:bg-purple-950/60 dark:text-purple-400 mb-3.5 group-hover:scale-105 transition-transform">
@@ -220,8 +247,9 @@ export const ModeSelector: React.FC<ModeSelectorProps> = ({
                 key={topic.id}
                 onClick={() => onStartMode('topic', topic.id)}
                 onMouseMove={handleMouseMove}
+                onMouseLeave={handleMouseLeave}
                 onMouseEnter={() => onHoverTopic?.(topoType)}
-                className="group relative flex flex-col justify-between rounded-2xl border border-slate-200/80 bg-white p-5 text-left shadow-sm hover:border-emerald-500 hover:shadow-md dark:border-white/10 dark:bg-[#0e0f12] dark:hover:border-emerald-500/60 transition-all overflow-hidden"
+                className="spatial-glass spotlight-card group relative flex flex-col justify-between rounded-2xl border border-slate-200/80 p-5 text-left hover:border-emerald-500 dark:border-white/15 dark:hover:border-emerald-500/60 transition-colors overflow-hidden"
               >
                 <div className="relative z-10">
                   <div className="flex items-center justify-between mb-3.5">
