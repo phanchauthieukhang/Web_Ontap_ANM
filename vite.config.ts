@@ -10,5 +10,14 @@ export default defineConfig({
   build: {
     outDir: 'dist',
     sourcemap: true,
-  }
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          vendor_three: ['three'],
+          vendor_gsap: ['gsap', '@gsap/react'],
+          vendor_react: ['react', 'react-dom'],
+        },
+      },
+    },
+  },
 });

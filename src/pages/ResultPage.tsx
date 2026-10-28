@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { QuizSessionState, Question } from '../types/quiz';
+import { TOPICS } from '../data/topics';
 import {
   Award,
   CheckCircle2,
@@ -9,9 +10,14 @@ import {
   Home,
   AlertTriangle,
   ChevronDown,
-  ChevronUp
+  ChevronUp,
+  BarChart3
 } from 'lucide-react';
 import { formatDuration } from '../utils/quiz-engine';
+import gsap from 'gsap';
+import { useGSAP } from '@gsap/react';
+
+gsap.registerPlugin(useGSAP);
 
 interface ResultPageProps {
   session: QuizSessionState;
@@ -28,6 +34,8 @@ export const ResultPage: React.FC<ResultPageProps> = ({
   onRestartSameMode,
   onGoHome,
 }) => {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const scoreCounterRef = useRef<HTMLSpanElement>(null);
   const [filterType, setFilterType] = useState<'all' | 'incorrect' | 'correct'>('all');
   const [expandedQuestionId, setExpandedQuestionId] = useState<number | null>(null);
 
@@ -38,24 +46,70 @@ export const ResultPage: React.FC<ResultPageProps> = ({
   let incorrectCount = 0;
   const incorrectIds: number[] = [];
 
+  // Topic mastery stats
+  const topicStats: Record<string, { total: number; correct: number }> = {
+    'topic-governance-iso': { total: 0, correct: 0 },
+    'topic-cryptography': { total: 0, correct: 0 },
+    'topic-threats-defense': { total: 0, correct: 0 },
+  };
+
   session.questionIds.forEach((qId) => {
+    const question = questionsMap[qId];
+    if (question && topicStats[question.topicId]) {
+      topicStats[question.topicId].total++;
+    }
+
     const record = session.userAnswers[qId];
     if (record) {
       if (record.isCorrect) {
         correctCount++;
+        if (question && topicStats[question.topicId]) {
+          topicStats[question.topicId].correct++;
+        }
       } else {
         incorrectCount++;
         incorrectIds.push(qId);
       }
     } else {
-      // Unanswered counts as incorrect in final tally
       incorrectCount++;
       incorrectIds.push(qId);
     }
   });
 
-  const percentage = Math.round((correctCount / total) * 100);
-  const isPassed = percentage >= 70; // 70% threshold
+  const targetPercentage = Math.round((correctCount / total) * 100);
+  const isPassed = targetPercentage >= 70;
+
+  // Animated Score Counter with GSAP
+  useGSAP(
+    () => {
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        if (scoreCounterRef.current) scoreCounterRef.current.innerText = `${targetPercentage}%`;
+        return;
+      }
+
+      const counter = { val: 0 };
+      gsap.to(counter, {
+        val: targetPercentage,
+        duration: 1.2,
+        ease: 'power3.out',
+        onUpdate: () => {
+          if (scoreCounterRef.current) {
+            scoreCounterRef.current.innerText = `${Math.floor(counter.val)}%`;
+          }
+        },
+      });
+
+      // Animate topic progress bars
+      gsap.from('.anim-topic-bar', {
+        width: 0,
+        duration: 0.9,
+        stagger: 0.15,
+        ease: 'power2.out',
+        delay: 0.3,
+      });
+    },
+    { scope: containerRef }
+  );
 
   const displayedQuestionIds = session.questionIds.filter((qId) => {
     const record = session.userAnswers[qId];
@@ -66,9 +120,9 @@ export const ResultPage: React.FC<ResultPageProps> = ({
   });
 
   return (
-    <div className="space-y-8 pb-16 max-w-4xl mx-auto">
+    <div ref={containerRef} className="space-y-8 pb-16 max-w-4xl mx-auto">
       {/* Result Score Banner */}
-      <div className="rounded-3xl border border-slate-200 bg-white p-6 sm:p-10 shadow-sm dark:border-slate-800 dark:bg-slate-900 text-center transition-colors">
+      <div className="rounded-3xl border border-slate-200/80 bg-white p-6 sm:p-10 shadow-sm dark:border-white/10 dark:bg-[#0e0f12] text-center transition-colors">
         <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-emerald-100 text-emerald-600 dark:bg-emerald-950 dark:text-emerald-400 mb-4 shadow-sm">
           <Award className="h-8 w-8" />
         </div>
@@ -83,12 +137,15 @@ export const ResultPage: React.FC<ResultPageProps> = ({
         </p>
 
         {/* Big Score Display */}
-        <div className="mt-6 flex items-center justify-center gap-3">
-          <span className="text-5xl sm:text-6xl font-black font-mono tracking-tight text-emerald-600 dark:text-emerald-400">
-            {percentage}%
+        <div className="mt-6 flex items-center justify-center gap-4">
+          <span
+            ref={scoreCounterRef}
+            className="text-5xl sm:text-6xl font-black font-mono tracking-tight text-emerald-600 dark:text-emerald-400"
+          >
+            0%
           </span>
-          <div className="text-left border-l border-slate-200 dark:border-slate-800 pl-3">
-            <span className="text-lg font-bold text-slate-900 dark:text-white block font-mono">
+          <div className="text-left border-l border-slate-200 dark:border-white/10 pl-4">
+            <span className="text-xl font-bold text-slate-900 dark:text-white block font-mono">
               {correctCount} / {total}
             </span>
             <span className="text-xs text-slate-400 font-medium">câu trả lời đúng</span>
@@ -97,7 +154,7 @@ export const ResultPage: React.FC<ResultPageProps> = ({
 
         {/* Summary Metric Chips */}
         <div className="mt-8 grid grid-cols-3 gap-3 max-w-lg mx-auto">
-          <div className="rounded-xl bg-emerald-50/70 p-3 text-center dark:bg-emerald-950/30 border border-emerald-100 dark:border-emerald-900/40">
+          <div className="rounded-2xl bg-emerald-50/70 p-3.5 text-center dark:bg-emerald-950/30 border border-emerald-100 dark:border-emerald-900/40">
             <div className="flex items-center justify-center gap-1 text-emerald-700 dark:text-emerald-400 text-xs font-semibold">
               <CheckCircle2 className="h-3.5 w-3.5" /> Đúng
             </div>
@@ -106,7 +163,7 @@ export const ResultPage: React.FC<ResultPageProps> = ({
             </div>
           </div>
 
-          <div className="rounded-xl bg-rose-50/70 p-3 text-center dark:bg-rose-950/30 border border-rose-100 dark:border-rose-900/40">
+          <div className="rounded-2xl bg-rose-50/70 p-3.5 text-center dark:bg-rose-950/30 border border-rose-100 dark:border-rose-900/40">
             <div className="flex items-center justify-center gap-1 text-rose-700 dark:text-rose-400 text-xs font-semibold">
               <XCircle className="h-3.5 w-3.5" /> Sai / Bỏ qua
             </div>
@@ -115,7 +172,7 @@ export const ResultPage: React.FC<ResultPageProps> = ({
             </div>
           </div>
 
-          <div className="rounded-xl bg-slate-100/70 p-3 text-center dark:bg-slate-800/50 border border-slate-200 dark:border-slate-800">
+          <div className="rounded-2xl bg-slate-100/70 p-3.5 text-center dark:bg-[#121316] border border-slate-200/80 dark:border-white/10">
             <div className="flex items-center justify-center gap-1 text-slate-700 dark:text-slate-300 text-xs font-semibold">
               <Clock className="h-3.5 w-3.5" /> Thời gian
             </div>
@@ -130,7 +187,7 @@ export const ResultPage: React.FC<ResultPageProps> = ({
           {incorrectCount > 0 && (
             <button
               onClick={() => onRetryIncorrect(incorrectIds)}
-              className="flex items-center gap-2 rounded-xl bg-rose-600 px-5 py-2.5 text-xs sm:text-sm font-bold text-white shadow-sm hover:bg-rose-700 transition"
+              className="flex items-center gap-2 rounded-2xl bg-rose-600 px-5 py-2.5 text-xs sm:text-sm font-bold text-white shadow-lg shadow-rose-600/20 hover:bg-rose-500 transition"
             >
               <AlertTriangle className="h-4 w-4" />
               Luyện lại {incorrectCount} câu làm sai
@@ -139,7 +196,7 @@ export const ResultPage: React.FC<ResultPageProps> = ({
 
           <button
             onClick={onRestartSameMode}
-            className="flex items-center gap-2 rounded-xl bg-slate-900 px-4 py-2.5 text-xs sm:text-sm font-semibold text-white shadow-sm hover:bg-slate-800 dark:bg-emerald-600 dark:hover:bg-emerald-500 transition"
+            className="flex items-center gap-2 rounded-2xl bg-slate-900 px-4 py-2.5 text-xs sm:text-sm font-semibold text-white shadow-sm hover:bg-slate-800 dark:bg-emerald-600 dark:hover:bg-emerald-500 transition"
           >
             <RotateCcw className="h-4 w-4" />
             Làm lại lượt mới
@@ -147,7 +204,7 @@ export const ResultPage: React.FC<ResultPageProps> = ({
 
           <button
             onClick={onGoHome}
-            className="flex items-center gap-2 rounded-xl border border-slate-200 px-4 py-2.5 text-xs sm:text-sm font-semibold text-slate-700 hover:bg-slate-50 dark:border-slate-700 dark:text-slate-200 dark:hover:bg-slate-800 transition"
+            className="flex items-center gap-2 rounded-2xl border border-slate-200/80 px-4 py-2.5 text-xs sm:text-sm font-semibold text-slate-700 hover:bg-slate-50 dark:border-white/10 dark:text-slate-200 dark:hover:bg-slate-800 transition"
           >
             <Home className="h-4 w-4" />
             Về trang chủ
@@ -155,19 +212,51 @@ export const ResultPage: React.FC<ResultPageProps> = ({
         </div>
       </div>
 
+      {/* Topic Mastery Radar Breakdown */}
+      <div className="rounded-3xl border border-slate-200/80 bg-white p-5 sm:p-7 shadow-sm dark:border-white/10 dark:bg-[#0e0f12] transition-colors">
+        <h2 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2 mb-4">
+          <BarChart3 className="h-5 w-5 text-emerald-600 dark:text-emerald-400" />
+          Phân tích Năng lực theo 3 Nhóm Chủ đề
+        </h2>
+
+        <div className="space-y-4">
+          {TOPICS.map((topic) => {
+            const stat = topicStats[topic.id] || { total: 0, correct: 0 };
+            const pct = stat.total > 0 ? Math.round((stat.correct / stat.total) * 100) : 0;
+
+            return (
+              <div key={topic.id} className="space-y-1.5">
+                <div className="flex items-center justify-between text-xs sm:text-sm font-medium">
+                  <span className="text-slate-800 dark:text-slate-200 font-semibold">{topic.title}</span>
+                  <span className="font-mono text-slate-500 dark:text-slate-400">
+                    {stat.correct}/{stat.total} câu ({pct}%)
+                  </span>
+                </div>
+                <div className="h-2.5 w-full rounded-full bg-slate-100 dark:bg-slate-800 overflow-hidden">
+                  <div
+                    className="anim-topic-bar h-full rounded-full bg-emerald-500 transition-all duration-700 ease-out"
+                    style={{ width: `${pct}%` }}
+                  />
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
       {/* Review List & Filter Tabs */}
-      <div className="rounded-2xl border border-slate-200 bg-white p-5 sm:p-7 shadow-sm dark:border-slate-800 dark:bg-slate-900 transition-colors">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-5 border-b border-slate-100 dark:border-slate-800">
+      <div className="rounded-3xl border border-slate-200/80 bg-white p-5 sm:p-7 shadow-sm dark:border-white/10 dark:bg-[#0e0f12] transition-colors">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-5 border-b border-slate-100 dark:border-white/10">
           <h2 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white">
             Chi tiết các câu hỏi trong phiên
           </h2>
 
-          <div className="flex items-center gap-1.5 bg-slate-100 p-1 rounded-xl dark:bg-slate-800">
+          <div className="flex items-center gap-1.5 bg-slate-100/80 p-1 rounded-2xl dark:bg-[#121316]">
             <button
               onClick={() => setFilterType('all')}
-              className={`px-3 py-1 text-xs font-semibold rounded-lg transition ${
+              className={`px-3 py-1.5 text-xs font-semibold rounded-xl transition ${
                 filterType === 'all'
-                  ? 'bg-white text-slate-900 shadow-sm dark:bg-slate-900 dark:text-white'
+                  ? 'bg-white text-slate-900 shadow-sm dark:bg-[#1e2025] dark:text-white'
                   : 'text-slate-500 dark:text-slate-400'
               }`}
             >
@@ -175,9 +264,9 @@ export const ResultPage: React.FC<ResultPageProps> = ({
             </button>
             <button
               onClick={() => setFilterType('incorrect')}
-              className={`px-3 py-1 text-xs font-semibold rounded-lg transition ${
+              className={`px-3 py-1.5 text-xs font-semibold rounded-xl transition ${
                 filterType === 'incorrect'
-                  ? 'bg-white text-rose-600 shadow-sm dark:bg-slate-900 dark:text-rose-400'
+                  ? 'bg-white text-rose-600 shadow-sm dark:bg-[#1e2025] dark:text-rose-400'
                   : 'text-slate-500 dark:text-slate-400'
               }`}
             >
@@ -185,9 +274,9 @@ export const ResultPage: React.FC<ResultPageProps> = ({
             </button>
             <button
               onClick={() => setFilterType('correct')}
-              className={`px-3 py-1 text-xs font-semibold rounded-lg transition ${
+              className={`px-3 py-1.5 text-xs font-semibold rounded-xl transition ${
                 filterType === 'correct'
-                  ? 'bg-white text-emerald-600 shadow-sm dark:bg-slate-900 dark:text-emerald-400'
+                  ? 'bg-white text-emerald-600 shadow-sm dark:bg-[#1e2025] dark:text-emerald-400'
                   : 'text-slate-500 dark:text-slate-400'
               }`}
             >
@@ -211,9 +300,9 @@ export const ResultPage: React.FC<ResultPageProps> = ({
             return (
               <div
                 key={qId}
-                className={`rounded-xl border transition-all ${
+                className={`rounded-2xl border transition-all ${
                   isCorrect
-                    ? 'border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900'
+                    ? 'border-slate-200/80 dark:border-white/10 bg-white dark:bg-[#0e0f12]'
                     : 'border-rose-200 dark:border-rose-950/60 bg-rose-50/20 dark:bg-rose-950/10'
                 }`}
               >
@@ -223,7 +312,7 @@ export const ResultPage: React.FC<ResultPageProps> = ({
                 >
                   <div className="flex items-start gap-3">
                     <div
-                      className={`flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-md text-xs font-mono font-bold mt-0.5 ${
+                      className={`flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-lg text-xs font-mono font-bold mt-0.5 ${
                         isCorrect
                           ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-400'
                           : 'bg-rose-100 text-rose-700 dark:bg-rose-950 dark:text-rose-400'
@@ -251,19 +340,23 @@ export const ResultPage: React.FC<ResultPageProps> = ({
 
                 {/* Expanded Details */}
                 {isExpanded && (
-                  <div className="border-t border-slate-100 dark:border-slate-800 p-4 space-y-3 bg-slate-50/50 dark:bg-slate-850/30 text-xs sm:text-sm">
+                  <div className="border-t border-slate-100 dark:border-white/10 p-4 space-y-3 bg-slate-50/50 dark:bg-[#121316] text-xs sm:text-sm">
                     {/* User Selection vs Correct Answer */}
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                      <div className="p-3 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
+                      <div className="p-3 rounded-xl bg-white dark:bg-[#0e0f12] border border-slate-200/80 dark:border-white/10">
                         <span className="text-xs text-slate-400 font-medium block mb-1">
                           Lựa chọn của bạn:
                         </span>
-                        <span className={`font-semibold ${isCorrect ? 'text-emerald-600 dark:text-emerald-400' : 'text-rose-600 dark:text-rose-400'}`}>
+                        <span
+                          className={`font-semibold ${
+                            isCorrect ? 'text-emerald-600 dark:text-emerald-400' : 'text-rose-600 dark:text-rose-400'
+                          }`}
+                        >
                           {selectedOpt ? `${selectedOpt.text}` : 'Chưa trả lời'}
                         </span>
                       </div>
 
-                      <div className="p-3 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
+                      <div className="p-3 rounded-xl bg-white dark:bg-[#0e0f12] border border-slate-200/80 dark:border-white/10">
                         <span className="text-xs text-slate-400 font-medium block mb-1">
                           Đáp án đúng của đề:
                         </span>
@@ -274,7 +367,7 @@ export const ResultPage: React.FC<ResultPageProps> = ({
                     </div>
 
                     {/* Rationale */}
-                    <div className="p-3 rounded-lg bg-emerald-50/60 dark:bg-emerald-950/20 border border-emerald-100 dark:border-emerald-900/30">
+                    <div className="p-3.5 rounded-xl bg-emerald-50/60 dark:bg-emerald-950/20 border border-emerald-100 dark:border-emerald-900/30">
                       <strong className="text-emerald-800 dark:text-emerald-300 block mb-1">
                         Căn cứ giải thích:
                       </strong>
@@ -284,7 +377,7 @@ export const ResultPage: React.FC<ResultPageProps> = ({
                     </div>
 
                     {question.academicNote && (
-                      <div className="p-3 rounded-lg bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800/40 text-amber-900 dark:text-amber-300">
+                      <div className="p-3.5 rounded-xl bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800/40 text-amber-900 dark:text-amber-300">
                         <strong>Lưu ý học thuật:</strong> {question.academicNote}
                       </div>
                     )}

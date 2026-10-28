@@ -1,6 +1,11 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { Question } from '../types/quiz';
+import { CryptoInteractiveLab } from './CryptoInteractiveLab';
 import { CheckCircle2, XCircle, AlertTriangle, Lightbulb, BookMarked, ArrowRight } from 'lucide-react';
+import gsap from 'gsap';
+import { useGSAP } from '@gsap/react';
+
+gsap.registerPlugin(useGSAP);
 
 interface ExplanationPanelProps {
   question: Question;
@@ -15,29 +20,54 @@ export const ExplanationPanel: React.FC<ExplanationPanelProps> = ({
   onNextQuestion,
   isLastQuestion,
 }) => {
+  const panelRef = useRef<HTMLDivElement>(null);
   const isCorrect = selectedOptionId === question.correctOptionId;
   const correctOption = question.options.find((o) => o.id === question.correctOptionId);
 
+  // Smooth expanding animation with GSAP
+  useGSAP(
+    () => {
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      gsap.from(panelRef.current, {
+        y: 16,
+        opacity: 0,
+        duration: 0.35,
+        ease: 'power3.out',
+      });
+    },
+    { dependencies: [question.id], scope: panelRef }
+  );
+
   return (
-    <div className="mt-4 rounded-2xl border border-slate-200 bg-white p-5 sm:p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900 transition-colors">
+    <div
+      ref={panelRef}
+      className="mt-4 rounded-3xl border border-slate-200/80 bg-white p-5 sm:p-7 shadow-sm dark:border-white/10 dark:bg-[#0e0f12] transition-colors"
+    >
       {/* Result Status Banner */}
-      <div className="flex items-center justify-between pb-4 border-b border-slate-100 dark:border-slate-800">
-        <div className="flex items-center gap-2.5">
+      <div className="flex items-center justify-between pb-4 border-b border-slate-100 dark:border-white/10">
+        <div className="flex items-center gap-3">
           {isCorrect ? (
-            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-emerald-100 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-400">
-              <CheckCircle2 className="h-5 w-5" />
+            <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-emerald-100 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-400">
+              <CheckCircle2 className="h-6 w-6" />
             </div>
           ) : (
-            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-rose-100 text-rose-700 dark:bg-rose-950 dark:text-rose-400">
-              <XCircle className="h-5 w-5" />
+            <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-rose-100 text-rose-700 dark:bg-rose-950 dark:text-rose-400">
+              <XCircle className="h-6 w-6" />
             </div>
           )}
           <div>
-            <h3 className={`font-bold text-base ${isCorrect ? 'text-emerald-700 dark:text-emerald-400' : 'text-rose-700 dark:text-rose-400'}`}>
+            <h3
+              className={`font-bold text-base sm:text-lg ${
+                isCorrect ? 'text-emerald-700 dark:text-emerald-400' : 'text-rose-700 dark:text-rose-400'
+              }`}
+            >
               {isCorrect ? 'Chính xác!' : 'Chưa chính xác'}
             </h3>
             <p className="text-xs text-slate-500 dark:text-slate-400">
-              Đáp án chuẩn: <span className="font-semibold text-slate-900 dark:text-white font-mono">{correctOption?.text}</span>
+              Đáp án chuẩn của đề:{' '}
+              <span className="font-semibold text-slate-900 dark:text-white font-mono">
+                {correctOption?.text}
+              </span>
             </p>
           </div>
         </div>
@@ -45,39 +75,39 @@ export const ExplanationPanel: React.FC<ExplanationPanelProps> = ({
         {/* Next Question CTA */}
         <button
           onClick={onNextQuestion}
-          className="flex items-center gap-1.5 rounded-xl bg-emerald-600 px-4 py-2 text-xs sm:text-sm font-semibold text-white shadow-sm hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-all"
+          className="flex items-center gap-2 rounded-2xl bg-emerald-600 px-5 py-2.5 text-xs sm:text-sm font-bold text-white shadow-lg shadow-emerald-600/20 hover:bg-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-all hover:translate-x-0.5"
         >
-          {isLastQuestion ? 'Xem kết quả' : 'Câu tiếp theo'}
+          {isLastQuestion ? 'Xem kết quả' : 'Câu tiếp theo (Enter)'}
           <ArrowRight className="h-4 w-4" />
         </button>
       </div>
 
       {/* Rationale and Explanations */}
-      <div className="mt-4 space-y-3.5">
-        <div className="rounded-xl bg-slate-50 p-4 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800">
-          <div className="flex items-center gap-1.5 text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">
+      <div className="mt-5 space-y-4">
+        <div className="rounded-2xl bg-slate-50/80 p-4 dark:bg-[#121316] border border-slate-100 dark:border-white/10">
+          <div className="flex items-center gap-1.5 text-xs font-bold text-slate-700 dark:text-slate-300 mb-1.5">
             <Lightbulb className="h-4 w-4 text-amber-500" />
-            Giải thích chi tiết:
+            Căn cứ giải thích chi tiết:
           </div>
           <p className="text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
             {question.explanation.correctRationale}
           </p>
         </div>
 
-        {/* Key takeaway */}
-        <div className="rounded-xl bg-emerald-50/60 p-3.5 dark:bg-emerald-950/20 border border-emerald-100 dark:border-emerald-900/40">
+        {/* Key Takeaway */}
+        <div className="rounded-2xl bg-emerald-50/60 p-4 dark:bg-emerald-950/20 border border-emerald-200/80 dark:border-emerald-900/40">
           <div className="flex items-center gap-1.5 text-xs font-bold text-emerald-800 dark:text-emerald-400 mb-1">
             <BookMarked className="h-4 w-4" />
             Điểm cốt lõi cần nhớ:
           </div>
-          <p className="text-xs sm:text-sm font-medium text-emerald-900 dark:text-emerald-300">
+          <p className="text-xs sm:text-sm font-semibold text-emerald-950 dark:text-emerald-300">
             {question.explanation.keyTakeaway}
           </p>
         </div>
 
         {/* Academic Caution if present */}
         {question.academicNote && (
-          <div className="rounded-xl bg-amber-50/70 p-3.5 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800/60">
+          <div className="rounded-2xl bg-amber-50/70 p-4 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800/60">
             <div className="flex items-center gap-1.5 text-xs font-bold text-amber-800 dark:text-amber-400 mb-1">
               <AlertTriangle className="h-4 w-4 text-amber-600 dark:text-amber-400" />
               Lưu ý học thuật & Cảnh báo bẫy thi cử:
@@ -87,6 +117,9 @@ export const ExplanationPanel: React.FC<ExplanationPanelProps> = ({
             </p>
           </div>
         )}
+
+        {/* Dynamic Signature Lab Injection */}
+        <CryptoInteractiveLab questionId={question.id} />
       </div>
     </div>
   );

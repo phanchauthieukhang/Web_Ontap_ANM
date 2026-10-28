@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { Question, QuizMode, QuizSessionState, UserProgressStore } from './types/quiz';
 import questionsRaw from './data/questions.json';
 import { Header } from './components/Header';
@@ -6,24 +6,24 @@ import { HomePage } from './pages/HomePage';
 import { QuizPage } from './pages/QuizPage';
 import { ResultPage } from './pages/ResultPage';
 import { KnowledgeLibraryModal } from './components/KnowledgeLibraryModal';
+import { CommandPalette } from './components/CommandPalette';
 import {
   loadProgressStore,
   recordQuestionAttempt,
   toggleBookmark,
   resetAllProgress
 } from './utils/storage';
-import { shuffleArray, shuffleQuestionOptions, evaluateAnswer } from './utils/quiz-engine';
+import { shuffleArray, evaluateAnswer } from './utils/quiz-engine';
 
 export const App: React.FC = () => {
-  // Theme dark/light state
+  // Theme dark/light state (Default dark mode for cybersecurity aesthetic)
   const [darkMode, setDarkMode] = useState<boolean>(() => {
     if (typeof window !== 'undefined') {
-      return (
-        localStorage.getItem('theme') === 'dark' ||
-        (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)
-      );
+      const stored = localStorage.getItem('theme');
+      if (stored) return stored === 'dark';
+      return true; // Default to dark for cybersecurity theme
     }
-    return false;
+    return true;
   });
 
   useEffect(() => {
@@ -52,53 +52,87 @@ export const App: React.FC = () => {
   const [currentPage, setCurrentPage] = useState<'home' | 'quiz' | 'result'>('home');
   const [activeSession, setActiveSession] = useState<QuizSessionState | null>(null);
 
-  // Modal Library State
+  // Modals State
   const [isLibraryOpen, setIsLibraryOpen] = useState<boolean>(false);
+  const [isCommandPaletteOpen, setIsCommandPaletteOpen] = useState<boolean>(false);
+
+  // Global Keyboard Listener for Ctrl+K
+  useEffect(() => {
+    const handleGlobalKeyDown = (e: KeyboardEvent) => {
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        setIsCommandPaletteOpen((prev) => !prev);
+      }
+    };
+    window.addEventListener('keydown', handleGlobalKeyDown);
+    return () => window.removeEventListener('keydown', handleGlobalKeyDown);
+  }, []);
 
   // Start a Quiz Mode
-  const handleStartMode = (
-    mode: QuizMode,
-    topicId?: string,
-    examConfig?: { questionCount: number; timeMinutes: number }
-  ) => {
-    let questionIds: number[] = [];
+  const handleStartMode = useCallback(
+    (
+      mode: QuizMode,
+      topicId?: string,
+      examConfig?: { questionCount: number; timeMinutes: number }
+    ) => {
+      let questionIds: number[] = [];
 
-    if (mode === 'sequential') {
-      // 1 to 70
-      questionIds = (questionsRaw as Question[]).map((q) => q.id);
-    } else if (mode === 'random') {
-      questionIds = shuffleArray((questionsRaw as Question[]).map((q) => q.id));
-    } else if (mode === 'topic' && topicId) {
-      questionIds = (questionsRaw as Question[])
-        .filter((q) => q.topicId === topicId)
-        .map((q) => q.id);
-    } else if (mode === 'incorrect') {
-      questionIds = [...progressStore.incorrectQuestionIds];
-      if (questionIds.length === 0) {
-        alert('Hiện bạn chưa có câu hỏi nào bị trả lời sai!');
-        return;
+      if (mode === 'sequential') {
+        questionIds = (questionsRaw as Question[]).map((q) => q.id);
+      } else if (mode === 'random') {
+        questionIds = shuffleArray((questionsRaw as Question[]).map((q) => q.id));
+      } else if (mode === 'topic' && topicId) {
+        questionIds = (questionsRaw as Question[])
+          .filter((q) => q.topicId === topicId)
+          .map((q) => q.id);
+      } else if (mode === 'incorrect') {
+        questionIds = [...progressStore.incorrectQuestionIds];
+        if (questionIds.length === 0) {
+          alert('Hiện bạn chưa có câu hỏi nào bị trả lời sai!');
+          return;
+        }
+      } else if (mode === 'bookmarked') {
+        questionIds = [...progressStore.bookmarkedQuestionIds];
+        if (questionIds.length === 0) {
+          alert('Hiện bạn chưa đánh dấu câu hỏi nào!');
+          return;
+        }
+      } else if (mode === 'exam') {
+        const allIds = (questionsRaw as Question[]).map((q) => q.id);
+        const count = examConfig?.questionCount || 40;
+        questionIds = shuffleArray(allIds).slice(0, count);
       }
-    } else if (mode === 'bookmarked') {
-      questionIds = [...progressStore.bookmarkedQuestionIds];
-      if (questionIds.length === 0) {
-        alert('Hiện bạn chưa đánh dấu câu hỏi nào!');
-        return;
-      }
-    } else if (mode === 'exam') {
-      const allIds = (questionsRaw as Question[]).map((q) => q.id);
-      const count = examConfig?.questionCount || 40;
-      questionIds = shuffleArray(allIds).slice(0, count);
-    }
+
+      const session: QuizSessionState = {
+        mode,
+        topicId,
+        questionIds,
+        currentIndex: 0,
+        userAnswers: {},
+        bookmarkedIds: [...progressStore.bookmarkedQuestionIds],
+        startTime: Date.now(),
+        timeLimitSeconds: mode === 'exam' ? (examConfig?.timeMinutes || 30) * 60 : undefined,
+        isCompleted: false,
+      };
+
+      setActiveSession(session);
+      setCurrentPage('quiz');
+    },
+    [progressStore]
+  );
+
+  // Jump to specific question from Command Palette
+  const handleJumpToQuestion = (questionId: number) => {
+    const allIds = (questionsRaw as Question[]).map((q) => q.id);
+    const targetIndex = allIds.indexOf(questionId);
 
     const session: QuizSessionState = {
-      mode,
-      topicId,
-      questionIds,
-      currentIndex: 0,
+      mode: 'sequential',
+      questionIds: allIds,
+      currentIndex: targetIndex >= 0 ? targetIndex : 0,
       userAnswers: {},
       bookmarkedIds: [...progressStore.bookmarkedQuestionIds],
       startTime: Date.now(),
-      timeLimitSeconds: mode === 'exam' ? (examConfig?.timeMinutes || 30) * 60 : undefined,
       isCompleted: false,
     };
 
@@ -114,7 +148,6 @@ export const App: React.FC = () => {
 
     const isCorrect = evaluateAnswer(question, selectedOptionId);
 
-    // Update in-session answers
     const updatedAnswers = {
       ...activeSession.userAnswers,
       [questionId]: {
@@ -130,7 +163,6 @@ export const App: React.FC = () => {
       userAnswers: updatedAnswers,
     });
 
-    // Record into persistent progress store immediately
     const updatedStore = recordQuestionAttempt(questionId, isCorrect, progressStore);
     setProgressStore(updatedStore);
   };
@@ -175,7 +207,7 @@ export const App: React.FC = () => {
     setCurrentPage('result');
   };
 
-  // Handle Reset Progress with confirmation
+  // Handle Reset Progress
   const handleResetProgress = () => {
     const confirmed = window.confirm(
       'Bạn có chắc chắn muốn đặt lại toàn bộ tiến độ học tập, danh sách câu sai và câu đánh dấu không?'
@@ -187,7 +219,7 @@ export const App: React.FC = () => {
     }
   };
 
-  // Handle Retry only incorrect questions from Result Page
+  // Handle Retry only incorrect questions
   const handleRetryIncorrect = (incorrectIds: number[]) => {
     if (incorrectIds.length === 0) return;
     const session: QuizSessionState = {
@@ -204,13 +236,14 @@ export const App: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100 flex flex-col font-sans transition-colors duration-200">
+    <div className="min-h-screen bg-slate-50 text-slate-900 dark:bg-[#07080a] dark:text-[#f4f4f6] flex flex-col font-sans transition-colors duration-200">
       {/* Universal Header */}
       <Header
         darkMode={darkMode}
         onToggleDarkMode={() => setDarkMode(!darkMode)}
         onResetProgress={handleResetProgress}
         onOpenLibrary={() => setIsLibraryOpen(true)}
+        onOpenCommandPalette={() => setIsCommandPaletteOpen(true)}
         onGoHome={() => setCurrentPage('home')}
       />
 
@@ -221,6 +254,7 @@ export const App: React.FC = () => {
             progressStore={progressStore}
             onStartMode={handleStartMode}
             onOpenLibrary={() => setIsLibraryOpen(true)}
+            onOpenCommandPalette={() => setIsCommandPaletteOpen(true)}
           />
         )}
 
@@ -255,14 +289,24 @@ export const App: React.FC = () => {
         onClose={() => setIsLibraryOpen(false)}
       />
 
-      {/* Simple Footer */}
-      <footer className="border-t border-slate-200 dark:border-slate-800 py-6 text-center text-xs text-slate-500 dark:text-slate-400 bg-white/50 dark:bg-slate-900/50 backdrop-blur transition-colors">
+      {/* Command Palette (Ctrl+K) */}
+      <CommandPalette
+        isOpen={isCommandPaletteOpen}
+        onClose={() => setIsCommandPaletteOpen(false)}
+        onSelectQuestion={handleJumpToQuestion}
+        onActionStartExam={() => handleStartMode('exam', undefined, { questionCount: 40, timeMinutes: 30 })}
+        onActionReviewIncorrect={() => handleStartMode('incorrect')}
+        onActionOpenLibrary={() => setIsLibraryOpen(true)}
+      />
+
+      {/* Footer */}
+      <footer className="border-t border-slate-200/80 dark:border-white/10 py-6 text-center text-xs text-slate-500 dark:text-slate-400 bg-white/40 dark:bg-[#07080a]/40 backdrop-blur transition-colors">
         <div className="max-w-6xl mx-auto px-4">
           <p>
-            Hệ thống Ôn tập Trắc nghiệm An toàn thông tin • Biên soạn theo chuẩn ngân hàng 70 câu hỏi và hệ thống hóa học thuật.
+            Hệ thống Ôn tập Trắc nghiệm An toàn thông tin • 70 câu hỏi chuẩn hóa & Interactive 3D Lab.
           </p>
           <p className="mt-1 font-mono text-[11px] text-slate-400">
-            Dữ liệu hoạt động 100% Offline • LocalStorage Version 1.0 • Không phụ thuộc AI API khi làm bài
+            Offline 100% • LocalStorage Schema v1.0 • Bấm <kbd className="px-1.5 py-0.5 rounded bg-slate-200 dark:bg-white/10 font-mono text-[10px] text-slate-500 dark:text-slate-300">Ctrl + K</kbd> để tìm kiếm
           </p>
         </div>
       </footer>
